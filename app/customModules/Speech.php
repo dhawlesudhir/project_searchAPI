@@ -5,9 +5,10 @@ namespace App\customModules;
 
 
 use Exception;
-use Google\Cloud\Speech\V1\SpeechClient;
 use Google\Cloud\Speech\V1\RecognitionAudio;
 use Google\Cloud\Speech\V1\RecognitionConfig;
+use Google\Cloud\Speech\V1\SpeechClient;
+
 
 
 use Google\Cloud\TextToSpeech\V1\AudioConfig;
@@ -15,7 +16,12 @@ use Google\Cloud\TextToSpeech\V1\AudioEncoding;
 use Google\Cloud\TextToSpeech\V1\SynthesisInput;
 use Google\Cloud\TextToSpeech\V1\TextToSpeechClient;
 use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
-use Google\Cloud\Speech\V1\StreamingRecognitionConfig;
+
+use Google\Cloud\Vision\V1\Feature\Type;
+use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Google\Cloud\Vision\V1\Likelihood;
+
+
 
 
 class Speech
@@ -33,7 +39,7 @@ class Speech
             // ** Uncomment and populate these variables in your code */
             // $audioFile = 'D:\project-search\public\assets\audio\sample.mp3';
             // $audioFile = asset('public\assets\audio\sample.mp3');
-            $audioFile = "D:\project-search\public\assets\audio\samplenew.wav";
+            $audioFile = "D:\project-search\public\assets\audio\\04-07-2022_12_46_57.wav";
 
             // change these variables if necessary
             $encoding = AudioEncoding::LINEAR16;
@@ -41,7 +47,6 @@ class Speech
             $languageCode = 'en-US';
             // get contents of a file into a string
             $content = file_get_contents($audioFile);
-
 
             // set string as audio content
             $audio = (new RecognitionAudio())
@@ -58,7 +63,6 @@ class Speech
             // create the asyncronous recognize operation
             $operation = $client->longRunningRecognize($config, $audio);
             $operation->pollUntilComplete();
-
             if ($operation->operationSucceeded()) {
                 $response = $operation->getResult();
                 // each result is for a consecutive portion of the audio. iterate
@@ -83,39 +87,92 @@ class Speech
         }
     }
 
-    function TextTospeech()
+    function TextTospeech($text)
     {
+
         $textToSpeechClient = new TextToSpeechClient();
 
         $input = new SynthesisInput();
-        $input->setText('how are you? vishal');
+        $input->setText($text);
         $voice = new VoiceSelectionParams();
         $voice->setLanguageCode('en-US');
         $audioConfig = new AudioConfig();
         $audioConfig->setAudioEncoding(AudioEncoding::MP3);
 
         $resp = $textToSpeechClient->synthesizeSpeech($input, $voice, $audioConfig);
-        file_put_contents('D:\project-search\public\assets\audio\test1.wav', $resp->getAudioContent());
+        $filename = date_format(now(), "d-m-Y_H_i_s");
+        $flag = file_put_contents('D:\project-search\public\assets\audio\\' . $filename . '.wav', $resp->getAudioContent());
+        echo $flag;
+        if ($flag) {
+            echo 'File Saved';
+        } else {
+            echo 'Failed to save';
+        }
     }
 
-    function speechToText1()
+    function textExtractfromImage()
     {
-        $recognitionConfig = new RecognitionConfig();
-        $recognitionConfig->setEncoding(AudioEncoding::AUDIO_ENCODING_UNSPECIFIED);
-        $recognitionConfig->setSampleRateHertz(44100);
-        $recognitionConfig->setLanguageCode('en-US');
-        $config = new StreamingRecognitionConfig();
-        $config->setConfig($recognitionConfig);
 
-        $audioResource = fopen('D:\project-search\public\assets\audio\sample.mp3', 'r');
-        $speechClient = new SpeechClient();
 
-        $responses = $speechClient->recognizeAudioStream($config, $audioResource);
+        // try {
+        $path = 'D:\project-search\public\assets\images\9e19d0f553eeadc85d17a712a1d5b2e7461cb256_en-text-editor-img.webp';
 
-        foreach ($responses as $element) {
-            // doSomethingWith($element);
-            echo $element;
+        //     //code...
+        // } catch (\Exception $th) {
+        //     //throw $th;
 
+        //    dd($th);
+            
+        // }
+
+        // $path = asset(__FILE__.'/images/alttext.jpg');
+        // echo $path;die;
+        $imageAnnotator = new ImageAnnotatorClient();
+
+        # annotate the image
+        $image = file_get_contents($path);
+        $response = $imageAnnotator->documentTextDetection($image);
+        $annotation = $response->getFullTextAnnotation();
+        $text = [];
+        # print out detailed and structured information about document text
+        if ($annotation) {
+            foreach ($annotation->getPages() as $page) {
+                foreach ($page->getBlocks() as $block) {
+                    $block_text = '';
+                    foreach ($block->getParagraphs() as $paragraph) {
+                        foreach ($paragraph->getWords() as $word) {
+                            foreach ($word->getSymbols() as $symbol) {
+                                $block_text .= $symbol->getText();
+                            }
+                            $block_text .= ' ';
+                        }
+                    }
+                    $text[] .= $block_text;
+                    // printf('Block content: %s', $block_text);
+                    // printf(
+                    //     'Block confidence: %f' . PHP_EOL,
+                    //     $block->getConfidence()
+                    // );
+
+                    # get bounds
+                    $vertices = $block->getBoundingBox()->getVertices();
+                    $bounds = [];
+                    foreach ($vertices as $vertex) {
+                        $bounds[] = sprintf(
+                            '(%d,%d)',
+                            $vertex->getX(),
+                            $vertex->getY()
+                        );
+                    }
+                    // print('Bounds: ' . join(', ', $bounds) . PHP_EOL);
+                    // print(PHP_EOL);
+                }
+            }
+            print_r($text);
+        } else {
+            print('No text found' . PHP_EOL);
         }
+
+        $imageAnnotator->close();
     }
 }

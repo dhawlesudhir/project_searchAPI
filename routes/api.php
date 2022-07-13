@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/speech', [SpeechController::class,'speechToText']);
 Route::get('/text', [SpeechController::class,'textToSpeech']);
+Route::get('/getText', [SpeechController::class,'textExtract']);
