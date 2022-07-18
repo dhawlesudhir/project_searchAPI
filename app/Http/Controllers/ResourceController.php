@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\resource;
 use App\Http\Requests\StoreresourceRequest;
-use App\Http\Requests\UpdateresourceRequest;
+use Illuminate\Http\Request;
 
 class ResourceController extends Controller
 {
+
+    public function texttospeech(Request $request)
+    {
+        $text = $request->str ? $request->str : '';
+        $speech = new SpeechController();
+        return $speech->textToSpeechAWS($text);
+    }
+
     /**
      * Display a listing of the resource.
      *

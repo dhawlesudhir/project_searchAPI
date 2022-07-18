@@ -66,7 +66,7 @@
         </div>
         <div class="search-input">
           <p>Search for an API</p>
-          <form method="get" action="/search" auto-focus>
+          <form method="get" action="/" auto-focus>
             <input type="text" name="search" placeholder="Search an API" autofocus />
           </form>
         </div>

@@ -14,13 +14,8 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $categoriesData = category::where('status', 1)->get();
-        return view('apicategories')->with('categories_resources', $categoriesData);
-    }
 
-    public function search(Request $request)
+    public function index(Request $request)
     {
         $search = $request->query('search');
         if ($search) {

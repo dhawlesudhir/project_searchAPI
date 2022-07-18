@@ -11,7 +11,7 @@
         <?php
         foreach ($categorie->resources as $resource) {
         ?>
-          <a href="">{{$resource->name}}
+          <a href="{{$resource->route?$resource->route:''}}" target="{{$resource->route?'_blank':''}}">{{$resource->name}}
             <p>{{$resource->desc}}</p>
           </a>
         <?php } ?>
