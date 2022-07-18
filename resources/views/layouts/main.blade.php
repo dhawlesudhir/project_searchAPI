@@ -14,10 +14,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Open+Sans:wght@300;800&family=Oswald:wght@600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Open+Sans:wght@100;200;300;500;600;700;900;800&family=Oswald:wght@600&display=swap" rel="stylesheet" />
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/style.css">
-
+  @stack('scripts')
 
 
   <!-- <style>
@@ -76,6 +76,7 @@
       </div>
     </article>
   </div>
+
 </body>
 
 </html>

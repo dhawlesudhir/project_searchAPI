@@ -10,6 +10,7 @@ class AICategoryController extends Controller
     //
     public function texttospeech(Request $request)
     {
+
         return view('texttospeech');
     }
 }

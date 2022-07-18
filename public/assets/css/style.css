@@ -1,16 +1,12 @@
 * {
     margin: 0;
-    padding: 2px;
+    padding: 0;
 }
 body {
     background-color: #f5f5f5;
-    /* letter-spacing: 1.2px; */
     padding: 5px;
-    /* font-family: "Roboto", sans-serif; */
-    /* font-family: "Open Sans", sans-serif; */
     color: #000000;
-    size: 100%;
-    /* font: Sans-Serif; */
+    position: relative;
 }
 
 .container {
@@ -36,7 +32,7 @@ body {
     /* border-bottom: ; */
 }
 
-aside {
+.container aside {
     border-right: solid 1px;
     height: 610px;
     position: relative;
@@ -222,6 +218,63 @@ article header h4:first-child {
 #notFound::after {
     content: "(press Enter key)";
     font-size: 18px;
+}
+
+.modal {
+    position: absolute;
+    top: 5%;
+    left: 15%;
+    font-size: 18px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 24px;
+    box-shadow: 0px 4px 20px #00000029;
+    height: 40%;
+    width: 70%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 10% 80% 10%;
+    font-family: "Open Sans", sans-serif;
+}
+.modal header {
+    grid-column: 2 / 3;
+    height: 100%;
+    border-bottom: gray solid 1px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-weight: 700;
+}
+
+.modal aside {
+    border: none;
+    grid-row: 1/ 4;
+    height: 100%;
+    width: 100%;
+    border-right: gray solid 1px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-weight: 700;
+    display: grid;
+    overflow: auto;
+}
+.modal article {
+    padding: 10px;
+    box-sizing: border-box;
+    font-weight: 300;
+}
+
+.modal footer {
+    grid-column: -2/ -1;
+    height: 100%;
+    border-top: gray solid 1px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.modal-close {
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    color: gray;
 }
 
 /* 
