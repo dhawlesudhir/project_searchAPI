@@ -15,7 +15,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index(Request $request)
+    public function index(Request $request, String $type = 'default')
     {
         $search = $request->query('search');
         if ($search) {
@@ -26,7 +26,11 @@ class CategoryController extends Controller
             $categoriesData = category::where('status', 1)->get();
         }
 
-        return view('apicategories')->with('categories_resources', $categoriesData);
+        if ($type == 'default') {
+            return view('layouts.main')->with('categories_resources', $categoriesData);
+        } else {
+            return $categoriesData;
+        }
     }
     /**
      * Show the form for creating a new resource.

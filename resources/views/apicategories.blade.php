@@ -11,7 +11,7 @@
         <?php
         foreach ($categorie->resources as $resource) {
         ?>
-          <a href="{{$resource->route?$resource->route:''}}" target="{{$resource->route?'_blank':''}}">{{$resource->name}}
+          <a href="{{$resource->route?$resource->route:''}}">{{$resource->name}}
             <p>{{$resource->desc}}</p>
           </a>
         <?php } ?>
@@ -24,8 +24,8 @@
 <p id="notFound">No API's Found</p>
 @endif
 
-@if(true)
-@include('texttospeech')
+@if(isset($modal))
+@include($modal)
 @endif
 
 @endsection
