@@ -12,15 +12,13 @@ body {
 .container {
     display: grid;
     grid-template-columns: auto 95%;
-    /* grid-template-rows: 4% 2% 93%; */
     column-gap: 20px;
     row-gap: 10px;
 }
 
 .main-header {
-    /* background-color: red; */
     grid-column: 1 / -1;
-    border-bottom: solid 1px;
+    border-bottom: #aaaaaa solid 1px;
     font-family: "Montserrat", sans-serif;
     padding-left: 5px;
 }
@@ -40,7 +38,7 @@ body {
     width: 40px;
 }
 
-article {
+.container article {
     display: grid;
     grid-template-rows: 150px auto;
     row-gap: 40px;
@@ -56,8 +54,8 @@ article header {
 
 article header .headings {
     display: flex;
-    border-top: solid 1px;
-    border-bottom: solid 1px;
+    border-top: #aaaaaa solid 1px;
+    border-bottom: #aaaaaa solid 1px;
     gap: 20px;
     /* height: 60px; */
     align-content: center;
@@ -97,6 +95,11 @@ article header .headings {
 
 header h1 {
     font-weight: normal;
+    font-size: 26px;
+    color: #888888;
+}
+header h1 b {
+    color: #000000;
 }
 
 .tools span {
@@ -119,14 +122,14 @@ nav h3 {
 }
 
 .exlore-main {
-    font-size: 48px;
+    font-size: 96px;
     align-self: center;
-    font-family: "Montserrat", sans-serif;
-    font-weight: bold;
+    font-family: "Oswald", sans-serif;
+    /* font-weight: bold; */
 }
 
 .headings h4 {
-    border-left: dotted 1px;
+    border-left: 3px dashed #dddddd;
     height: 50%;
     align-self: center;
     padding-left: 20px;
@@ -134,12 +137,11 @@ nav h3 {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     color: #000000;
-    font-size: 18px;
+    font-size: 48px;
 }
 
 .headings h4 p:last-child {
-    font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
 }
 article header h4:first-child {
     border-left: 0;
@@ -198,6 +200,7 @@ article header h4:first-child {
     font-family: "Roboto", sans-serif;
     font-size: 16px;
     color: #212121;
+    pointer-events: all;
 }
 
 .group-items a::first-letter {

@@ -11,12 +11,17 @@ class AICategoryController extends Controller
     //
     public function texttospeech(Request $request)
     {
-        $modal = 'texttospeech';
         $category = new CategoryController();
         $categoriesData = $category->index($request, "data");
+        //collection of resources relate to category 
+        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+    }
 
+    public function speechtotext(Request $request)
+    {
+        $category = new CategoryController();
+        $categoriesData = $category->index($request, "data");
         //collection of resources related to category 
-
-        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', $modal);
+        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
     }
 }

@@ -102,6 +102,12 @@
       </div>
     </article>
   </div>
+  <script>
+    $("a").click(function(event) {
+      alert();
+      event.preventDefault();
+    });
+  </script>
 </body>
 
 </html>
