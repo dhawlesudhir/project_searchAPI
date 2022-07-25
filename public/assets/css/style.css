@@ -133,7 +133,7 @@ nav h3 {
     /* transform: rotate(270deg); */
     /* left: -47px; */
     width: 150px;
-    top: 90px;
+    top: 50px;
     font-family: "Oswald", sans-serif;
     font-weight: 400;
     color: #aaaaaa;
@@ -152,6 +152,7 @@ nav .material-symbols-outlined {
     font-size: 96px;
     align-self: center;
     font-family: "Oswald", sans-serif;
+    font-weight: 300;
 }
 
 .headings h4 {
@@ -162,10 +163,10 @@ nav .material-symbols-outlined {
     height: 50%;
     align-self: center;
     padding-left: 20px;
-
     color: #000000;
     font-size: 48px;
     font-family: "Oswald", sans-serif;
+    font-weight: 400;
 }
 
 .headings h4 p:last-child {
@@ -202,11 +203,14 @@ article header h4:first-child {
 .search-input input::placeholder {
     font-size: 18px;
     color: #888888;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
 }
 
 .content p {
     font-size: 12px;
     font-family: "Open Sans", sans-serif;
+    font-weight: 400;
 }
 .group {
     padding-left: 10px;

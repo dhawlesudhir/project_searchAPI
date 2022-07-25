@@ -29,8 +29,8 @@
 
   .modal {
     position: absolute;
-    top: 10%;
-    left: 15%;
+    top: 5%;
+    left: 20%;
     /* font-size: 18px; */
     background: #FFFFFF 0% 0% no-repeat padding-box;
     /* background-color: rgb(255, 255, 255); */
