@@ -44,7 +44,7 @@
     <fieldset class="optionsFieldSet">
       <label for="languageSelected" class="headings">Language</label>
       <select class="optselect" name="" id="languageSelected">
-        <option value="xyz" class="sltOption">XYZ</option>
+        <option value="xyz" class="sltOption">English, US</option>
         <option value="abc">ABC</option>
         <option value="mnp">MNP</option>
       </select>
@@ -53,7 +53,7 @@
     <fieldset class="optionsFieldSet">
       <label for="voice" class="headings">Voice</label>
       <select class="optselect" name="" id="voice">
-        <option value="xyz" class="sltOption">XYZ</option>
+        <option value="xyz" class="sltOption">Joanna, Female</option>
         <option value="abc">ABC</option>
         <option value="mnp">MNP</option>
       </select>
@@ -92,7 +92,7 @@
   .headings {
     color: #111111;
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 700;
   }
 
   .title {
@@ -209,5 +209,11 @@
   .sltOption {
     font-size: 13px;
     color: #888888;
+    font-family: "Open Sans", sans-serif;
+
+  }
+
+  #texttocovert::placeholder {
+    font-size: 13px;
   }
 </style>

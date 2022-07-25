@@ -29,15 +29,17 @@
 
   .modal {
     position: absolute;
-    top: 5%;
-    left: 20%;
+    top: 2%;
+    left: 10%;
     /* font-size: 18px; */
     background: #FFFFFF 0% 0% no-repeat padding-box;
     /* background-color: rgb(255, 255, 255); */
     border-radius: 24px;
     box-shadow: 0px 4px 20px #00000029;
-    height: 40%;
-    width: 60%;
+    /* height: 40%;
+    width: 60%; */
+    width: 800px;
+    height: 450px;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: 10% 75% 15%;
@@ -63,6 +65,7 @@
     padding: 10px;
     box-sizing: border-box;
     font-weight: 700;
+
     display: grid;
     overflow: auto;
     font-size: small;
@@ -104,7 +107,9 @@
 
   .modal aside h4 {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
+    color: #888888;
+
   }
 
   .modal aside .selected {
@@ -112,5 +117,6 @@
     text-transform: capitalize;
     font-size: 13px;
     font-weight: 700;
+
   }
 </style>
