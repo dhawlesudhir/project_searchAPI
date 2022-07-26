@@ -69,7 +69,8 @@
             <p>Platforms</p>
           </h4>
           <h4>
-            <p>{{count($categories_resources)}}</p>
+            <!-- <p>{{count($categories_resources)}}</p> -->
+            <p>200</p>
             <p>Resources</p>
           </h4>
         </div>

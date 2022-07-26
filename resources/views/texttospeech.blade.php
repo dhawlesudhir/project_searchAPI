@@ -151,11 +151,16 @@
     width: 100%;
     border-radius: 5px;
     padding: 10px;
-    color: #888888;
     box-sizing: border-box;
     border: 1px solid #DDDDDD;
     resize: none;
   }
+
+  .textinput:focus {
+    /* border: 1px solid #0091FF; */
+    box-shadow: 0 0 3px #0091FF;
+  }
+
 
   .footerDiv {
     height: 100%;
