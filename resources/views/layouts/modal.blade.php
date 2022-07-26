@@ -11,6 +11,14 @@
   </header>
   <aside>
     @stack('aside')
+    @if($modal == 'texttospeech')
+    <h4 class="selected">Text To Speech</h4>
+    @endif
+    <h4>API service 1</h4>
+    <h4>API service 2</h4>
+    <h4>API service 3</h4>
+    <h4>API service 4</h4>
+    <h4>API service 5</h4>
   </aside>
   <article>
     @stack('artical')
@@ -23,14 +31,20 @@
 </div>
 
 <style>
+  .container {
+    /* opacity: 0.5; */
+  }
+
   .modal-close {
     cursor: pointer;
   }
 
   .modal {
     position: absolute;
-    top: 2%;
-    left: 10%;
+    top: 10%;
+    left: 20%;
+    opacity: 1 !important;
+    /* background: o; */
     /* font-size: 18px; */
     background: #FFFFFF 0% 0% no-repeat padding-box;
     /* background-color: rgb(255, 255, 255); */
@@ -39,7 +53,7 @@
     /* height: 40%;
     width: 60%; */
     width: 800px;
-    height: 450px;
+    height: 550px;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: 10% 75% 15%;
@@ -66,11 +80,13 @@
     box-sizing: border-box;
     font-weight: 700;
 
-    display: grid;
+    display: flex;
     overflow: auto;
-    font-size: small;
+    font-size: 13px;
     padding: 25px;
-    justify-items: center;
+    align-content: stretch;
+    flex-direction: column;
+    gap: 30px;
   }
 
   .modal article {
@@ -90,10 +106,10 @@
 
   .modal-close {
     position: absolute;
-    right: 2%;
-    top: 2%;
+    right: 3%;
+    top: 3%;
     color: gray;
-    font-size: 14px;
+    font-size: 16px;
     text-decoration: none;
   }
 

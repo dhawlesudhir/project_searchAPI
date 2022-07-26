@@ -15,15 +15,16 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/style.css">
   @stack('scripts')
-
+  @stack('style')
 
   <!-- <style>
         body {
@@ -59,25 +60,25 @@
     <article>
       <header>
         <div class="headings">
-          <span class="exlore-main"> EXPLORE </span>
-          <h4>
+          <p class="exlore-main"> EXPLORE </p>
+          <div>
             <p>160</p>
             <p>API</p>
-          </h4>
-          <h4>
+          </div>
+          <div>
             <p>24</p>
             <p>Platforms</p>
-          </h4>
-          <h4>
+          </div>
+          <div>
             <!-- <p>{{count($categories_resources)}}</p> -->
             <p>200</p>
             <p>Resources</p>
-          </h4>
+          </div>
         </div>
         <div class="search-input">
           <p>Search for an API</p>
           <form method="get" action="/" auto-focus>
-            <input type="text" name="search" placeholder="Search an API" autofocus />
+            <input type="text" name="search" placeholder="Enter an API" autofocus />
           </form>
         </div>
       </header>

@@ -1,19 +1,13 @@
 @extends('layouts.modal')
 
+
 @push('header')
 <h1>Text To Speech</h1>
 @endpush
 
 
 @push('aside')
-@if($modal == 'texttospeech')
-<h4 class="selected">Text To Speech</h4>
-@endif
-<h4>API service 1</h4>
-<h4>API service 2</h4>
-<h4>API service 3</h4>
-<h4>API service 4</h4>
-<h4>API service 5</h4>
+
 @endpush
 
 
@@ -65,7 +59,7 @@
     <textarea class="textinput" name="" id="texttocovert" cols="90%" rows="6" placeholder="English,US"></textarea>
     <div class="texttocovertbtns">
       <p class="pChars">58 Characters remaining</p>
-      <button class="btnClear btn">Clear</button>
+      <button class="btnClear btn">CLEAR TEXT</button>
     </div>
   </div>
 
@@ -74,16 +68,30 @@
 
 @push('footer')
 <div class="footerDiv">
-  <button class="btn">Download</button>
-  <button class="btn">Listen</button>
+  <button class="btn download"><svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
+      <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
+    </svg>Download</button>
+  <button class="btn listen">
+    <span class="material-symbols-sharp">
+      play_arrow
+    </span> Listen</button>
 </div>
 @endpush
 <style>
+  .material-symbols-sharp {
+    font-variation-settings:
+      'FILL'1,
+      'wght'400,
+      'GRAD'0,
+      'opsz'48
+  }
+
   .model-artical {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 18% 15% auto;
-    row-gap: 15px;
+    row-gap: 25px;
     width: 100%;
     font-size: 13px;
     font-weight: 500;
@@ -154,6 +162,14 @@
     box-sizing: border-box;
     border: 1px solid #DDDDDD;
     resize: none;
+    font-family: "Open Sans", sans-serif;
+
+  }
+
+  .textinput::placeholder {
+    font-size: 13px;
+    font-family: "Open Sans", sans-serif;
+    color: #888888;
   }
 
   .textinput:focus {
@@ -181,6 +197,26 @@
     height: 36px;
     text-align: center;
     font-size: 13px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+
+  }
+
+  .listen,
+  .download {
+    color: #FFFFFF !important;
+    background-color: #0091FF !important;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 55px;
+    padding-left: 9px;
+  }
+
+  .download {
+    background-color: transparent !important;
+    color: #0091FF !important;
+    gap: 40px;
   }
 
   .texttocovertbtns {
@@ -193,16 +229,30 @@
     color: #888888;
   }
 
+  SELECT {
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    padding-right: 2rem !important;
+    color: #888888;
+
+  }
+
   .optselect {
     border-radius: 21px;
-    padding: 5px 10px 5px 10px;
+    /* padding: 5px 10px 5px 10px; */
+    padding: 10px;
     color: #888888;
     border: 1px solid #DDDDDD;
   }
 
   .textinputdiv .btnClear {
-    width: 75px;
-    height: 25px;
+    width: 98px;
+    font-size: 13px;
+    font-weight: 300;
+
   }
 
   .optionsFieldSet {
@@ -220,5 +270,7 @@
 
   #texttocovert::placeholder {
     font-size: 13px;
+    font-family: "Open Sans", sans-serif;
+    color: #888888;
   }
 </style>
