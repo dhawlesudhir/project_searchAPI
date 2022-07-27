@@ -2,7 +2,7 @@
 
 
 @push('header')
-<h1>Text To Speech</h1>
+Text To Speech
 @endpush
 
 
@@ -79,14 +79,6 @@
 </div>
 @endpush
 <style>
-  .material-symbols-sharp {
-    font-variation-settings:
-      'FILL'1,
-      'wght'400,
-      'GRAD'0,
-      'opsz'48
-  }
-
   .model-artical {
     display: grid;
     grid-template-columns: 1fr;
@@ -209,7 +201,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 55px;
+    gap: 50px;
     padding-left: 9px;
   }
 
@@ -227,17 +219,6 @@
   .texttocovertbtns p {
     font-size: 13px;
     color: #888888;
-  }
-
-  SELECT {
-    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
-    background-position: calc(100% - 0.75rem) center !important;
-    -moz-appearance: none !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
-    padding-right: 2rem !important;
-    color: #888888;
-
   }
 
   .optselect {

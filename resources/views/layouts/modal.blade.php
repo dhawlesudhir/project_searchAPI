@@ -7,7 +7,9 @@
 
 <div class="modal" id="model">
   <header>
-    @stack('header')
+    <h1>
+      @stack('header')
+    </h1>
   </header>
   <aside>
     @stack('aside')
@@ -41,24 +43,29 @@
 
   .modal {
     position: absolute;
-    top: 10%;
-    left: 20%;
+    top: 1%;
+    left: 8%;
     opacity: 1 !important;
     /* background: o; */
-    /* font-size: 18px; */
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    /* background-color: rgb(255, 255, 255); */
+    font-size: 13px;
+    /* background: #FFFFFF 0% 0% no-repeat padding-box; */
+    background-color: #FFFFFF;
     border-radius: 24px;
     box-shadow: 0px 4px 20px #00000029;
     /* height: 40%;
     width: 60%; */
-    width: 800px;
-    height: 550px;
+    /* width: 800px; */
+    /* height: 640px; */
+    /* //provided */
+    width: 1080px;
+    height: 640px;
     display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: 10% 75% 15%;
+    grid-template-columns: 20% auto;
+    grid-template-rows: 8% auto 10%;
     font-family: "Open Sans", sans-serif;
   }
+
+
 
   .modal header {
     grid-column: 2 / 3;
@@ -73,13 +80,10 @@
   .modal aside {
     border: none;
     grid-row: 1/ 4;
-    height: 100%;
-    width: 100%;
     border-right: #EEEEEE solid 1px;
     padding: 10px;
     box-sizing: border-box;
     font-weight: 700;
-
     display: flex;
     overflow: auto;
     font-size: 13px;
@@ -118,7 +122,22 @@
     color: #0091FF;
     height: auto;
     font-weight: 700;
+    margin: 10px;
+  }
 
+  .modal .btn {
+    background-color: transparent;
+    color: #0091FF;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #0091FF;
+    border-radius: 24px;
+    opacity: 1;
+    width: 208px;
+    height: 36px;
+    padding: 5px 10px 5px px 10px;
+    font-size: 13px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
   }
 
   .modal aside h4 {
@@ -133,6 +152,15 @@
     text-transform: capitalize;
     font-size: 13px;
     font-weight: 700;
+  }
 
+  SELECT {
+    background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+    background-position: calc(100% - 0.75rem) center !important;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    padding-right: 2rem !important;
+    color: #888888;
   }
 </style>
