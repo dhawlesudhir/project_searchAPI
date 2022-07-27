@@ -14,7 +14,11 @@ Text Extract
   <select class="btn" id="btnChoose">Choose Sample Document
     <option value="">Choose Sample Document</option>
   </select>
-  <button class="btn" id="btnUpld">Upload Document</button>
+  <div>
+    <input id="uploadimage" type="file" name="myfile" hidden />
+
+    <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button>
+  </div>
 </div>
 
 <hr class="hrSeperator">
@@ -441,6 +445,7 @@ Text Extract
 
   span.material-symbols-outlined {
     margin: 0 10px 0 5px;
+    font-size: 18px;
   }
 
   .material-symbols-outlined {
@@ -475,7 +480,7 @@ Text Extract
 
   /* tab toggle manual */
   .rawtext {
-    display: none;
+    /* display: none; */
   }
 
   .tables {
@@ -487,7 +492,7 @@ Text Extract
   }
 
   .queries {
-    /* display: none; */
+    display: none;
 
   }
 
@@ -607,11 +612,13 @@ Text Extract
 
   /* css for Object recognixation  */
   .informationDiv {
-    display: none;
+    /* display: none; */
   }
 
   .informationDiv2 {
     display: grid;
+    display: none;
+
     grid-template-columns: 1fr;
     grid-template-rows: 15% auto;
     row-gap: 20px
