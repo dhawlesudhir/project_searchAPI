@@ -190,6 +190,49 @@ Text Extract
   </div>
 
 </div>
+
+<div class="informationDiv2">
+  <div class="tools">
+    <div class="iconinputbox">
+      <span class="material-symbols-outlined">
+        search
+      </span>
+      <input id="lblsearch" class="nooutline" type="text" placeholder="Search for a Label...">
+    </div>
+    <p id="notetext">Check whether we support your label</p>
+  </div>
+  <div class="objectinformation">
+    <p class="title">Results</p>
+    <div class="Oinfolist">
+      <span>Person</span>
+      <span class="alias">99%</span>
+    </div>
+    <div class="Oinfolist">
+      <span>Person</span>
+      <span class="alias">99%</span>
+    </div>
+    <div class="Oinfolist">
+      <span>Person</span>
+      <span class="alias">99%</span>
+    </div>
+    <div class="Oinfolist">
+      <span>Person</span>
+      <span class="alias">99%</span>
+    </div>
+    <div class="Oinfolist">
+      <span>Person</span>
+      <span class="alias">99%</span>
+    </div>
+    <div class="Oinfolist">
+      <span>Person</span>
+      <span class="alias">99%</span>
+    </div>
+    <div class="Oinfolist">
+      <span>Person</span>
+      <span class="alias">99%</span>
+    </div>
+  </div>
+</div>
 @endpush
 
 @push('footer')
@@ -560,5 +603,57 @@ Text Extract
     color: #000000;
     border: none;
     width: 220px;
+  }
+
+  /* css for Object recognixation  */
+  .informationDiv {
+    display: none;
+  }
+
+  .informationDiv2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% auto;
+    row-gap: 20px
+  }
+
+  .informationDiv2 .tools {
+    margin-left: 25px;
+    width: 400px;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .informationDiv2 .tools p {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  /* 9175431127 avinash*/
+  #lblsearch {
+    grid-column: 1/2;
+    font-size: 13px;
+    font-family: "Open Sans", sans-serif;
+    color: #000000;
+    width: 320px;
+    border: none;
+  }
+
+  #lblsearch::placeholder {
+    font-weight: bold;
+  }
+
+  .objectinformation {
+    margin-left: 20px;
+  }
+
+  .objectinformation .Oinfolist {
+    margin: 20px 0 10px 0;
+    font-weight: 500;
+    border-bottom: 1px solid #EEEEEE;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0 5px 0;
   }
 </style>
