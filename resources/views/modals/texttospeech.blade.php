@@ -87,6 +87,7 @@ Text To Speech
     width: 100%;
     font-size: 13px;
     font-weight: 500;
+    margin: 10px;
   }
 
   .headings {
@@ -246,7 +247,6 @@ Text To Speech
     font-size: 13px;
     color: #888888;
     font-family: "Open Sans", sans-serif;
-
   }
 
   #texttocovert::placeholder {

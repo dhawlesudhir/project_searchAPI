@@ -5,236 +5,202 @@ Text Extract
 @endpush
 
 @push('artical')
-<div class="imagediv">
-  <p class="title">Document Name</p>
-  <picture>
-    <img src="/assets/images/NoPath.png">
-  </picture>
-  <!-- <input type="file" class="btn" id="btnChoose" name="myfile"> -->
-  <select class="btn" id="btnChoose">Choose Sample Document
-    <option value="">Choose Sample Document</option>
-  </select>
-  <div>
-    <input id="uploadimage" type="file" name="myfile" hidden />
+<!-- text extract  container -->
+<div class="orcontainer">
 
-    <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button>
-  </div>
-</div>
+  <div class="imagediv">
+    <p class="title">Document Name</p>
+    <picture>
+      <img src="/assets/images/NoPath.png">
+    </picture>
+    <!-- <input type="file" class="btn" id="btnChoose" name="myfile"> -->
+    <select class="btn" id="btnChoose">Choose Sample Document
+      <option value="">Choose Sample Document</option>
+    </select>
 
-<hr class="hrSeperator">
+    <!-- <div> -->
+    <!-- <input id="uploadimage" type="file" name="myfile" hidden />
+    <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+    <input type="file" id="actual-btn" hidden />
 
-<div class="informationDiv">
-  <p class="title">Results</p>
-  <div id="tabs" class="responsive sticky-top bg-white">
-    <!-- <div class="tabs tabs-center"> -->
-    <a href="#responsive" class="tab active">
-      Raw Text
-    </a>
-    <a href="#center" class="tab">
-      Forms
-    </a>
-    <a href="#justify" class="tab">
-      Tables
-    </a>
-    <a href="#sticky" class="tab">
-      Queries
-    </a>
+    <!--our custom file upload button-->
+    <label id="labelbtnUpld" for="actual-btn" class="btn" onclick="uploadpicture()">Upload Document</label>
     <!-- </div> -->
-  </div>
-
-  <div id="rawtext" class="rawtext tabcontent">
-    <div class="tools">
-      <div class="iconinputbox">
-        <span class="material-symbols-outlined">
-          search
-        </span>
-        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
-      </div>
-      <select id="segmentline" name="" id="">
-        <option value="">Segment by line</option>
-      </select>
-    </div>
-
-    <div class="tagstext">
-      <span class="item">Adobe InDesign</span>
-      <span class="item">Hello adaffsdf</span>
-      <span class="item">Hello a </span>
-      <span class="item">Hello fsfsff fsdfs f</span>
-      <span class="item">Hello fsdfs</span>
-      <span class="item">Hello a </span>
-      <span class="item">Hello 4554</span>
-      <span class="item">Hello sdklasjkd ajdkaj akdfjakl</span>
-    </div>
-  </div>
-
-  <div id="form" class="forms tabcontent">
-    <div class="tools">
-      <div class="iconinputbox">
-        <span class="material-symbols-outlined">
-          search
-        </span>
-        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
-      </div>
-    </div>
-
-    <div class="fromsitems">
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-      <div class="fromsitem">
-        <p>Rech Nr.</p>
-        <p>4572</p>
-      </div>
-    </div>
-  </div>
-
-  <div id="tbl" class="tables tabcontent">
-    <div class="tools">
-      <div class="iconinputbox">
-        <span class="material-symbols-outlined">
-          search
-        </span>
-        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
-      </div>
-    </div>
-
-    <div class="tablebody">
-      <table>
-        <tr>
-          <th class="itemname">Item</th>
-          <th class="qty">Qty.</th>
-          <th class="price">Price</th>
-          <th class="total">Total</th>
-        </tr>
-        <tr>
-          <td>Latte Macchiato</td>
-          <td>2</td>
-          <td>4.50</td>
-          <td>9</td>
-        </tr>
-        <tr>
-          <td>Gloki</td>
-          <td>1</td>
-          <td>5</td>
-          <td>5</td>
-        </tr>
-
-      </table>
-    </div>
-  </div>
-
-  <div id="qry" class="queries tabcontent">
-    <div class="tools">
-      <div class="iconinputbox">
-        <span class="material-symbols-outlined">
-          search
-        </span>
-        <input id="qrysearch" class="nooutline" type="text" placeholder="Search..">
-      </div>
-      <button id="qrysubmit" name="" id="" class="btn">
-        Submit
-      </button>
-      <p id="notetext">Note: Limit of 200 characters per query. Duplicate queries not permitted</p>
-    </div>
-
-    <div class="qryitems">
-      <div class="qryitem">
-        <span>What is the item name?</span>
-        <span class="alias">Alias: Name</span>
-        <p>4575</p>
-      </div>
-      <div class="qryitem">
-        <span>What is the item name?</span>
-        <span class="alias">Alias: Name</span>
-        <p>4575</p>
-      </div>
-      <div class="qryitem">
-        <span>What is the item name?</span>
-        <span class="alias">Alias: Name</span>
-        <p>4575</p>
-      </div>
-      <div class="qryitem">
-        <span>What is the item name?</span>
-        <span class="alias">Alias: Name</span>
-        <p>4575</p>
-      </div>
-
-
-    </div>
 
   </div>
 
-</div>
+  <hr class="hrSeperator">
 
-<div class="informationDiv2">
-  <div class="tools">
-    <div class="iconinputbox">
-      <span class="material-symbols-outlined">
-        search
-      </span>
-      <input id="lblsearch" class="nooutline" type="text" placeholder="Search for a Label...">
-    </div>
-    <p id="notetext">Check whether we support your label</p>
-  </div>
-  <div class="objectinformation">
+  <div class="informationDiv">
     <p class="title">Results</p>
-    <div class="Oinfolist">
-      <span>Person</span>
-      <span class="alias">99%</span>
+    <div id="tabs" class="responsive sticky-top bg-white">
+      <!-- <div class="tabs tabs-center"> -->
+      <a id="btnrawtext" class="tab active" onclick="test('rawtext','btnrawtext')">
+        Raw Text
+      </a>
+      <a id="btnform" class="tab" onclick="test('form','btnform')">
+        Forms
+      </a>
+      <a id="btntbl" class="tab" onclick="test('tbl','btntbl')">
+        Tables
+      </a>
+      <a id="btnqry" class="tab" onclick="test('qry','btnqry')">
+        Queries
+      </a>
+      <!-- </div> -->
     </div>
-    <div class="Oinfolist">
-      <span>Person</span>
-      <span class="alias">99%</span>
+
+    <div id="rawtext" class="rawtext tabcontent">
+      <div class="tools">
+        <div class="iconinputbox">
+          <span class="material-symbols-outlined">
+            search
+          </span>
+          <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+        </div>
+        <select id="segmentline" name="" id="">
+          <option value="">Segment by line</option>
+        </select>
+      </div>
+
+      <div class="tagstext">
+        <span class="item">Adobe InDesign</span>
+        <span class="item">Hello adaffsdf</span>
+        <span class="item">Hello a </span>
+        <span class="item">Hello fsfsff fsdfs f</span>
+        <span class="item">Hello fsdfs</span>
+        <span class="item">Hello a </span>
+        <span class="item">Hello 4554</span>
+        <span class="item">Hello sdklasjkd ajdkaj akdfjakl</span>
+      </div>
     </div>
-    <div class="Oinfolist">
-      <span>Person</span>
-      <span class="alias">99%</span>
+
+    <div id="form" class="forms tabcontent">
+      <div class="tools">
+        <div class="iconinputbox">
+          <span class="material-symbols-outlined">
+            search
+          </span>
+          <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+        </div>
+      </div>
+
+      <div class="fromsitems">
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+        <div class="fromsitem">
+          <p>Rech Nr.</p>
+          <p>4572</p>
+        </div>
+      </div>
     </div>
-    <div class="Oinfolist">
-      <span>Person</span>
-      <span class="alias">99%</span>
+
+    <div id="tbl" class="tables tabcontent">
+      <div class="tools">
+        <div class="iconinputbox">
+          <span class="material-symbols-outlined">
+            search
+          </span>
+          <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+        </div>
+      </div>
+
+      <div class="tablebody">
+        <table>
+          <tr>
+            <th class="itemname">Item</th>
+            <th class="qty">Qty.</th>
+            <th class="price">Price</th>
+            <th class="total">Total</th>
+          </tr>
+          <tr>
+            <td>Latte Macchiato</td>
+            <td>2</td>
+            <td>4.50</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>Gloki</td>
+            <td>1</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+
+        </table>
+      </div>
     </div>
-    <div class="Oinfolist">
-      <span>Person</span>
-      <span class="alias">99%</span>
+
+    <div id="qry" class="queries tabcontent">
+      <div class="tools">
+        <div class="iconinputbox">
+          <span class="material-symbols-outlined">
+            search
+          </span>
+          <input id="qrysearch" class="nooutline" type="text" placeholder="Search..">
+        </div>
+        <button id="qrysubmit" name="" id="" class="btn">
+          Submit
+        </button>
+        <p id="notetext">Note: Limit of 200 characters per query. Duplicate queries not permitted</p>
+      </div>
+
+      <div class="qryitems">
+        <div class="qryitem">
+          <span>What is the item name?</span>
+          <span class="alias">Alias: Name</span>
+          <p>4575</p>
+        </div>
+        <div class="qryitem">
+          <span>What is the item name?</span>
+          <span class="alias">Alias: Name</span>
+          <p>4575</p>
+        </div>
+        <div class="qryitem">
+          <span>What is the item name?</span>
+          <span class="alias">Alias: Name</span>
+          <p>4575</p>
+        </div>
+        <div class="qryitem">
+          <span>What is the item name?</span>
+          <span class="alias">Alias: Name</span>
+          <p>4575</p>
+        </div>
+
+
+      </div>
+
     </div>
-    <div class="Oinfolist">
-      <span>Person</span>
-      <span class="alias">99%</span>
-    </div>
-    <div class="Oinfolist">
-      <span>Person</span>
-      <span class="alias">99%</span>
-    </div>
+
   </div>
 </div>
 @endpush
@@ -251,6 +217,11 @@ Text Extract
 @endpush
 
 <style>
+  .orcontainer {
+    margin: 15px 0 10px 0px;
+    display: flex;
+  }
+
   .title {
     color: #0091FF;
     font-size: 13px !important;
@@ -303,8 +274,11 @@ Text Extract
     width: 360px;
   }
 
-  #btnUpld {
+  #labelbtnUpld {
     width: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   #btnChoose {
@@ -313,7 +287,8 @@ Text Extract
     border: 1px solid #DDDDDD;
     color: #000000 !important;
     /* font-weight: 600; */
-
+    font-weight: 400;
+    padding: 5px 15px;
     /* width: max-content; */
   }
 
@@ -480,7 +455,7 @@ Text Extract
 
   /* tab toggle manual */
   .rawtext {
-    /* display: none; */
+    display: grid;
   }
 
   .tables {
@@ -493,8 +468,9 @@ Text Extract
 
   .queries {
     display: none;
-
   }
+
+
 
   .forms #searchtext {
     width: 350px;
@@ -664,3 +640,39 @@ Text Extract
     padding: 5px 0 5px 0;
   }
 </style>
+<script>
+  function test(id, btnid) {
+    hideall();
+    var x = document.getElementById(id);
+    if (x.style.display === "none") {
+      x.style.display = "grid";
+      var btnx = document.getElementById(btnid);
+      btnx.classList.add("active");
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+  function hideall() {
+    var rawtext = document.getElementById('rawtext');
+    var btnrawtext = document.getElementById('btnrawtext');
+    var form = document.getElementById('form');
+    var btnform = document.getElementById('btnform');
+    var tbl = document.getElementById('tbl');
+    var btntbl = document.getElementById('btntbl');
+    var qry = document.getElementById('qry');
+    var btnqry = document.getElementById('btnqry');
+    rawtext.style.display = "none";
+    btnrawtext.classList.remove("active");
+    form.style.display = "none";
+    btnform.classList.remove("active");
+    tbl.style.display = "none";
+    btntbl.classList.remove("active");
+    qry.style.display = "none";
+    btnqry.classList.remove("active");
+  }
+
+  function uploadpicture() {
+    alert("img")
+  }
+</script>

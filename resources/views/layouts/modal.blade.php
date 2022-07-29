@@ -91,10 +91,11 @@
     align-content: stretch;
     flex-direction: column;
     gap: 30px;
+    height: auto;
   }
 
   .modal article {
-    padding: 10px;
+    /* padding: 10px; */
     box-sizing: border-box;
     font-weight: 300;
     display: flex;

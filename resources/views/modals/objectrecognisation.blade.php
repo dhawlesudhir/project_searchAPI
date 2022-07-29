@@ -1,91 +1,92 @@
 @extends('layouts.modal')
 
 @push('header')
-Speech To Text
+<h1>Object Recognition</h1>
 @endpush
 
 
 @push('aside')
+
 
 @endpush
 
 
 
 @push('artical')
-<!-- speech to text container -->
+<!-- object recognixation container -->
 <div class="orcontainer">
   <div class="imagediv">
-    <p class="title">Transcription Output</p>
-    <div name="" id="textfromaudio">
-      Click <strong>Start Transcribing</strong> below to begin a real-time transcription of what you speak into your microphone
-    </div>
-    <div class="divrecord">
-      <p>Current language: <span>English, US</span> </p>
+    <p class="title">Document Name</p>
+    <picture>
+      <img src="/assets/images/NoPath.png">
+    </picture>
+    <!-- <input type="file" class="btn" id="btnChoose" name="myfile"> -->
+    <select class="btn" id="btnChoose">Choose Sample Document
+      <option value="">Choose Sample Document</option>
+    </select>
 
-      <button id="btnRecord" for="actual-btn" class="btn" onclick="uploadpicture()">
-        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
-          <path fill="#0091ff" d="M10.021 12.208q-1.25 0-2.146-.896-.896-.895-.896-2.145V4.146q0-1.25.896-2.136.896-.885 2.146-.885t2.135.885q.886.886.886 2.136v5.021q0 1.25-.875 2.145-.875.896-2.146.896Zm-1.167 6v-2.437q-2.437-.333-4-2.219-1.562-1.885-1.562-4.385h2.291q0 1.854 1.302 3.125 1.303 1.27 3.136 1.27 1.833 0 3.125-1.27 1.292-1.271 1.292-3.125h2.291q0 2.5-1.562 4.385-1.563 1.886-4.021 2.219v2.437Z" />
-        </svg>START TRANSCRIBING
-      </button>
-    </div>
+    <!-- <div> -->
+    <!-- <input id="uploadimage" type="file" name="myfile" hidden />
+    <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+    <input type="file" id="actual-btn" hidden />
+
+    <!--our custom file upload button-->
+    <label id="labelbtnUpld" for="actual-btn" class="btn" onclick="uploadpicture()">Upload Document</label>
+    <!-- </div> -->
 
   </div>
-
   <hr class="hrSeperator">
-
-  <div class="informationDiv">
-    <p class="title">Settings</p>
-    <div class="divcollapses">
-      <div class="divcollapse">
-        <div class="collabseheader">
-          <span>XYZ</span>
-          <span>
-            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
-              <path d="M10 12.333 5.292 7.667h9.416Z" />
-            </svg>
-          </span>
-
-        </div>
-        <div class="collabsebody">
-          <div>
-            <label class="form-control">
-              <input type="radio" id="engine" name="engine" value="neural" />
-              <span class="title">Neural</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </label>
-          </div>
-          <div>
-            <label class="form-control">
-              <input type="radio" id="engine" name="engine" value="neural" />
-              <span class="title">Neural</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </label>
-          </div>
-          <fieldset class=" ">
-            <label for="languageSelected" class="headings">Language</label>
-            <select class="optselect" name="" id="languageSelected">
-              <option value="xyz" class="sltOption">English, US</option>
-              <option value="abc">ABC</option>
-              <option value="mnp">MNP</option>
-            </select>
-          </fieldset>
-        </div>
+  <div class="informationDiv2">
+    <div class="tools">
+      <div class="iconinputbox">
+        <span class="material-symbols-outlined">
+          search
+        </span>
+        <input id="lblsearch" class="nooutline" type="text" placeholder="Search for a Label...">
+      </div>
+      <p id="notetext">Check whether we support your label</p>
+    </div>
+    <div class="objectinformation">
+      <p class="title">Results</p>
+      <div class="Oinfolist">
+        <span>Person</span>
+        <span class="alias">99%</span>
+      </div>
+      <div class="Oinfolist">
+        <span>Person</span>
+        <span class="alias">99%</span>
+      </div>
+      <div class="Oinfolist">
+        <span>Person</span>
+        <span class="alias">99%</span>
+      </div>
+      <div class="Oinfolist">
+        <span>Person</span>
+        <span class="alias">99%</span>
+      </div>
+      <div class="Oinfolist">
+        <span>Person</span>
+        <span class="alias">99%</span>
+      </div>
+      <div class="Oinfolist">
+        <span>Person</span>
+        <span class="alias">99%</span>
+      </div>
+      <div class="Oinfolist">
+        <span>Person</span>
+        <span class="alias">99%</span>
       </div>
     </div>
-
   </div>
 </div>
-
 @endpush
 
 @push('footer')
 <div class="footerDiv">
-  <button class="btn download">
-    <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <button class="btn download"><svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
       <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
       <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
-    </svg>Download
-  </button>
+    </svg>Download</button>
   <button class="btn reset">
     RESET DEMO</button>
 </div>
@@ -93,17 +94,15 @@ Speech To Text
 
 
 <style>
-  .orcontainer {
-    margin: 10px 0 0 5px;
-    display: flex;
-    width: 100%;
-  }
-
   .title {
     color: #0091FF;
     font-size: 13px !important;
     font-weight: bold !important;
-    /* margin: 0 0 10px 0 !important; */
+  }
+
+  .orcontainer {
+    margin: 15px 0 10px 0px;
+    display: flex;
   }
 
   .footerDiv {
@@ -124,10 +123,11 @@ Speech To Text
   .imagediv {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 7% auto 16%;
     column-gap: 15px;
-    /* border: 1px dotted black; */
-    /* padding: 0 15px 0px 15px; */
+    /* background-color: #EEEEEE; */
+    width: 400px;
+    margin: 0 10px 0 10px;
+
   }
 
   .imagediv p,
@@ -137,79 +137,125 @@ Speech To Text
     /* height: 5px; */
   }
 
-  #textfromaudio {
-    width: 380px;
-    height: 380px;
+  img {
+    height: 100%;
+    width: 80%;
+  }
+
+  picture {
+    text-align: center;
     grid-column: 1/4;
-    border-radius: 8px;
-    resize: none;
-    margin: 5px 15px 0 10px;
-    padding: 18px;
-    box-sizing: border-box;
     border: 1px solid #DDDDDD;
-    color: #888888;
-
+    border-radius: 8px;
+    margin: 0px 0px 10px 20px;
+    height: 400px;
+    width: 360px;
   }
 
-  .imagediv strong {
-    color: #888888;
+  #labelbtnUpld {
+    width: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  #textfromaudio::placeholder {
-    color: #888888;
+  #btnChoose {
+    width: 210px;
+    margin-left: 20px;
+    border: 1px solid #DDDDDD;
+    color: #000000 !important;
+    /* font-weight: 600; */
+    font-weight: 400;
+    padding: 5px 15px;
+    /* width: max-content; */
   }
 
 
   .informationDiv {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 5% auto;
-    row-gap: 10px;
+    grid-template-rows: 7% 10% auto;
     width: 100%;
+    align-items: start;
   }
 
-  .divrecord p {
-    margin: 0;
-    font-size: 13px;
-  }
-
-  .divrecord p span {
-    font-weight: bold;
-  }
-
-  .divrecord {
+  /* Style the tab */
+  #tabs {
+    overflow: hidden;
+    border-bottom: 1px solid #EEEEEE;
+    margin: 0 25px 0 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     grid-column: 1/4;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 12px 0 10px;
   }
 
-  #btnRecord {
-    width: 180px;
-    text-align: center;
-    padding: 2px 5px 2px 8px;
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-  }
-
-  .divcollapse {
-    border-bottom: 1px solid #DDDDDD;
-    margin: 10px;
-  }
-
-  .collabseheader {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-
-  .collabseheader span {
+  .tab {
+    /* margin: 5px; */
+    text-decoration: none;
+    font-size: 13px;
+    color: #111111;
     font-weight: bold;
+    padding: 0 10px 8px 10px;
+    box-sizing: border-box;
+    border-bottom: 3px solid transparent;
   }
 
-  .fieldset {
+  .active {
+    border-bottom: 3px solid #0091FF;
+  }
+
+  /* Style the buttons inside the tab */
+  /* .tab a {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  } */
+
+  /* Change background color of buttons on hover */
+  /* .tab a:hover {
+  background-color: #ddd;
+  } */
+
+  /* Create an active/current tablink class */
+  /* .tab a.active {
+  background-color: #0091FF;
+  } */
+
+  /* Style the tab content */
+  .tabcontent {
+    height: 100%;
+    /* width: 100%; */
+    margin: 0 20px 0 20px;
+    grid-column: 1/2;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% auto;
+  }
+
+  .tabcontent .tools {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .iconinputbox {
+    border: 1px solid #DDDDDD;
+    border-radius: 16px;
+    padding: 7px 5px 7px 10px;
+    display: flex;
+  }
+
+  #searchtext {
+    font-size: 13px;
+    font-family: "Open Sans", sans-serif;
+    color: #000000;
+    width: 180px;
     border: none;
   }
 
@@ -418,10 +464,32 @@ Speech To Text
     width: 220px;
   }
 
+  /* css for Object recognixation  */
+  .informationDiv {
+    /* display: none; */
+  }
 
+  .informationDiv2 {
+    display: grid;
+    /* display: none; */
 
+    grid-template-columns: 1fr;
+    grid-template-rows: 15% auto;
+    row-gap: 20px
+  }
 
+  .informationDiv2 .tools {
+    margin-left: 25px;
+    width: 400px;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 
+  .informationDiv2 .tools p {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+  }
 
   /* 9175431127 avinash*/
   #lblsearch {
