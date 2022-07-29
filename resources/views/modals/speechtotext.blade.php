@@ -38,35 +38,35 @@ Speech To Text
     <div class="divcollapses">
       <div class="divcollapse">
         <div class="collabseheader">
-          <span>XYZ</span>
+          <span>Language Settings</span>
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
               <path d="M10 12.333 5.292 7.667h9.416Z" />
             </svg>
           </span>
-
         </div>
+
         <div class="collabsebody">
           <div>
             <label class="form-control">
               <input type="radio" id="engine" name="engine" value="neural" />
-              <span class="title">Neural</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+              <span class="radiotitle">Specific language</span>
+              <p> If you know the language spoken in your source audio, choose this option to get the most accurate results.
+              </p>
             </label>
           </div>
           <div>
             <label class="form-control">
               <input type="radio" id="engine" name="engine" value="neural" />
-              <span class="title">Neural</span>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+              <span class="radiotitle">Automatic language identification</span>
+              <p>Produces natural-sounding speech</p>
             </label>
           </div>
-          <fieldset class=" ">
-            <label for="languageSelected" class="headings">Language</label>
+          <fieldset class="optionsFieldSet">
+            <label for="languageSelected" class="lbloption">Choose Language</label>
             <select class="optselect" name="" id="languageSelected">
-              <option value="xyz" class="sltOption">English, US</option>
-              <option value="abc">ABC</option>
-              <option value="mnp">MNP</option>
+              <option value="xyz" class="sltOption">Chinese, CN (zh-CN)</option>
+              <option value="abc">English, US</option>
             </select>
           </fieldset>
         </div>
@@ -196,22 +196,59 @@ Speech To Text
 
   .divcollapse {
     border-bottom: 1px solid #DDDDDD;
-    margin: 10px;
+    margin: 5px 15px;
+  }
+
+  .collabsebody {
+    margin-bottom: 15px;
   }
 
   .collabseheader {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-  }
-
-  .collabseheader span {
     font-weight: bold;
   }
 
-  .fieldset {
-    border: none;
+  .lbloption {
+    /* margin: 20px !important; */
+    font-weight: bold;
+    margin-bottom: 5px;
   }
+
+  .radiotitle {
+    color: #000000;
+    margin-left: 5px;
+  }
+
+  .form-control p {
+    margin-left: 20px;
+    color: #888888;
+  }
+
+  .optionsFieldSet {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: none;
+    margin: 10px 0;
+  }
+
+  .optselect {
+    border-radius: 21px;
+    /* padding: 5px 10px 5px 10px; */
+    padding: 10px;
+    color: #888888;
+    border: 1px solid #DDDDDD;
+  }
+
+  .sltOption {
+    font-size: 13px;
+    color: #888888;
+    font-family: "Open Sans", sans-serif;
+  }
+
+
 
   #segmentline {
     border-radius: 21px;
