@@ -36,17 +36,18 @@ Speech To Text
   <div class="informationDiv">
     <p class="title">Settings</p>
     <div class="divcollapses">
-      <div class="divcollapse">
-        <div class="collabseheader">
-          <span>Language Settings</span>
+
+      <div class="divcollapse languagesettings">
+        <div class="collabseheader" onclick="show('bodylanguagesettingsdiv','187px','arrowicon1')">
+          <span id="languagesettingbtn">Language Settings</span>
           <span>
-            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+            <svg id="arrowicon1" class="arrowdown" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
               <path d="M10 12.333 5.292 7.667h9.416Z" />
             </svg>
           </span>
         </div>
 
-        <div class="collabsebody">
+        <div id="bodylanguagesettingsdiv" class="collabsebody">
           <div>
             <label class="form-control">
               <input type="radio" id="engine" name="engine" value="neural" />
@@ -70,7 +71,182 @@ Speech To Text
             </select>
           </fieldset>
         </div>
+
       </div>
+
+      <div class="divcollapse audiosettings">
+        <div class="collabseheader" onclick="show('audiosettingsdiv','75px','arrowicon2')">
+          <span id="audiosettingsbtn">Audio Settings</span>
+          <span>
+            <svg id="arrowicon2" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+              <path d="M10 12.333 5.292 7.667h9.416Z" />
+            </svg>
+          </span>
+        </div>
+
+        <div class="collabsebody" id="audiosettingsdiv">
+          <div>
+            <label class="form-control">
+              <div class="formcntlelement">
+                <div class="formcntlelementheader">
+                  <span class="radiotitle">Speaker identification</span>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <p class="formcntlelementdesc">
+                  Identify the different speakers in the stream. Speaker identification might vary in availability between languages.
+                </p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="divcollapse contentremovalsettings">
+        <div class="collabseheader" onclick="show('contentremovalsettingsdiv','494px','arrowicon3')">
+          <span id="contentremovalsettingsbtn">Content Removal Settings</span>
+          <span>
+            <svg id="arrowicon3" xmlns=" http://www.w3.org/2000/svg" height="20" width="20">
+              <path d="M10 12.333 5.292 7.667h9.416Z" />
+            </svg>
+          </span>
+        </div>
+
+        <div class="collabsebody" id="contentremovalsettingsdiv">
+          <div>
+            <label class="form-control">
+              <div class="formcntlelement">
+                <div class="formcntlelementheader">
+                  <span class="radiotitle">Vocabulary filtering</span>
+                  <label class="switch">
+                    <input id="vocabularyswitch" type="checkbox" value="vocabularyfilter" onclick="togglediv('vocabularyswitch','vocabularyextradiv','109px')">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <p class="formcntlelementdesc">
+                  Vocabulary filtering removes, masks, or tags words that you specify in your vocabulary filter. Choose a vocabulary filter to see an example.
+                </p>
+                <div class="formcntlelementbody" id="vocabularyextradiv">
+                  <div class="formcntlelementheader">
+                    <span class="radiotitle">Filter selection</span>
+                  </div>
+                  <p class="formcntlelementdesc">
+                    The vocabulary filters shown here are based on your language settings. You can choose up to one vocabulary filter per language.
+                  </p>
+                  <select class="optselect" name="" id="vocabularyfilterSelected">
+                    <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
+                  </select>
+                </div>
+              </div>
+            </label>
+            <label class="form-control">
+              <div class="formcntlelement">
+                <div class="formcntlelementheader">
+                  <span class="radiotitle">PII Identification & redaction</span>
+                  <label class="switch">
+                    <input type="checkbox" id="identificationandredactionswitch" onclick="togglediv('identificationandredactionswitch','identificationandredactionextradiv','141px')">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <p class="formcntlelementdesc">
+                  Identify or redact one or more types of personally identifiable information (PII) in your transcript
+                </p>
+                <div class="formcntlelementbody" id="identificationandredactionextradiv">
+                  <div>
+                    <label class="form-control">
+                      <input type="radio" id="engine" name="engine" value="neural" />
+                      <span class="radiotitle">Identification only</span>
+                      <p>
+                        Label the type of PII identified but not redact it in the transcription output
+                      </p>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="form-control">
+                      <input type="radio" id="engine" name="engine" value="neural" />
+                      <span class="radiotitle">Identification & redaction</span>
+                      <p>
+                        Label the type of PII and also mask the content with the PII entity type in the transcription output. For example, (123)456-7890 will be masked as [PHONE]
+                      </p>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="divcollapse customizationssettings">
+        <div class="collabseheader" onclick="show('customizationssettingsdiv','358px','arrowicon4')">
+          <span id="customizationssettingsid">Customizations</span>
+          <span>
+            <svg id="arrowicon4" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+              <path d="M10 12.333 5.292 7.667h9.416Z" />
+            </svg>
+          </span>
+        </div>
+
+        <div class="collabsebody" id="customizationssettingsdiv">
+          <div>
+            <label class="form-control">
+              <div class="formcntlelement">
+                <div class="formcntlelementheader">
+                  <span class="radiotitle">Custom vocabulary</span>
+                  <label class="switch">
+                    <input type="checkbox" id="customvocabularyswitch" onclick="togglediv('customvocabularyswitch','customvocabularyextradiv','109px')">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <p class="formcntlelementdesc">
+                  A custom vocabulary improves the accuracy of recognizing words and phrases specific to your use case.
+                </p>
+                <div class="formcntlelementbody" id="customvocabularyextradiv">
+                  <div class="formcntlelementheader">
+                    <span class="radiotitle">Vocabulary selection</span>
+                  </div>
+                  <p class="formcntlelementdesc">
+                    The vocabularies shown here are based on your language settings. You can choose up to one vocabulary per language.
+                  </p>
+                  <select class="optselect" name="" id="vocabularyfilterSelected">
+                    <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
+                  </select>
+                </div>
+              </div>
+            </label>
+            <label class="form-control">
+              <div class="formcntlelement">
+                <div class="formcntlelementheader">
+                  <span class="radiotitle">Partial results stabilization</span>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <p class="formcntlelementdesc">
+                  Configure Amazon Transcribe to present results that don't change as it processes the transcription output from your stream.
+                </p>
+              </div>
+            </label>
+            <label class="form-control">
+              <div class="formcntlelement">
+                <div class="formcntlelementheader">
+                  <span class="radiotitle">Custom language model</span>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <p class="formcntlelementdesc">
+                  Select the model you want to use with this streaming session. </p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -80,11 +256,11 @@ Speech To Text
 
 @push('footer')
 <div class="footerDiv">
-  <button class="btn download">
+  <button class="btn downloadtranscription">
     <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
       <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
       <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
-    </svg>Download
+    </svg>DOWNLOAD TRANSCRIPTION
   </button>
   <button class="btn reset">
     RESET DEMO</button>
@@ -139,7 +315,7 @@ Speech To Text
 
   #textfromaudio {
     width: 380px;
-    height: 380px;
+    height: 400px;
     grid-column: 1/4;
     border-radius: 8px;
     resize: none;
@@ -163,9 +339,10 @@ Speech To Text
   .informationDiv {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 5% auto;
+    grid-template-rows: 5% 95%;
     row-gap: 10px;
     width: 100%;
+    /* overflow-y: scroll; */
   }
 
   .divrecord p {
@@ -194,13 +371,24 @@ Speech To Text
     font-weight: 500;
   }
 
+  .divcollapse:first-child {
+    margin-top: 10px;
+  }
+
   .divcollapse {
     border-bottom: 1px solid #DDDDDD;
-    margin: 5px 15px;
+    margin: 20px 15px;
   }
 
   .collabsebody {
-    margin-bottom: 15px;
+    -moz-transition: height 0.5s;
+    -ms-transition: height 0.5s;
+    -o-transition: height 0.5s;
+    -webkit-transition: height 0.5s;
+    transition: height 0.5s ease;
+    transition: height 0.5s ease;
+    overflow: hidden;
+    /* height: fit-content; */
   }
 
   .collabseheader {
@@ -208,6 +396,7 @@ Speech To Text
     justify-content: space-between;
     margin-bottom: 10px;
     font-weight: bold;
+    cursor: pointer;
   }
 
   .lbloption {
@@ -219,6 +408,7 @@ Speech To Text
   .radiotitle {
     color: #000000;
     margin-left: 5px;
+    font-weight: 600;
   }
 
   .form-control p {
@@ -301,25 +491,23 @@ Speech To Text
   }
 
 
-  .download {
+  .downloadtranscription {
     /* color: #FFFFFF !important; */
-    background-color: #0091FF !important;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 50px;
-    padding-left: 9px;
-  }
-
-  .download {
+    /* background-color: #0091FF !important; */
     background-color: transparent !important;
     color: #0091FF !important;
-    gap: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 9px;
+    width: 240px !important;
   }
+
 
   .reset {
     text-align: center;
     margin-right: 20px;
+    width: 120px !important;
   }
 
   /* tab toggle manual */
@@ -486,4 +674,191 @@ Speech To Text
     justify-content: space-between;
     padding: 5px 0 5px 0;
   }
+
+  .divcollapses {
+    height: 95%;
+    overflow-y: auto;
+  }
+
+  .divcollapses::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+  }
+
+  .languagesettings {
+    /* display: none; */
+  }
+
+  .contentremovalsettings {
+    /* display: none; */
+  }
+
+  .formcntlelementheader {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .formcntlelementdesc {
+    margin: 10px 5px !important;
+  }
+
+  .formcntlelementbody {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  #vocabularyfilterSelected {
+    width: 100%;
+    color: #888888;
+  }
+
+  /* //slider or toggle button */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 16px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+
+  input:checked+.slider {
+    background-color: #2196F3;
+  }
+
+  input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+
+  input:checked+.slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 18px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .arrowdown {
+    /* animation: rotationdown 2s linear; */
+    transform: rotateX(0deg);
+    transition: all 0.5s linear;
+  }
+
+  .arrowup {
+    transform: rotateX(180deg);
+    transition: all 0.5s linear;
+    /* animation: rotationup 2s linear; */
+  }
+
+  /* @keyframes rotationup {
+    from {
+      transform: rotateX(0deg);
+    }
+
+    to {
+      transform: rotateX(180deg);
+    }
+  } */
+
+  /* @keyframes rotationdown {
+    from {
+      transform: rotateX(0deg);
+    }
+
+    to {
+      transform: rotateX(180deg);
+    }
+  } */
+  #bodylanguagesettingsdiv,
+  #audiosettingsdiv,
+  #contentremovalsettingsdiv,
+  #customizationssettingsdiv {
+    height: 0px;
+
+  }
+
+  /* code for Vocabulary filtering extra div */
+  #vocabularyextradiv {
+    overflow: hidden;
+    transition: height 0.5s ease;
+    height: 0px;
+  }
+
+  #identificationandredactionextradiv {
+    overflow: hidden;
+    transition: height 0.5s ease;
+    height: 0px;
+  }
+
+  #customvocabularyextradiv {
+    overflow: hidden;
+    transition: height 0.5s ease;
+    height: 0px;
+  }
 </style>
+
+<script>
+  // var chk = document.getElementById('vocabularyswitch');
+
+
+  function show(div, divheight, icon) {
+    var x = document.getElementById(div);
+    var icon = document.getElementById(icon);
+    // alert(x.clientHeight);
+    if (x.clientHeight === 0) {
+      x.style.height = divheight;
+      // x.style.height = 'auto';
+      icon.classList.remove("arrowdown");
+      icon.classList.add("arrowup");
+    } else {
+      x.style.height = '0px';
+      icon.classList.remove("arrowup");
+      icon.classList.add("arrowdown");
+    }
+  }
+
+  function togglediv(chkbox, div, divheight) {
+    var x = document.getElementById(div);
+    var chkbox = document.getElementById(chkbox);
+    if (chkbox.checked == true) {
+      x.style.height = divheight;
+    } else {
+      x.style.height = '0px';
+    }
+  }
+</script>

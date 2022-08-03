@@ -61,7 +61,7 @@
     height: 640px;
     display: grid;
     grid-template-columns: 20% auto;
-    grid-template-rows: 8% auto 10%;
+    grid-template-rows: 8% 82% 10%;
     font-family: "Open Sans", sans-serif;
   }
 
