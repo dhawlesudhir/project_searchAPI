@@ -108,12 +108,11 @@
         <p id="notFound">No API's Found</p>
         @endif
 
-        @if(isset($modal))
-        @include('modals/'.$modal)
-        @endif
+
       </div>
     </article>
   </div>
+
   <script>
     $("a").click(function(event) {
       alert();
@@ -121,5 +120,8 @@
     });
   </script>
 </body>
+  @if(isset($modal))
+  @include('modals/'.$modal)
+  @endif
 
 </html>

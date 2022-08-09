@@ -34,12 +34,16 @@
 
 <style>
   .container {
-    /* opacity: 0.5; */
+    /* background: #000000; */
+    background: rgb(122,122,122);
+    opacity: 0.5;
+    background-color: transparent;
   }
 
   .modal-close {
     cursor: pointer;
   }
+
 
   .modal {
     position: absolute;
