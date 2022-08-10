@@ -24,7 +24,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/style.css">
-  @stack('scripts')
   @stack('style')
 
   <!-- <style>
@@ -113,6 +112,9 @@
       </div>
     </article>
   </div>
+  @if(isset($modal))
+  @include('modals/'.$modal)
+  @endif
 
   <script>
     $("a").click(function(event) {
@@ -120,9 +122,10 @@
       event.preventDefault();
     });
   </script>
+  @stack('scripts')
+
+
 </body>
-@if(isset($modal))
-@include('modals/'.$modal)
-@endif
+
 
 </html>

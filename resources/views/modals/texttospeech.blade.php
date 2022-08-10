@@ -1,5 +1,11 @@
 @extends('layouts.modal')
 
+@push('scripts')
+<script>
+  alert("texttospeech");
+</script>
+@endpush
+
 
 @push('header')
 Text To Speech

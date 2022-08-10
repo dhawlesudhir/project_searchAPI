@@ -20,10 +20,9 @@ class SpeechController extends Controller
     }
 
 
-    public function textToSpeechAWS(String $str = '')
+    public function textToSpeechAWS(Request $request)
     {
-
-        if (empty($str)) {
+        if (empty($request->input('str'))) {
             return response()->json([
                 'status' => 'failed',
                 'msg' => " 'str' parameter is missing or empty",
@@ -31,7 +30,8 @@ class SpeechController extends Controller
         }
         //URL
         $baseurl = 'https://it2c947od4.execute-api.us-east-1.amazonaws.com/prod/steve?';
-
+        echo $baseurl;
+        die;
         //parameters
         $user = 'user_id=mreader';
         $fixedparams = '&speaker=Amy&style=conversational&rate=100.0&bkmus=None&octave=0.0&startmusic=0&startvoice=5&relativevol=15&trailmusic=10';

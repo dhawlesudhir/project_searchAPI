@@ -1,7 +1,7 @@
 @push('scripts')
-<script>
-
-</script>
+<!-- <script> -->
+@stack('script')
+<!-- </script> -->
 @endpush
 
 
@@ -66,10 +66,10 @@
     /* width: 800px; */
     /* height: 640px; */
     /* //provided */
-    top: 5%;
+    top: 3%;
     left: 10%;
     width: 1080px;
-    height: 70%;
+    height: 640px;
     display: grid;
     grid-template-columns: 20% auto;
     grid-template-rows: 8% 82% 10%;
