@@ -35,9 +35,14 @@
 <style>
   .container {
     /* background: #000000; */
-    background: rgb(122,122,122);
-    opacity: 0.5;
-    background-color: transparent;
+    /* background: rgb(123, 123, 123, 0.5) !important; */
+    /* background: black !important; */
+    /* opacity: 0.5; */
+    /* background-color: transparent; */
+  }
+
+  .overlay {
+    display: block !important;
   }
 
   .modal-close {
@@ -61,8 +66,10 @@
     /* width: 800px; */
     /* height: 640px; */
     /* //provided */
+    top: 5%;
+    left: 10%;
     width: 1080px;
-    height: 640px;
+    height: 70%;
     display: grid;
     grid-template-columns: 20% auto;
     grid-template-rows: 8% 82% 10%;

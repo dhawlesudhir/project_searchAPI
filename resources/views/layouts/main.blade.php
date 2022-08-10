@@ -35,6 +35,7 @@
 </head>
 
 <body>
+  <div class="overlay"> </div>
   <div class="container">
     <header class="main-header">
       <h1><b>Aloha</b>Technology</h1>
@@ -120,8 +121,8 @@
     });
   </script>
 </body>
-  @if(isset($modal))
-  @include('modals/'.$modal)
-  @endif
+@if(isset($modal))
+@include('modals/'.$modal)
+@endif
 
 </html>
