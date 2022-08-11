@@ -31,31 +31,12 @@
         body {
             font-family: 'Nunito', sans-serif;
         }
-    </style> -->\
-
-  <script>
-    const {
-      createApp
-    } = Vue
-
-    createApp({
-      data() {
-        return {
-          message: 'Hello Vue!'
-        }
-      },
-      methods: {
-        test() {
-          alert('vue working');
-        }
-      }
-    }).mount('#app')
-  </script>
+    </style> -->
 </head>
 
 <body>
   <div class="overlay"> </div>
-  <div class="container" id="app">
+  <div class="container">
     <header class="main-header">
       <h1><b>Aloha</b>Technology</h1>
     </header>
@@ -110,22 +91,22 @@
           <?php
           // foreach ($categories_resources as $categorie) {
           ?>
-            @if(count($categorie->resources))
-            <div class="group" style="border-left: solid 5px #{{$categorie->color}}">
-              <h5 class="group-heading">{{$categorie->name}}</h5>
+            //@ if(count($categorie->resources))
+            //<div class="group" style="border-left: solid 5px #{$categorie->color}}">
+              <h5 class="group-heading">{$categorie->name}}</h5>
               <div class="group-items">
                 <?php
                 // foreach ($categorie->resources as $resource) {
                 ?>
-                  <a href="{{$resource->route?$resource->route:''}}">{{$resource->name}}
-                    <p>{{$resource->desc}}</p>
+                  <a href="{$resource->route?$resource->route:''}}">{$resource->name}}
+                    <p>{$resource->desc}}</p>
                   </a>
                 <?php
                 //  } 
                 ?>
               </div>
             </div>
-            @endif
+            //@ endif
           <?php
           //  } 
           ?>
