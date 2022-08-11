@@ -25,17 +25,37 @@
   <!-- Styles -->
   <link rel="stylesheet" href="/assets/css/style.css">
   @stack('style')
+  <script src="https://unpkg.com/vue@3"></script>
 
   <!-- <style>
         body {
             font-family: 'Nunito', sans-serif;
         }
-    </style> -->
+    </style> -->\
+
+  <script>
+    const {
+      createApp
+    } = Vue
+
+    createApp({
+      data() {
+        return {
+          message: 'Hello Vue!'
+        }
+      },
+      methods: {
+        test() {
+          alert('vue working');
+        }
+      }
+    }).mount('#app')
+  </script>
 </head>
 
 <body>
   <div class="overlay"> </div>
-  <div class="container">
+  <div class="container" id="app">
     <header class="main-header">
       <h1><b>Aloha</b>Technology</h1>
     </header>
@@ -83,33 +103,108 @@
           </form>
         </div>
       </header>
-      <div class="content">
+      <!-- <div class="content">
         @if(count($categories_resources))
         <p>Configurations helps change a group of system settings across your computers in one-click. Click on one of the settings below to get started.</p>
         <div class="groups">
-          <?php foreach ($categories_resources as $categorie) { ?>
+          <?php
+          // foreach ($categories_resources as $categorie) {
+          ?>
             @if(count($categorie->resources))
             <div class="group" style="border-left: solid 5px #{{$categorie->color}}">
               <h5 class="group-heading">{{$categorie->name}}</h5>
               <div class="group-items">
                 <?php
-                foreach ($categorie->resources as $resource) {
+                // foreach ($categorie->resources as $resource) {
                 ?>
                   <a href="{{$resource->route?$resource->route:''}}">{{$resource->name}}
                     <p>{{$resource->desc}}</p>
                   </a>
-                <?php } ?>
+                <?php
+                //  } 
+                ?>
               </div>
             </div>
             @endif
-          <?php } ?>
+          <?php
+          //  } 
+          ?>
         </div>
         @else
         <p id="notFound">No API's Found</p>
         @endif
+      </div> -->
+
+      <div class="content2">
+        <p class="content2Divtitle">Configurations helps change a group of system settings across your computers in one-click. Click on one of the settings below to get started.</p>
+        <div class="groups">
+          <div class="group">
+            <h5 class="group-heading">SYSTEM AND SECURITY</h5>
+            <div class="group-items">
+              <a href="">Firewall</a>
+              <a href="">Registry</a>
+              <a href="">Services</a>
+            </div>
+          </div>
+          <div class="group">
+            <h5 class="group-heading">Artificial Intelligence</h5>
+            <div class="group-items">
+              <a href="/textextract">Image to text</a>
+              <a href="/speechtotext">Speech to text</a>
+              <a href="/texttospeech">Text to speech</a>
+            </div>
+          </div>
+          <div class="group">
+            <h5 class="group-heading">NETWORK AND INTERNET</h5>
+            <div class="group-items">
+              <a href="">WiFi and Bluetooth Radio</a>
+              <a href="">WiFi Profiles</a>
+              <a href="">IP Printer</a>
+            </div>
+          </div>
+          <div class="group">
+            <h5 class="group-heading">APPEARANCE AND PERSONALIZATION</h5>
+            <div class="group-items">
+              <a href="">Display</a>
+              <a href="">Fonts</a>
+              <a href="">Theme</a>
+            </div>
+          </div>
+          <div class="group">
+            <h5 class="group-heading">USER ACCOUNTS</h5>
+            <div class="group-items">
+              <a href="">User Management</a>
+            </div>
+          </div>
+          <div class="group">
+            <h5 class="group-heading">HARDWARE</h5>
+            <div class="group-items">
+              <a href="">Power Managemnt</a>
+            </div>
+          </div>
+          <div class="group">
+            <h5 class="group-heading">OTHERS</h5>
+            <div class="group-items">
+              <a href="">Scheduler</a>
+            </div>
+          </div>
+          <div class="group">
+            <h5 class="group-heading">CLOCK AND REGION</h5>
+            <div class="group-items">
+              <a href="">Date/Time</a>
+              <a href="">Region</a>
+            </div>
+          </div>
+          <div class="group">
+            <h5 class="group-heading">EASE OF ACCESS</h5>
+            <div class="group-items">
+              <a href="">Activate Windows Kiosk Mode</a>
+              <a href="">Shortcut</a>
+            </div>
+          </div>
 
 
-      </div>
+        </div>
     </article>
   </div>
   @if(isset($modal))
@@ -117,10 +212,10 @@
   @endif
 
   <script>
-    $("a").click(function(event) {
-      alert();
-      event.preventDefault();
-    });
+    // $("a").click(function(event) {
+    //   alert();
+    //   event.preventDefault();
+    // });
   </script>
   @stack('scripts')
 
