@@ -5,24 +5,34 @@
 
 <script>
   var voiceurlaws = '';
-  textchange();
+  var speaker = '';
+  textempty();
+  document.getElementById("converting").style.display = "none";
 
   function convert() {
+
+
     //selector value
     var voiceselect = document.getElementById("voice");
-    var voice = voiceselect.options[voiceselect.selectedIndex].value;
+    speaker = voiceselect.options[voiceselect.selectedIndex].value;
 
     // text area value
     var text = document.getElementById("texttocovert").value;
+
+    if (text == '') {
+      alert('Please enter text!');
+      return;
+    }
+
 
     var requestOptions = {
       method: 'GET',
       redirect: 'follow'
     };
 
-    document.getElementById("btnconvert").style.display = "none";
+    document.getElementById("converting").style.display = "block";
 
-    fetch("http://127.0.0.1:8000/api/textspeechaws?str=" + text + "&speaker=" + voice, requestOptions)
+    fetch("http://127.0.0.1:8000/api/textspeechaws?str=" + text + "&speaker=" + speaker, requestOptions)
       .then(response => response.json())
       // .then((response) => {
       //   return response.json();
@@ -30,34 +40,28 @@
       .then((result) => {
         // use response
         voiceurlaws = result.url;
-        console.log(result.url);
-        console.log(result.str);
-        document.getElementById("btndownload").style.display = "flex";
-        document.getElementById("btnlisten").style.display = "flex";
+        // console.log(result.url);
+        // console.log(result.str);
+        textempty();
+        document.getElementById("converting").style.display = "none";
+
       })
       .catch(error => console.log('error', error));
   }
 
-  function cleartext() {
-    document.getElementById("texttocovert").value = '';
-    document.getElementById("btndownload").style.display = "none";
-    document.getElementById("btnlisten").style.display = "none";
-    document.getElementById("btnconvert").style.display = "block";
-  }
 
 
-  function textchange() {
-    // if (document.getElementById("texttocovert").value == '') {
-    //   document.getElementById("btndownload").style.display = "none";
-    //   document.getElementById("btnlisten").style.display = "none";
-    //   document.getElementById("btnconvert").style.display = "block";
-    // } else {
-    //   document.getElementById("btndownload").style.display = "flex";
-    //   document.getElementById("btnlisten").style.display = "flex";
-    //   document.getElementById("btnconvert").style.display = "none";
-    // }
-    document.getElementById("btndownload").style.display = "none";
-    document.getElementById("btnlisten").style.display = "none";
+  function textempty() {
+    if (voiceurlaws == '') {
+      document.getElementById("btndownload").style.display = "none";
+      document.getElementById("btnlisten").style.display = "none";
+      document.getElementById("btnconvert").style.display = "block";
+    } else {
+      document.getElementById("btndownload").style.display = "flex";
+      document.getElementById("btnlisten").style.display = "flex";
+      document.getElementById("btnconvert").style.display = "none";
+
+    }
   }
 
   function play() {
@@ -65,6 +69,7 @@
     audio.play();
   }
 
+  // bulding download file
   const downloadURI = (uri) => {
     const link = document.createElement("a");
     link.download = uri;
@@ -80,6 +85,24 @@
     } else {
       downloadURI(voiceurlaws)
     }
+  }
+
+  // char counting and updating 
+  function textchange() {
+    var textremaining = 60 - document.getElementById("texttocovert").value.length;
+    document.getElementById("textremaining-p").innerHTML = textremaining + ' Characters remaining';
+  }
+
+  // clearing text
+  function cleartext() {
+    document.getElementById("texttocovert").value = '';
+    document.getElementById("btndownload").style.display = "none";
+    document.getElementById("btnlisten").style.display = "none";
+    document.getElementById("btnconvert").style.display = "block";
+  }
+
+  function parameterchange() {
+    document.getElementById("btnconvert").style.display = "block";
   }
 </script>
 @endpush
@@ -129,7 +152,7 @@ Text To Speech
 
     <fieldset class="optionsFieldSet">
       <label for="voice" class="headings">Voice</label>
-      <select id="voice" class="optselect" name="">
+      <select id="voice" class="optselect" name="" onchange="parameterchange()">
         <option value="Amy" class="sltOption">Amy, Female</option>
         <option value="Matthew">Matthew, Male</option>
         <option value="Joanna">Joanna, Female</option>
@@ -139,9 +162,9 @@ Text To Speech
 
   <div class="textinputdiv">
     <label for="texttocovert" class="headings texttoLabel">Input Text</label>
-    <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" placeholder="English,US">Testing API integration</textarea>
+    <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" maxlength="60" placeholder="English,US" onkeyup="textchange()"></textarea>
     <div class="texttocovertbtns">
-      <p class="pChars">58 Characters remaining</p>
+      <p id="textremaining-p" class="pChars">58 Characters remaining</p>
       <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
     </div>
   </div>
@@ -165,7 +188,7 @@ Text To Speech
     </span> Listen
   </button>
   <button id="btnconvert" type="button" class="btn" onclick="convert()">
-    Convert
+    <i id="converting" class="fa fa-spinner fa-spin"></i> Convert
   </button>
 </div>
 @endpush
