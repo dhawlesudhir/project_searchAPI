@@ -164,7 +164,7 @@ Text To Speech
     <label for="texttocovert" class="headings texttoLabel">Input Text</label>
     <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" maxlength="60" placeholder="English,US" onkeyup="textchange()"></textarea>
     <div class="texttocovertbtns">
-      <p id="textremaining-p" class="pChars">58 Characters remaining</p>
+      <p id="textremaining-p" class="pChars">60 Characters remaining</p>
       <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
     </div>
   </div>
