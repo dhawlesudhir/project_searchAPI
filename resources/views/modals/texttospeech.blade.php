@@ -80,7 +80,7 @@
   }
 
   function downloadaudiofile() {
-    if (voiceurlaws = '') {
+    if (voiceurlaws == '') {
       alert("Audio file not found, please try converting again!");
     } else {
       downloadURI(voiceurlaws)
