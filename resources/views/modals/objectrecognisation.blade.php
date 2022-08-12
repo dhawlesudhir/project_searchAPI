@@ -465,9 +465,7 @@
   }
 
   /* css for Object recognixation  */
-  .informationDiv {
-    /* display: none; */
-  }
+
 
   .informationDiv2 {
     display: grid;

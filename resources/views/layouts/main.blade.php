@@ -95,7 +95,7 @@
           foreach ($categories_resources as $categorie) {
           ?>
             @if(count($categorie->resources))
-            <div class="group" style="border-left: solid 5px {{$categorie->color}}">
+            <div class="group" style="border-left: solid 5px '{{$categorie->color}}'">
               <h5 class="group-heading">{{$categorie->name}}</h5>
               <div class="group-items">
                 <?php

@@ -723,13 +723,6 @@ Speech To Text
     /* Safari and Chrome */
   }
 
-  .languagesettings {
-    /* display: none; */
-  }
-
-  .contentremovalsettings {
-    /* display: none; */
-  }
 
   .formcntlelementheader {
     display: flex;

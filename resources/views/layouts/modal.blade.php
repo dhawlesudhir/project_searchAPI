@@ -41,14 +41,6 @@
 
 
 <style>
-  .container {
-    /* background: #000000; */
-    /* background: rgb(123, 123, 123, 0.5) !important; */
-    /* background: black !important; */
-    /* opacity: 0.5; */
-    /* background-color: transparent; */
-  }
-
   .overlay {
     display: block !important;
   }
