@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
+use App\Models\resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class CategoryController extends Controller
 {
@@ -19,12 +22,23 @@ class CategoryController extends Controller
     {
         $search = $request->query('search');
         if ($search) {
-            // $categoriesData = category::with(Resource::class)->whereHas('resources', function ($a, $search) {
-            //     $a->where('name', 'like', '%' . $search . '%');
-            // })->get();
+
+            $resourcedata = resource::select('id')
+                // ->where('status', 1)
+                ->where('name', 'like', '%' . $search . '%')
+                ->get();
+
+            $categoryids = DB::table('category_resource')
+                ->select('category_id')
+                ->whereIn('resource_id', $resourcedata)
+                ->get();
+
+            $categoryids =  $categoryids->pluck('category_id');
+
 
             $categoriesData = category::where('status', 1)
-                ->where('name', 'like', '%' . $search . '%')
+                // ->where('name', 'like', '%' . $search . '%')
+                ->whereIn('id', $categoryids)
                 ->get();
         } else {
             $categoriesData = category::where('status', 1)->get();

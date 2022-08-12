@@ -81,7 +81,7 @@
         <div class="search-input">
           <p>Search for an API</p>
           <form method="get" action="/" auto-focus>
-            <input type="text" name="search" placeholder="Enter an API" autofocus />
+            <input id="searchresourcesipt" type="text" name="search" placeholder="Enter an API" autofocus />
           </form>
         </div>
       </header>
@@ -194,7 +194,12 @@
   </div>
 
   @stack('scripts')
-
+  <script>
+    var select = document.getElementById('searchresourcesipt');
+    select.onkeyup = function() {
+      this.form.submit();
+    };
+  </script>
 </body>
 
 
