@@ -1,3 +1,10 @@
+@push('style')
+<!-- <script> -->
+@stack('style')
+<!-- </script> -->
+@endpush
+
+
 @push('scripts')
 <!-- <script> -->
 @stack('script')
@@ -31,6 +38,7 @@
   <!-- <div class="modal-close" onclick="{{ URL::previous() }}">✖</div> -->
   <a class="modal-close" href="/">✖</a>
 </div>
+
 
 <style>
   .container {

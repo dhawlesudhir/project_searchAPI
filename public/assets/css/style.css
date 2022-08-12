@@ -131,7 +131,7 @@ article header .headings {
 
 .content .groups {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(4, auto);
     column-gap: 30px;
     row-gap: 40px;

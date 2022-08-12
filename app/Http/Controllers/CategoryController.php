@@ -19,6 +19,10 @@ class CategoryController extends Controller
     {
         $search = $request->query('search');
         if ($search) {
+            // $categoriesData = category::with(Resource::class)->whereHas('resources', function ($a, $search) {
+            //     $a->where('name', 'like', '%' . $search . '%');
+            // })->get();
+
             $categoriesData = category::where('status', 1)
                 ->where('name', 'like', '%' . $search . '%')
                 ->get();

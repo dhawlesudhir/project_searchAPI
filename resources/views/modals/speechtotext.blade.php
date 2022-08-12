@@ -105,7 +105,7 @@ Speech To Text
       </div>
 
       <div class="divcollapse contentremovalsettings">
-        <div class="collabseheader" onclick="show('contentremovalsettingsdiv','494px','arrowicon3')">
+        <div class="collabseheader" onclick="show('contentremovalsettingsdiv','271px','arrowicon3')">
           <span id="contentremovalsettingsbtn">Content Removal Settings</span>
           <span>
             <svg id="arrowicon3" xmlns=" http://www.w3.org/2000/svg" height="20" width="20">
@@ -121,7 +121,7 @@ Speech To Text
                 <div class="formcntlelementheader">
                   <span class="radiotitle">Vocabulary filtering</span>
                   <label class="switch">
-                    <input id="vocabularyswitch" type="checkbox" value="vocabularyfilter" onclick="togglediv('vocabularyswitch','vocabularyextradiv','109px')">
+                    <input id="vocabularyswitch" type="checkbox" value="vocabularyfilter" onclick="togglediv('vocabularyswitch','vocabularyextradiv','115px')">
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -146,7 +146,7 @@ Speech To Text
                 <div class="formcntlelementheader">
                   <span class="radiotitle">PII Identification & redaction</span>
                   <label class="switch">
-                    <input type="checkbox" id="identificationandredactionswitch" onclick="togglediv('identificationandredactionswitch','identificationandredactionextradiv','141px')">
+                    <input type="checkbox" id="identificationandredactionswitch" onclick="togglediv('identificationandredactionswitch','identificationandredactionextradiv','150px')">
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -180,7 +180,7 @@ Speech To Text
       </div>
 
       <div class="divcollapse customizationssettings">
-        <div class="collabseheader" onclick="show('customizationssettingsdiv','358px','arrowicon4')">
+        <div class="collabseheader" onclick="show('customizationssettingsdiv','auto','arrowicon4')">
           <span id="customizationssettingsid">Customizations</span>
           <span>
             <svg id="arrowicon4" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
@@ -190,60 +190,98 @@ Speech To Text
         </div>
 
         <div class="collabsebody" id="customizationssettingsdiv">
-          <div>
-            <label class="form-control">
-              <div class="formcntlelement">
+          <!-- <div> -->
+          <label class="form-control">
+            <div class="formcntlelement">
+              <div class="formcntlelementheader">
+                <span class="radiotitle">Custom vocabulary</span>
+                <label class="switch">
+                  <input type="checkbox" id="customvocabularyswitch" onclick="togglediv('customvocabularyswitch','customvocabularyextradiv','115px')">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="formcntlelementdesc">
+                A custom vocabulary improves the accuracy of recognizing words and phrases specific to your use case.
+              </p>
+              <div class="formcntlelementbody" id="customvocabularyextradiv">
                 <div class="formcntlelementheader">
-                  <span class="radiotitle">Custom vocabulary</span>
-                  <label class="switch">
-                    <input type="checkbox" id="customvocabularyswitch" onclick="togglediv('customvocabularyswitch','customvocabularyextradiv','109px')">
-                    <span class="slider round"></span>
-                  </label>
+                  <span class="radiotitle">Vocabulary selection</span>
                 </div>
                 <p class="formcntlelementdesc">
-                  A custom vocabulary improves the accuracy of recognizing words and phrases specific to your use case.
+                  The vocabularies shown here are based on your language settings. You can choose up to one vocabulary per language.
                 </p>
-                <div class="formcntlelementbody" id="customvocabularyextradiv">
-                  <div class="formcntlelementheader">
-                    <span class="radiotitle">Vocabulary selection</span>
-                  </div>
-                  <p class="formcntlelementdesc">
-                    The vocabularies shown here are based on your language settings. You can choose up to one vocabulary per language.
-                  </p>
-                  <select class="optselect" name="" id="vocabularyfilterSelected">
-                    <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
-                  </select>
-                </div>
+                <select class="optselect" name="" id="vocabularyfilterSelected">
+                  <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
+                </select>
               </div>
-            </label>
-            <label class="form-control">
-              <div class="formcntlelement">
-                <div class="formcntlelementheader">
-                  <span class="radiotitle">Partial results stabilization</span>
-                  <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
+            </div>
+          </label>
+          <label class="form-control">
+            <div class="formcntlelement">
+              <div class="formcntlelementheader">
+                <span class="radiotitle">Partial results stabilization</span>
+                <label class="switch">
+                  <input type="checkbox" id="partialresultswitch" onclick="togglediv('partialresultswitch','partialresultsextradiv','auto')">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="formcntlelementdesc">
+                Configure Amazon Transcribe to present results that don't change as it processes the transcription output from your stream.
+              </p>
+              <div class="formcntlelementbody" id="partialresultsextradiv">
+                <div>
+                  <label class="form-control">
+                    <input type="radio" id="engine" name="engine" value="neural" />
+                    <span class="radiotitle">High</span>
+                    <p>
+                      Provides the most stable partial transcript results with lower accuracy compared to the Medium and Low settings.
+                    </p>
                   </label>
                 </div>
-                <p class="formcntlelementdesc">
-                  Configure Amazon Transcribe to present results that don't change as it processes the transcription output from your stream.
-                </p>
-              </div>
-            </label>
-            <label class="form-control">
-              <div class="formcntlelement">
-                <div class="formcntlelementheader">
-                  <span class="radiotitle">Custom language model</span>
-                  <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
+                <div>
+                  <label class="form-control">
+                    <input type="radio" id="engine" name="engine" value="neural" />
+                    <span class="radiotitle">Medium</span>
+                    <p>
+                      Provides partial transcription results that have a balance between stability and accuracy. </p>
                   </label>
                 </div>
-                <p class="formcntlelementdesc">
-                  Select the model you want to use with this streaming session. </p>
+                <div>
+                  <label class="form-control">
+                    <input type="radio" id="engine" name="engine" value="neural" />
+                    <span class="radiotitle">Low</span>
+                    <p>
+                      Provides the relatively less stable partial transcription result with higher accuracy compared to the High and Medium settings. </p>
+                  </label>
+                </div>
               </div>
-            </label>
-          </div>
+            </div>
+          </label>
+          <label class="form-control">
+            <div class="formcntlelement">
+              <div class="formcntlelementheader">
+                <span class="radiotitle">Custom language model</span>
+                <label class="switch">
+                  <input id="customlanguageswitch" type="checkbox" onclick="togglediv('customlanguageswitch','customlanguageextradiv','115px')">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="formcntlelementdesc">
+                Select the model you want to use with this streaming session.
+              </p>
+              <div class="formcntlelementbody" id="customlanguageextradiv">
+                <div class="formcntlelementheader">
+                  <span class="radiotitle">Custom model selection</span>
+                </div>
+                <p class="formcntlelementdesc">
+                  The models shown here are based on your language settings. You can choose up to one model per language </p>
+                <select class="optselect" name="" id="vocabularyfilterSelected">
+                  <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
+                </select>
+              </div>
+            </div>
+          </label>
+          <!-- </div> -->
         </div>
       </div>
 
@@ -700,11 +738,12 @@ Speech To Text
 
   .formcntlelementdesc {
     margin: 10px 5px !important;
+    font-size: 11px;
   }
 
   .formcntlelementbody {
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
   }
 
   #vocabularyfilterSelected {
@@ -826,6 +865,13 @@ Speech To Text
   }
 
   #customvocabularyextradiv {
+    overflow: hidden;
+    transition: height 0.5s ease;
+    height: 0px;
+  }
+
+  #partialresultsextradiv,
+  #customlanguageextradiv {
     overflow: hidden;
     transition: height 0.5s ease;
     height: 0px;

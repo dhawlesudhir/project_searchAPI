@@ -1,8 +1,26 @@
 @extends('layouts.modal')
 
+
 @push('scripts')
+
 <script>
-  alert("texttospeech");
+  function test() {
+    alert('alert using js');
+  }
+
+  textchange();
+
+  function textchange() {
+    if (document.getElementById("texttocovert").value == '') {
+      document.getElementById("btndownload").style.display = "none";
+      document.getElementById("btnlisten").style.display = "none";
+      document.getElementById("btnconvert").style.display = "block";
+    } else {
+      document.getElementById("btndownload").style.display = "flex";
+      document.getElementById("btnlisten").style.display = "flex";
+      document.getElementById("btnconvert").style.display = "none";
+    }
+  }
 </script>
 @endpush
 
@@ -19,8 +37,7 @@ Text To Speech
 
 
 @push('artical')
-<div class="model-artical">
-
+<div id="texttospeechmodal" class="model-artical">
   <div class="engine">
     <span class="headings">Engine</span>
     <div>
@@ -62,7 +79,7 @@ Text To Speech
 
   <div class="textinputdiv">
     <label for="texttocovert" class="headings texttoLabel">Input Text</label>
-    <textarea class="textinput" name="" id="texttocovert" cols="90%" rows="6" placeholder="English,US"></textarea>
+    <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" placeholder="English,US" onkeyup="textchange()"></textarea>
     <div class="texttocovertbtns">
       <p class="pChars">58 Characters remaining</p>
       <button class="btnClear btn">CLEAR TEXT</button>
@@ -74,21 +91,26 @@ Text To Speech
 
 @push('footer')
 <div class="footerDiv">
-  <button class="btn download"><svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <button id="btndownload" class="btn download"><svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
       <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
       <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
     </svg>Download</button>
-  <button class="btn listen">
+  <button id="btnlisten" type="button" class="btn listen" onclick="test()">
     <span class="material-symbols-sharp">
       play_arrow
-    </span> Listen</button>
+    </span> Listen
+  </button>
+  <button id="btnconvert" type="button" class="btn" onclick="test()">
+    Convert
+  </button>
 </div>
 @endpush
+
 <style>
   .model-artical {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 18% 15% auto;
+    grid-template-rows: 15% 12% 63%;
     row-gap: 25px;
     width: 100%;
     font-size: 13px;
@@ -261,3 +283,9 @@ Text To Speech
     color: #888888;
   }
 </style>
+
+@push('style')
+<style>
+  /* //texttospeech styling */
+</style>
+@endpush

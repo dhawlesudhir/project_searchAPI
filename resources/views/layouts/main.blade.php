@@ -23,9 +23,10 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <!-- Styles -->
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- <link rel="stylesheet" href="/assets/css/style.css"> -->
+  <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
+
   @stack('style')
-  <script src="https://unpkg.com/vue@3"></script>
 
   <!-- <style>
         body {
@@ -84,39 +85,39 @@
           </form>
         </div>
       </header>
-      <!-- <div class="content">
+      <div class="content">
         @if(count($categories_resources))
         <p>Configurations helps change a group of system settings across your computers in one-click. Click on one of the settings below to get started.</p>
         <div class="groups">
           <?php
-          // foreach ($categories_resources as $categorie) {
+          foreach ($categories_resources as $categorie) {
           ?>
-            //@ if(count($categorie->resources))
-            //<div class="group" style="border-left: solid 5px #{$categorie->color}}">
-              <h5 class="group-heading">{$categorie->name}}</h5>
+            @if(count($categorie->resources))
+            <div class="group" style="border-left: solid 5px {{$categorie->color}}">
+              <h5 class="group-heading">{{$categorie->name}}</h5>
               <div class="group-items">
                 <?php
-                // foreach ($categorie->resources as $resource) {
+                foreach ($categorie->resources as $resource) {
                 ?>
-                  <a href="{$resource->route?$resource->route:''}}">{$resource->name}}
-                    <p>{$resource->desc}}</p>
+                  <a href="{{$resource->route?$resource->route:''}}">{{$resource->name}}
+
                   </a>
                 <?php
-                //  } 
+                }
                 ?>
               </div>
             </div>
-            //@ endif
+            @endif
           <?php
-          //  } 
+          }
           ?>
         </div>
         @else
         <p id="notFound">No API's Found</p>
         @endif
-      </div> -->
+      </div>
 
-      <div class="content2">
+      <div class="content2" style="display: none">
         <p class="content2Divtitle">Configurations helps change a group of system settings across your computers in one-click. Click on one of the settings below to get started.</p>
         <div class="groups">
           <div class="group">
@@ -187,19 +188,12 @@
 
         </div>
     </article>
+    @if(isset($modal))
+    @include('modals/'.$modal)
+    @endif
   </div>
-  @if(isset($modal))
-  @include('modals/'.$modal)
-  @endif
 
-  <script>
-    // $("a").click(function(event) {
-    //   alert();
-    //   event.preventDefault();
-    // });
-  </script>
   @stack('scripts')
-
 
 </body>
 
