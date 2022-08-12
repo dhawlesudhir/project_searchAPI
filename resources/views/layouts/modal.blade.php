@@ -20,9 +20,7 @@
   </header>
   <aside>
     @stack('aside')
-    @if($modal == 'texttospeech')
-    <h4 class="selected">Text To Speech</h4>
-    @endif
+
     <h4>API service 1</h4>
     <h4>API service 2</h4>
     <h4>API service 3</h4>

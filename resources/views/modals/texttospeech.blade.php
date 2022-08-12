@@ -115,6 +115,8 @@ Text To Speech
 
 @push('aside')
 
+<h4 class="selected">Text To Speech</h4>
+
 @endpush
 
 

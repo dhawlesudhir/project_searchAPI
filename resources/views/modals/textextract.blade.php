@@ -4,6 +4,12 @@
 Text Extract
 @endpush
 
+@push('aside')
+
+<h4 class="selected">Text Extract</h4>
+
+@endpush
+
 @push('artical')
 <!-- text extract  container -->
 <div class="orcontainer">

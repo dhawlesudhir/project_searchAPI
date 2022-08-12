@@ -7,6 +7,8 @@ Speech To Text
 
 @push('aside')
 
+<h4 class="selected">Speech To Text</h4>
+
 @endpush
 
 
