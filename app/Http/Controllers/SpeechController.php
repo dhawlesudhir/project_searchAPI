@@ -22,7 +22,10 @@ class SpeechController extends Controller
 
     public function textToSpeechAWS(Request $request)
     {
-        if (empty($request->input('str'))) {
+
+        $str = urlencode($request->input('str'));
+        $speaker = $request->input('speaker');
+        if (empty($str)) {
             return response()->json([
                 'status' => 'failed',
                 'msg' => " 'str' parameter is missing or empty",
@@ -30,11 +33,10 @@ class SpeechController extends Controller
         }
         //URL
         $baseurl = 'https://it2c947od4.execute-api.us-east-1.amazonaws.com/prod/steve?';
-        echo $baseurl;
-        die;
+
         //parameters
         $user = 'user_id=mreader';
-        $fixedparams = '&speaker=Amy&style=conversational&rate=100.0&bkmus=None&octave=0.0&startmusic=0&startvoice=5&relativevol=15&trailmusic=10';
+        $fixedparams = '&speaker=' . $speaker . '&style=conversational&rate=100.0&bkmus=None&octave=0.0&startmusic=0&startvoice=5&relativevol=15&trailmusic=10';
         $variableparams = '&str=' . $str;
         $url = $baseurl . $user . $fixedparams . $variableparams;
 
@@ -54,18 +56,26 @@ class SpeechController extends Controller
         $response = json_decode(curl_exec($curl));
         curl_close($curl);
 
+        // if request failed
+        if (!isset($response)) {
+            return response()->json([
+                'status' => 'failed',
+                'msg' => " Something went wrong! ",
+            ], 402);
+        }
 
         if ($response->statusCode == 200) {
             return response()->json([
                 'status' => 'success',
                 'msg' => " use URL for accessing Audio file",
-                'str' => $str, 'url' => $response->url,
+                'str' => $str,
+                'url' => $response->url,
             ], 200);
         } else {
             return response()->json([
                 'status' => 'failed',
-                'msg' => " Something went wrong! " . $response->statusCode,
-            ], 502);
+                'msg' => " Something went wrong! ",
+            ], 402);
         }
     }
 

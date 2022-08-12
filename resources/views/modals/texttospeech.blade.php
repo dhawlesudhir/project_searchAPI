@@ -4,21 +4,81 @@
 @push('scripts')
 
 <script>
-  function test() {
-    alert('alert using js');
-  }
-
+  var voiceurlaws = '';
   textchange();
 
+  function convert() {
+    //selector value
+    var voiceselect = document.getElementById("voice");
+    var voice = voiceselect.options[voiceselect.selectedIndex].value;
+
+    // text area value
+    var text = document.getElementById("texttocovert").value;
+
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    document.getElementById("btnconvert").style.display = "none";
+
+    fetch("http://127.0.0.1:8000/api/textspeechaws?str=" + text + "&speaker=" + voice, requestOptions)
+      .then(response => response.json())
+      // .then((response) => {
+      //   return response.json();
+      // })
+      .then((result) => {
+        // use response
+        voiceurlaws = result.url;
+        console.log(result.url);
+        console.log(result.str);
+        document.getElementById("btndownload").style.display = "flex";
+        document.getElementById("btnlisten").style.display = "flex";
+      })
+      .catch(error => console.log('error', error));
+  }
+
+  function cleartext() {
+    document.getElementById("texttocovert").value = '';
+    document.getElementById("btndownload").style.display = "none";
+    document.getElementById("btnlisten").style.display = "none";
+    document.getElementById("btnconvert").style.display = "block";
+  }
+
+
   function textchange() {
-    if (document.getElementById("texttocovert").value == '') {
-      document.getElementById("btndownload").style.display = "none";
-      document.getElementById("btnlisten").style.display = "none";
-      document.getElementById("btnconvert").style.display = "block";
+    // if (document.getElementById("texttocovert").value == '') {
+    //   document.getElementById("btndownload").style.display = "none";
+    //   document.getElementById("btnlisten").style.display = "none";
+    //   document.getElementById("btnconvert").style.display = "block";
+    // } else {
+    //   document.getElementById("btndownload").style.display = "flex";
+    //   document.getElementById("btnlisten").style.display = "flex";
+    //   document.getElementById("btnconvert").style.display = "none";
+    // }
+    document.getElementById("btndownload").style.display = "none";
+    document.getElementById("btnlisten").style.display = "none";
+  }
+
+  function play() {
+    var audio = new Audio(voiceurlaws);
+    audio.play();
+  }
+
+  const downloadURI = (uri) => {
+    const link = document.createElement("a");
+    link.download = uri;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function downloadaudiofile() {
+    if (voiceurlaws = '') {
+      alert("Audio file not found, please try converting again!");
     } else {
-      document.getElementById("btndownload").style.display = "flex";
-      document.getElementById("btnlisten").style.display = "flex";
-      document.getElementById("btnconvert").style.display = "none";
+      downloadURI(voiceurlaws)
     }
   }
 </script>
@@ -42,7 +102,7 @@ Text To Speech
     <span class="headings">Engine</span>
     <div>
       <label class="form-control">
-        <input type="radio" id="engine" name="engine" value="neural" />
+        <input type="radio" id="engine" name="Neural" value="neural" />
         <span class="title">Neural</span>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
       </label>
@@ -50,7 +110,7 @@ Text To Speech
 
     <div>
       <label class="form-control">
-        <input type="radio" class="title" id="engine" name="engine" value="standard" />
+        <input type="radio" class="title" id="engine" name="Standard" value="standard" />
         <span class="title">Standard</span>
       </label>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -60,8 +120,8 @@ Text To Speech
   <div class="language">
     <fieldset class="optionsFieldSet">
       <label for="languageSelected" class="headings">Language</label>
-      <select class="optselect" name="" id="languageSelected">
-        <option value="xyz" class="sltOption">English, US</option>
+      <select id="languageSelected" class="optselect" name="">
+        <option value="engus" class="sltOption">English, US</option>
         <option value="abc">ABC</option>
         <option value="mnp">MNP</option>
       </select>
@@ -69,20 +129,20 @@ Text To Speech
 
     <fieldset class="optionsFieldSet">
       <label for="voice" class="headings">Voice</label>
-      <select class="optselect" name="" id="voice">
-        <option value="xyz" class="sltOption">Joanna, Female</option>
-        <option value="abc">ABC</option>
-        <option value="mnp">MNP</option>
+      <select id="voice" class="optselect" name="">
+        <option value="Amy" class="sltOption">Amy, Female</option>
+        <option value="Matthew">Matthew, Male</option>
+        <option value="Joanna">Joanna, Female</option>
       </select>
     </fieldset>
   </div>
 
   <div class="textinputdiv">
     <label for="texttocovert" class="headings texttoLabel">Input Text</label>
-    <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" placeholder="English,US" onkeyup="textchange()"></textarea>
+    <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" placeholder="English,US">Testing API integration</textarea>
     <div class="texttocovertbtns">
       <p class="pChars">58 Characters remaining</p>
-      <button class="btnClear btn">CLEAR TEXT</button>
+      <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
     </div>
   </div>
 
@@ -91,16 +151,20 @@ Text To Speech
 
 @push('footer')
 <div class="footerDiv">
-  <button id="btndownload" class="btn download"><svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <button id="btndownload" class="btn download" onclick="downloadaudiofile()">
+    <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
       <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
       <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
-    </svg>Download</button>
-  <button id="btnlisten" type="button" class="btn listen" onclick="test()">
+    </svg>Download
+  </button>
+  <!-- <a href="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3" download="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3">Download PDF</a> -->
+
+  <button id="btnlisten" type="button" class="btn listen" onclick="play()">
     <span class="material-symbols-sharp">
       play_arrow
     </span> Listen
   </button>
-  <button id="btnconvert" type="button" class="btn" onclick="test()">
+  <button id="btnconvert" type="button" class="btn" onclick="convert()">
     Convert
   </button>
 </div>
