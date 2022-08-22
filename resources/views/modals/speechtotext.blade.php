@@ -107,7 +107,7 @@ Speech To Text
       </div>
 
       <div class="divcollapse contentremovalsettings">
-        <div class="collabseheader" onclick="show('contentremovalsettingsdiv','271px','arrowicon3')">
+        <div class="collabseheader" onclick="show('contentremovalsettingsdiv','auto','arrowicon3')">
           <span id="contentremovalsettingsbtn">Content Removal Settings</span>
           <span>
             <svg id="arrowicon3" xmlns=" http://www.w3.org/2000/svg" height="20" width="20">
@@ -148,7 +148,7 @@ Speech To Text
                 <div class="formcntlelementheader">
                   <span class="radiotitle">PII Identification & redaction</span>
                   <label class="switch">
-                    <input type="checkbox" id="identificationandredactionswitch" onclick="togglediv('identificationandredactionswitch','identificationandredactionextradiv','150px')">
+                    <input type="checkbox" id="identificationandredactionswitch"  onclick="togglediv('identificationandredactionswitch','identificationandredactionextradiv','auto')">
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -173,6 +173,50 @@ Speech To Text
                         Label the type of PII and also mask the content with the PII entity type in the transcription output. For example, (123)456-7890 will be masked as [PHONE]
                       </p>
                     </label>
+                  </div>
+                  <div class="identificationandredactionSelecttorDiv">
+                    <p class="selectorsheadings">Select PII entity types (11 of 11 selected)</p>
+                    <input type="checkbox" id="chkall"  name="chkall" value="chkall">
+                    <label for="chkall">Select All</label>
+
+                    <div class="checkgrp1">
+                        <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                        <label for="chkallfina">Finacial (0 of 6 selected)</label> <br>
+                        <div class="checksubgrp">
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">BANK_ACCOUNT_NUMBER</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">BANK_ROUTING</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">CREDIT_DEBIT_NUMBER</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">CREDIT_DEBIT_CVV</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">CREDIT_DEBIT_EXPIRY</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">PIN</label>
+                        </div>
+                    </div>
+
+                    <div class="checkgrp2">
+                        <input type="checkbox" id="chkallpersonal"  name="chkallpersonal" value="chkallpersonal">
+                        <label for="chkallpersonal">Finacial (0 of 5 selected)</label><br>
+                        <div class="checksubgrp">
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">NAME</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">ADDRESS</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">PHONE</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">EMAIL</label><br>
+                            <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">SSN</label><br>
+                            {{-- <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">Finacial (6 of 6 selected)</label> --}}
+                        </div>
+                    </div>
+
                   </div>
                 </div>
               </div>
@@ -810,12 +854,12 @@ Speech To Text
   .arrowdown {
     /* animation: rotationdown 2s linear; */
     transform: rotateX(0deg);
-    transition: all 0.5s linear;
+    transition: all 0.2s linear;
   }
 
   .arrowup {
     transform: rotateX(180deg);
-    transition: all 0.5s linear;
+    transition: all 0.2s linear;
     /* animation: rotationup 2s linear; */
   }
 
@@ -843,8 +887,9 @@ Speech To Text
   #contentremovalsettingsdiv,
   #customizationssettingsdiv {
     height: 0px;
+}
 
-  }
+
 
   /* code for Vocabulary filtering extra div */
   #vocabularyextradiv {
@@ -871,6 +916,51 @@ Speech To Text
     transition: height 0.5s ease;
     height: 0px;
   }
+  /* tempoary code
+#contentremovalsettingsdiv,
+#identificationandredactionextradiv{
+    height: auto;
+} */
+
+.selectorsheadings{
+    margin: 15px 0 5px 0 !important;
+    font-weight: 500;
+    color: #000000 !important;
+}
+
+.identificationandredactionSelecttorDiv
+input[type='checkbox']{
+    margin: 5px 5px 10px 0;
+    border-radius: 5px;
+    border: 1px solid #2196F3;
+    width: 15px;
+    height: 15px;
+}
+
+.identificationandredactionSelecttorDiv label{
+    font-family: "Open Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#chkall{
+    margin-left: 0px;
+}
+
+.checkgrp1 {
+    margin: 5px;
+    margin-left: 10px;
+
+}
+
+.checkgrp2 {
+    margin-left: 10px;
+}
+.checksubgrp{
+    margin-left: 20px;
+}
+
+
 </style>
 
 <script>
