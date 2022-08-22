@@ -22,16 +22,27 @@ class CategoryController extends Controller
     {
         $search = $request->query('search');
         if ($search) {
-
-            $resourcedata = resource::select('id')
+            // $resourcedata = resource::select('id')
+            //     // ->where('status', 1)
+            //     ->where('name', 'like', '%' . $search . '%')
+            //     ->get();
+            $resourcedata = DB::table('resources')
                 // ->where('status', 1)
                 ->where('name', 'like', '%' . $search . '%')
-                ->get();
+                ->get('id')->first();
+
+            // dd($resourcedata->id);
+
+            // $categoryids = DB::table('category_resource')
+            //     ->select('category_id')
+            //     ->whereIn('resource_id', $resourcedata)
+            //     ->get();
 
             $categoryids = DB::table('category_resource')
-                ->select('category_id')
-                ->whereIn('resource_id', $resourcedata)
-                ->get();
+                ->where('resource_id', $resourcedata->id)
+                ->get('category_id');
+
+            // dd($categoryids);
 
             $categoryids =  $categoryids->pluck('category_id');
 
