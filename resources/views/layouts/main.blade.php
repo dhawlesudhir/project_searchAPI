@@ -101,7 +101,7 @@
                 <?php
                 foreach ($categorie->resources as $resource) {
                 ?>
-                  <a href="{{$resource->route?$resource->route:''}}">{{$resource->name}}
+                  <a href="{{url($resource->route?$resource->route:'')}}">{{$resource->name}}
 
                   </a>
                 <?php
