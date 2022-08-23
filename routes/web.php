@@ -20,3 +20,4 @@ Route::get('/texttospeech', [AICategoryController::class, 'texttospeech']);
 Route::get('/speechtotext', [AICategoryController::class, 'speechtotext']);
 Route::get('/textextract', [AICategoryController::class, 'textextract']);
 Route::get('/objectrecognisation', [AICategoryController::class, 'objectrecognisation']);
+Route::get('/comprehend', [AICategoryController::class, 'comprehend']);

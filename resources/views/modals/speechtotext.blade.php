@@ -1,13 +1,13 @@
 @extends('layouts.modal')
 
 @push('header')
-Speech To Text
+Comprehend Demonstration
 @endpush
 
 
 @push('aside')
 
-<h4 class="selected">Speech To Text</h4>
+<h4 class="selected">Comprehend Demonstration</h4>
 
 @endpush
 
@@ -732,7 +732,6 @@ Speech To Text
 
 
 
-  /* 9175431127 avinash*/
   #lblsearch {
     grid-column: 1/2;
     font-size: 13px;

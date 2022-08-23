@@ -13,7 +13,7 @@ class AICategoryController extends Controller
     {
         $category = new CategoryController();
         $categoriesData = $category->index($request, "data");
-        //collection of resources relate to category 
+        //collection of resources relate to category
         return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
     }
 
@@ -21,7 +21,7 @@ class AICategoryController extends Controller
     {
         $category = new CategoryController();
         $categoriesData = $category->index($request, "data");
-        //collection of resources related to category 
+        //collection of resources related to category
         return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
     }
 
@@ -29,7 +29,7 @@ class AICategoryController extends Controller
     {
         $category = new CategoryController();
         $categoriesData = $category->index($request, "data");
-        //collection of resources related to category 
+        //collection of resources related to category
         return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
     }
 
@@ -37,7 +37,14 @@ class AICategoryController extends Controller
     {
         $category = new CategoryController();
         $categoriesData = $category->index($request, "data");
-        //collection of resources related to category 
+        //collection of resources related to category
+        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+    }
+    public function comprehend(Request $request)
+    {
+        $category = new CategoryController();
+        $categoriesData = $category->index($request, "data");
+        //collection of resources related to category
         return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
     }
 }

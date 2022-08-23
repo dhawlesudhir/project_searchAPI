@@ -199,7 +199,7 @@
   <script>
     var select = document.getElementById('searchresourcesipt');
     select.onkeyup = function() {
-      this.form.submit();
+    //   this.form.submit();
     };
   </script>
 </body>

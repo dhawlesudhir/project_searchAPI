@@ -69,7 +69,7 @@
     width: 1080px;
     height: 640px;
     display: grid;
-    grid-template-columns: 20% auto;
+    grid-template-columns: 20% 80%;
     grid-template-rows: 8% 82% 10%;
     font-family: "Open Sans", sans-serif;
   }
