@@ -23,18 +23,13 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/codemirror.css' rel='stylesheet'>
+  @stack('style')
 
   <!-- Styles -->
   <!-- <link rel="stylesheet" href="/assets/css/style.css"> -->
   <link rel="stylesheet" href="{{url('assets/css/style.css')}}">
 
-  @stack('style')
-
-  <!-- <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-        }
-    </style> -->
 </head>
 
 <body>

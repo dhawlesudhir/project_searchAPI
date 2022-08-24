@@ -200,7 +200,7 @@ article header .headings {
     cursor: pointer;
     margin-left: 10px;
 }
-/* 
+/*
 .tools span:last-child {
 } */
 
@@ -230,8 +230,8 @@ nav .material-symbols-outlined {
 }
 
 span.material-symbols-outlined {
-    margin: 0 !important;
-    font-size: 24px !important;
+    margin: 0 5px 0 5px !important;
+    font-size: 20px !important;
 }
 
 .exlore-main {
@@ -357,7 +357,7 @@ article header div:first-child {
     font-size: 18px;
 }
 
-/* 
+/*
 .group:last-child {
     border-left: solid 5px cyan;
 }
