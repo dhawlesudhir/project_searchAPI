@@ -37,20 +37,25 @@ class CategoryController extends Controller
             //     ->select('category_id')
             //     ->whereIn('resource_id', $resourcedata)
             //     ->get();
+            if (isset($resourcedata)) {
+                $categoryids = DB::table('category_resource')
+                    ->where('resource_id', $resourcedata->id)
+                    ->get('category_id');
+            }
 
-            $categoryids = DB::table('category_resource')
-                ->where('resource_id', $resourcedata->id)
-                ->get('category_id');
 
             // dd($categoryids);
 
-            $categoryids =  $categoryids->pluck('category_id');
 
-
-            $categoriesData = category::where('status', 1)
-                // ->where('name', 'like', '%' . $search . '%')
-                ->whereIn('id', $categoryids)
-                ->get();
+            if (isset($categoryids)) {
+                $categoryids =  $categoryids->pluck('category_id');
+                $categoriesData = category::where('status', 1)
+                    // ->where('name', 'like', '%' . $search . '%')
+                    ->whereIn('id', $categoryids)
+                    ->get();
+            } else {
+                $categoriesData = category::where('status', 1)->get();
+            }
         } else {
             $categoriesData = category::where('status', 1)->get();
         }
