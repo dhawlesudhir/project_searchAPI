@@ -36,7 +36,7 @@
                         <div class="box box3"></div>
                         <div class="box box4"></div>
                         <div class="box box5"></div>
-                    </div><br>
+                    </div>
                     <p>click to stop</p>
                 </div>
             </div>
@@ -1060,25 +1060,26 @@
     .waveboxContainer {
         display: flex;
         justify-content: space-evenly;
-        height: 64px;
-        /* width: 40px; */
+        height: 36px;
+        width: 180px !important;
         align-items: center;
+        padding: 0 5px;
     }
 
     .waves {
         display: flex;
         justify-content: space-evenly;
-        --boxSize: 8px;
+        --boxSize: 0.1px;
         --gutter: 4px;
-        width: calc((var(--boxSize) + var(--gutter)) * 5);
-        height: 35px;
+        width: calc((var(--boxSize) + var(--gutter)) * 7);
+        height: 20px;
     }
 
     .box {
         transform: scaleY(.4);
         height: 100%;
         width: var(--boxSize);
-        background: #12E2DC;
+        background: #0091FF;
         /* background: #12E2DC; */
         animation-duration: 1.2s;
         animation-timing-function: ease-in-out;
