@@ -29,9 +29,9 @@ class CategoryController extends Controller
             $resourcedata = DB::table('resources')
                 // ->where('status', 1)
                 ->where('name', 'like', '%' . $search . '%')
-                ->get('id')->first();
+                ->get('id');
 
-            // dd($resourcedata->id);
+            // dd($resourcedata->pluck('id'));
 
             // $categoryids = DB::table('category_resource')
             //     ->select('category_id')
@@ -39,12 +39,12 @@ class CategoryController extends Controller
             //     ->get();
             if (isset($resourcedata)) {
                 $categoryids = DB::table('category_resource')
-                    ->where('resource_id', $resourcedata->id)
+                    ->whereIn('resource_id', $resourcedata->pluck('id'))
                     ->get('category_id');
             }
-
-
             // dd($categoryids);
+
+
 
 
             if (isset($categoryids)) {
