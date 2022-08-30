@@ -87,7 +87,8 @@
                 <div class="search-input">
                     <p>Search for an API</p>
                     <form method="get" action="/" auto-focus>
-                        <input id="searchresourcesipt" type="text" name="search" placeholder="Enter an API" />
+                        <input id="searchresourcesipt" type="text" name="search" placeholder="Enter an API"
+                            autofocus />
                     </form>
                 </div>
             </header>
