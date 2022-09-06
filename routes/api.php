@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AICategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\speechController;
@@ -23,3 +24,4 @@ Route::get('/speech', [SpeechController::class, 'speechToText']);
 Route::get('/text', [SpeechController::class, 'textToSpeech']);
 Route::get('/getText', [SpeechController::class, 'textExtract']);
 Route::get('/textspeechaws', [SpeechController::class, 'textToSpeechAWS']);
+Route::post('/comprehend', [AICategoryController::class, 'AWScomprehend']);
