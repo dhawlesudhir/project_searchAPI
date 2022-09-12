@@ -14,6 +14,14 @@
 
     <script>
         var entityTypeArray = {};
+        var entities;
+        var sentiment;
+        var languages;
+        var piientities;
+        var syntaxtokens;
+        var keyPhrases;
+
+
         var textfromarea = document.getElementById("comprehendtextara").value;
 
         var comprehenddata =
@@ -1494,7 +1502,7 @@
         ]
     }
 }`;
-        responsedataprocessing(JSON.parse(testdataobject));
+        responsedataprocessing(JSON.parse(testdataobject), testdataobject);
         showentitytab();
 
         function callcomprehend() {
@@ -1517,6 +1525,7 @@
                 .then(result => {
                     console.log(result)
                     comprehenddata = result;
+                    // comprehenddata = result;
                     document.getElementById("btnAnalyze").style.display = "block";
                     document.getElementById("btnanalyzing").style.display = "none";
                     console.log(result.Entities);
@@ -1525,16 +1534,18 @@
         }
 
         function responsedataprocessing(data) {
-            // console.log(data.entities.Entities[0].Text);
-            // console.log(data.entities.Entities[0].Type);
-            // console.log(data.entities.Entities.length);
-            // console.log(data.sentiment.SentimentScore.Positive);
-            // console.log(data.sentiment.SentimentScore.Negative);
-            // console.log(data.keyPhaseResults.KeyPhrases.length);
-            // console.log(data.languageResults);
-            // console.log(data.piiEntitiesResults.Entities);
-            // console.log(data.syntaxResults);
-            entitydataprocessing(data.entities);
+
+            entities = data.entities.Entities;
+            sentiment = data.sentiment;
+            languages = data.languageResults.Languages;
+            piientities = data.piiEntitiesResults.Entities;
+            syntaxtokens = data.syntaxResults.SyntaxTokens;
+            keyPhrases = data.keyPhaseResults.KeyPhrases;
+
+
+
+            entitydataprocessing(entities);
+
             languagedataprocessing(data.languageResults);
             keyphrasedataprocessing(data.keyPhaseResults);
             piidataprocessing(data.piiEntitiesResults);
@@ -1548,16 +1559,17 @@
 
         function entitydataprocessing(data) {
             // console.log(data.Entities.length);
-            var count = data.Entities.length;
+            var count = data.length;
             var entitytable = document.getElementById("entitytablebody");
+            entitytable.innerHTML = "";
             var temp_textfromarea = textfromarea;
             for (let index = 0; index < count; index++) {
                 var row = entitytable.insertRow(index);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 var cell3 = row.insertCell(2);
-                entity = data.Entities[index].Text;
-                entitytype = data.Entities[index].Type;
+                entity = data[index].Text;
+                entitytype = data[index].Type;
                 // 'entity':'type' array for formate disabled text
                 entityTypeArray[entity] = entitytype;
 
@@ -1605,13 +1617,12 @@
                 temp_textfromarea = result;
 
                 //column 3 filling
-                cell3.innerHTML = data.Entities[index].Score;
+                score = data[index].Score;
+                // fixedScore =
+                cell3.innerHTML = score.toFixed(10);
             } //for end
 
             document.getElementById("entity_textaradisabled").innerHTML = temp_textfromarea;
-
-            // entityanalyzedtextprocessing(data.Entities);
-
         } //funends
 
         function languagedataprocessing(data) {
@@ -1626,6 +1637,7 @@
                 cell1.innerHTML = data.Languages[index].LanguageCode;
                 cell2.innerHTML = data.Languages[index].Score;
             }
+            document.getElementById("language_textaradisabled").innerHTML = textfromarea;
         }
 
         function keyphrasedataprocessing(data) {
@@ -1734,6 +1746,7 @@
                 cell1.innerHTML = "Mixed";
                 cell2.innerHTML = data.SentimentScore.Mixed;
             }
+            document.getElementById("sentiment_textaradisabled").innerHTML = textfromarea;
         }
 
         function syntaxdataprocessing(data) {
@@ -1754,6 +1767,7 @@
                 cell2.innerHTML = data.SyntaxTokens[index].PartOfSpeech.Tag;
                 cell3.innerHTML = data.SyntaxTokens[index].PartOfSpeech.Score;
             }
+            document.getElementById("syntax_textaradisabled").innerHTML = textfromarea;
 
         }
 
@@ -1855,6 +1869,7 @@
 
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+            togglepiioptions();
         }
 
         function showsentimenttab() {
@@ -1902,6 +1917,44 @@
 
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'block';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'block';
+        }
+
+        function togglepiioptions() {
+            radios = document.getElementsByName('piioptions');
+            var selected = Array.from(radios).find(radio => radio.checked);
+
+            if (selected.value == 'offset') {
+                document.getElementsByClassName('divtogglekeypii')[1].style.display = 'block';
+                document.getElementsByClassName('divtogglekeypii')[2].style.display = 'none';
+                document.getElementsByClassName('divtogglekeypii')[3].style.display = 'block';
+
+            } else {
+                document.getElementsByClassName('divtogglekeypii')[1].style.display = 'none';
+                document.getElementsByClassName('divtogglekeypii')[2].style.display = 'block';
+                document.getElementsByClassName('divtogglekeypii')[3].style.display = 'none';
+
+            }
+
+
+        }
+
+
+        function filterdata(data, filtervalue) {
+            data = entities;
+            filtervalue = "206";
+            filtervaluetype = 'OTHER';
+
+            datavalues = Object.values(data);
+            console.log(datavalues);
+
+            var data_filter = datavalues.filter(element => element.Text == filtervalue);
+            console.log(data_filter);
+
+            var data_filter = (data_filter = ' ' ? datavalues : data_filter).filter(element => element.Type ==
+                filtervaluetype);
+            console.log(data_filter);
+            // entities = data_filter;
+            entitydataprocessing(data_filter);
         }
     </script>
     <script>
@@ -1998,13 +2051,15 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                 <div class="radiospii">
 
                     <label class="form-control">
-                        <input type="radio" id="engine" name="engine" value="neural" checked />
+                        <input type="radio" id="piioffset" name="piioptions" value="offset" checked
+                            onclick="togglepiioptions()" />
                         <span class="radiotitle">Offsets</span>
                         <p> Identify the location of PII in your text documents.</p>
                     </label>
 
                     <label class="form-control">
-                        <input type="radio" id="engine" name="engine" value="neural" />
+                        <input type="radio" id="piilabel" name="piioptions" value="labels"
+                            onclick="togglepiioptions()" />
                         <span class="radiotitle">Labels</span>
                         <p>Label text documents with PII.</p>
                     </label>
@@ -2020,13 +2075,13 @@ If you have questions about your bill, AnyCompany Customer Service is available 
             </div>
 
             <div class="keyphraseanalyzedtextdiv analyzedtextdiv divtogglekeyphrase">
-                <p class="titleanalyzedtextp">Analyzed Text(key)</p>
+                <p class="titleanalyzedtextp">Analyzed Text</p>
                 <div id="keyphrase_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
 
             </div>
 
             <div class="piioffsetanalyzedtextdiv analyzedtextdiv divtogglekeypii">
-                <p class="titleanalyzedtextp">Analyzed Text(piioffset)</p>
+                <p class="titleanalyzedtextp">Analyzed Text</p>
                 <div id="piioffset_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
 
             </div>
@@ -2057,7 +2112,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+                        <input id="searchtext" class="nooutline" type="text" placeholder="Search.."
+                            onkeyup="filterdata('hi','bye')">
                     </div>
 
                     <div id="paginationentity" class="pagination">
@@ -2142,7 +2198,7 @@ If you have questions about your bill, AnyCompany Customer Service is available 
             </div>
 
             <div id="div_tbl_piilabel" class="table results divtogglekeypii">
-                <p class="headings">Results(PII Labels)</p>
+                <p class="headings"></p>
 
                 <div class="tools">
 
@@ -2179,7 +2235,7 @@ If you have questions about your bill, AnyCompany Customer Service is available 
             </div>
 
             <div id="div_tbl_piioffset" class="table results divtogglekeypii">
-                <p class="headings">Results(PII offset)</p>
+                <p class="headings">Results</p>
 
                 <div class="tools">
 
