@@ -11,7 +11,59 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/htmlmixed/htmlmixed.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/javascript/javascript.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/xml/xml.js'></script>
+    <script>
+        //
 
+        var HTMLContainer_response = document.querySelector(".HTMLContainercallresponse");
+        var HTMLContainer_request = document.querySelector(".HTMLContainercall");
+
+
+
+        // function updateEditor_request() {
+        //     if (!tinymce.activeEditor.hasFocus()) {
+        //         tinymce.activeEditor.setContent(editor_request.getDoc().getValue());
+        //     }
+        // }
+
+
+        // function updateEditor_response() {
+        //     if (!tinymce.activeEditor.hasFocus()) {
+        //         tinymce.activeEditor.setContent(editor_response.getDoc().getValue());
+        //     }
+        // }
+
+
+        var editor_request = CodeMirror(HTMLContainer_request, {
+            lineNumbers: true,
+            mode: "htmlmixed"
+        });
+
+        // editor_request.on("change", (editor) => {
+        //     updateHTML_request();
+        // });
+
+        var editor_response = CodeMirror(HTMLContainer_response, {
+            lineNumbers: true,
+            mode: "htmlmixed"
+        });
+
+        // editor_response.on("change", (editor) => {
+        //     updateHTML_response();
+        // });
+
+        function updateHTML_response(content) {
+            // loading into Var to copytext function use
+            responseload = content;
+            editor_response.getDoc().setValue(content);
+        }
+
+        function updateHTML_request(content) {
+            editor_request.getDoc().setValue(content);
+        }
+
+
+        // updateHTML_response(payload);
+    </script>
     <script>
         var entityTypeArray = {};
         var entities;
@@ -24,15 +76,23 @@
 
         var textfromarea = document.getElementById("comprehendtextara").value;
 
-        var comprehenddata =
-            "Hello Zhang Wei, I am John. Your AnyCompany Financial Services, LLC credit card account 1111-0000-1111-0008 has a minimum payment of $24.53 that is due by July 31st. Based on your autopay settings, we will withdraw your payment on the due date from your bank account number XXXXXX1111 with the routing number XXXXX0000.Your latest statement was mailed to 2200 West Cypress Creek Road, 1st Floor, Fort Lauderdale, Florida, 33309. After your payment is received, you will receive a confirmation text message at 206-555-0100. If you have questions about your bill, AnyCompany Customer Service is available by phone at 206-555-0199 or email at support@anycompany.com.";
+        payloadtext = textfromarea;
+        var responseload = '';
+
         var multilinedata = '';
-        while (comprehenddata.length >= (multilinedata.length + 40)) {
+        while (payloadtext.length >= (multilinedata.length + 40)) {
             // console.log(data.length);
             // console.log(multilinedata.length);
-            multilinedata = multilinedata + comprehenddata.substr(0, 40) + '\n';
-            comprehenddata = comprehenddata.substr(41);
+            multilinedata = multilinedata + payloadtext.substr(0, 40) + '\n';
+            payloadtext = payloadtext.substr(41);
         }
+        multilinedata = multilinedata + payloadtext;
+
+        var payloaddata = `{\n 'text':"` + multilinedata + `" \n}`;
+        // updateHTML_request(payload);
+        const obj = JSON.stringify(payloaddata);
+
+        updateHTML_request(payloaddata);
 
         var testdataobject = `{
     "entities": {
@@ -1525,8 +1585,6 @@
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
-                    // comprehenddata = result;
-                    // comprehenddata = result;
                     responsedataprocessing(result);
                     document.getElementById("btnAnalyze").style.display = "block";
                     document.getElementById("btnanalyzing").style.display = "none";
@@ -1540,6 +1598,7 @@
             entities = data.entities.Entities;
             sentiment = data.sentiment;
             languages = data.languageResults.Languages;
+            piidata = data.piiEntitiesResults.Entities;
             piioffsetentities = data.piiEntitiesResults.Entities;
             piilabelentities = data.piiEntitiesResults.Entities;
             syntaxtokens = data.syntaxResults.SyntaxTokens;
@@ -1623,6 +1682,8 @@
             } //for end
 
             document.getElementById("entity_textaradisabled").innerHTML = temp_textfromarea;
+
+
         } //funends
 
         function languagedataprocessing(data) {
@@ -1638,6 +1699,8 @@
                 cell2.innerHTML = data[index].Score;
             }
             document.getElementById("language_textaradisabled").innerHTML = textfromarea;
+            updateHTML_response(JSON.stringify(data, null, '\t'));
+
         }
 
         function keyphrasedataprocessing(data) {
@@ -1667,6 +1730,8 @@
                 temp_textfromarea = result;
             }
             document.getElementById("keyphrase_textaradisabled").innerHTML = temp_textfromarea;
+            // updateHTML_response(JSON.stringify(data, null, '\t'));
+
 
         }
 
@@ -1714,6 +1779,8 @@
                 row2_cell3.innerHTML = data[index].Score;
             }
             document.getElementById("piioffset_textaradisabled").innerHTML = temp_textfromarea;
+            // updateHTML_response(JSON.stringify(data, null, '\t'));
+
         }
 
         function piilabeldataprocessing(data) {
@@ -1732,6 +1799,8 @@
                 cell1.innerHTML = data[index].Type;
                 cell2.innerHTML = data[index].Score;
             }
+            // updateHTML_response(JSON.stringify(data, null, '\t'));
+
         }
 
         function sentimentdataprocessing(data) {
@@ -1767,16 +1836,17 @@
                 cell2.innerHTML = data.SentimentScore.Mixed;
             }
             document.getElementById("sentiment_textaradisabled").innerHTML = textfromarea;
+            // updateHTML_response(JSON.stringify(data, null, '\t'));
+
         }
 
         function syntaxdataprocessing(data) {
-            // console.log(data.SyntaxTokens.length);
             var count = data.length;
             var tableobj = document.getElementById("tbodysyntaxtable");
             tableobj.innerHTML = "";
-
-            var divtextareadisabledobj = document.getElementById("entity_textaradisabled");
-
+            var textstyled = '';
+            // var payloaddata = '';
+            // var payloaddata1 = '';
             // console.log(data);
             for (let index = 0; index < count; index++) {
                 var row = tableobj.insertRow(index);
@@ -1786,10 +1856,21 @@
                 // console.log(data[index]);
                 cell1.innerHTML = data[index].Text;
                 text = data[index].Text;
+                // payloaddata = payloaddata + " " + text;
+
+                // if (payloaddata.length > 40) {
+                //     payloaddata1 = payloaddata1 + "\n" + payloaddata;
+                //     payloaddata = '';
+                // }
+
+
+                textstyled = textstyled + ` <span class="hoveronspan">` + text + "</span>";
                 cell2.innerHTML = data[index].PartOfSpeech.Tag;
                 cell3.innerHTML = data[index].PartOfSpeech.Score;
             }
-            document.getElementById("syntax_textaradisabled").innerHTML = textfromarea;
+            document.getElementById("syntax_textaradisabled").innerHTML = textstyled;
+            // updateHTML_response(JSON.stringify(data, null, '\t'));
+
 
         }
 
@@ -1822,6 +1903,7 @@
 
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+            updateHTML_response(JSON.stringify(entities, null, '\t'));
         }
 
         function showphrasetab() {
@@ -1845,6 +1927,8 @@
 
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+            updateHTML_response(JSON.stringify(keyPhrases, null, '\t'));
+
         }
 
         function showlanguagetab() {
@@ -1868,6 +1952,8 @@
 
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+            updateHTML_response(JSON.stringify(languages, null, '\t'));
+
         }
 
         function showpiitab() {
@@ -1892,6 +1978,8 @@
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
             togglepiioptions();
+            updateHTML_response(JSON.stringify(piidata, null, '\t'));
+
         }
 
         function showsentimenttab() {
@@ -1915,6 +2003,8 @@
 
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+            updateHTML_response(JSON.stringify(sentiment, null, '\t'));
+
         }
 
         function showsyntaxtab() {
@@ -1939,6 +2029,8 @@
 
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'block';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'block';
+            updateHTML_response(JSON.stringify(syntaxtokens, null, '\t'));
+
         }
 
         function togglepiioptions() {
@@ -2074,35 +2166,25 @@
             console.log(temdata);
             piilabeldataprocessing(temdata);
         }
-    </script>
-    <script>
-        var HTMLContainerresponse = document.querySelector(".response");
-        var HTMLContainercall = document.querySelector(".call");
 
+        function copytext(element) {
+            // Get the text field
+            if (element == 1) {
+                copyText = payloaddata;
+            } else {
+                copyText = responseload;
+            }
 
-        var cmeditorcall = CodeMirror(HTMLContainercall, {
-            lineNumbers: true,
-            mode: "htmlmixed"
-        });
+            // Select the text field
+            // copyText.select();
+            // copyText.setSelectionRange(0, 99999); // For mobile devices
 
-        cmeditorcall.on("change", (editor) => {
-            updateEditor();
-        });
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText);
 
-        var cmeditorresponse = CodeMirror(HTMLContainerresponse, {
-            lineNumbers: true,
-            mode: "htmlmixed"
-        });
-
-        cmeditorresponse.on("change", (editor) => {
-            updateEditor();
-        });
-
-        function updateHTML(content) {
-            cmeditorcall.getDoc().setValue(content);
+            // Alert the copied text
+            alert("Copied the text: " + copyText);
         }
-        // updateHTML("multilinedata");
-        // console.log(comprehenddata);
     </script>
 @endpush
 
@@ -2453,15 +2535,14 @@ If you have questions about your bill, AnyCompany Customer Service is available 
             <div class="appintegration">
                 <p class="headings">Application Integration</p>
                 <p class="subtextappintegration">API call and API response of DetectEntities API.</p>
-
                 <div class="callresponsedivs">
                     <div class="divapicall">
-                        <div id="HTMLContainercall" class="HTMLContainer call"></div>
-                        <button class="btn btncpycall">COPY TEXT</button>
+                        <div id="HTMLContainercall" class="HTMLContainer HTMLContainercall"></div>
+                        <button class="btn btncpycall" onclick="copytext(1)">COPY TEXT</button>
                     </div>
                     <div class="divapiresponse">
-                        <div class="HTMLContainer response"></div>
-                        <button class="btn btncpyresponse">COPY TEXT</button>
+                        <div id="HTMLContainerresponse" class="HTMLContainer HTMLContainercallresponse"></div>
+                        <button class="btn btncpyresponse" onclick="copytext(2)">COPY TEXT</button>
                     </div>
                 </div>
             </div>
@@ -2546,8 +2627,14 @@ If you have questions about your bill, AnyCompany Customer Service is available 
         resize: none;
         font-family: "Open Sans", sans-serif;
         line-height: 28px;
-        overflow: hidden;
+        overflow-y: scroll;
     }
+
+    .comprehendtextaradisabled::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
+    }
+
 
     .btn {
         height: 30px !important;
@@ -2895,5 +2982,10 @@ If you have questions about your bill, AnyCompany Customer Service is available 
 
     .bb-entiry-quantity {
         border-bottom: 2px solid #77002A;
+    }
+
+    .hoveronspan:hover {
+        border-bottom: 2px solid #545B64;
+
     }
 </style>
