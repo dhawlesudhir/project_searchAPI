@@ -1502,7 +1502,7 @@
         ]
     }
 }`;
-        responsedataprocessing(JSON.parse(testdataobject), testdataobject);
+        responsedataprocessing(JSON.parse(testdataobject));
         showentitytab();
 
         function callcomprehend() {
@@ -1513,6 +1513,7 @@
             }
             document.getElementById("btnAnalyze").style.display = "none";
             document.getElementById("btnanalyzing").style.display = "block";
+            textfromarea = document.getElementById("comprehendtextara").value;
 
 
             var requestOptions = {
@@ -1524,11 +1525,12 @@
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
-                    comprehenddata = result;
                     // comprehenddata = result;
+                    // comprehenddata = result;
+                    responsedataprocessing(result);
                     document.getElementById("btnAnalyze").style.display = "block";
                     document.getElementById("btnanalyzing").style.display = "none";
-                    console.log(result.Entities);
+                    // console.log(result.Entities);
                 })
                 .catch(error => console.log('error', error));
         }
@@ -1538,19 +1540,18 @@
             entities = data.entities.Entities;
             sentiment = data.sentiment;
             languages = data.languageResults.Languages;
-            piientities = data.piiEntitiesResults.Entities;
+            piioffsetentities = data.piiEntitiesResults.Entities;
+            piilabelentities = data.piiEntitiesResults.Entities;
             syntaxtokens = data.syntaxResults.SyntaxTokens;
             keyPhrases = data.keyPhaseResults.KeyPhrases;
 
-
-
             entitydataprocessing(entities);
-
-            languagedataprocessing(data.languageResults);
-            keyphrasedataprocessing(data.keyPhaseResults);
-            piidataprocessing(data.piiEntitiesResults);
-            sentimentdataprocessing(data.sentiment);
-            syntaxdataprocessing(data.syntaxResults);
+            keyphrasedataprocessing(keyPhrases);
+            languagedataprocessing(languages);
+            piioffsetdataprocessing(piioffsetentities);
+            piilabeldataprocessing(piilabelentities);
+            sentimentdataprocessing(sentiment);
+            syntaxdataprocessing(syntaxtokens);
         }
 
         function cleartext() {
@@ -1558,7 +1559,6 @@
         }
 
         function entitydataprocessing(data) {
-            // console.log(data.Entities.length);
             var count = data.length;
             var entitytable = document.getElementById("entitytablebody");
             entitytable.innerHTML = "";
@@ -1626,24 +1626,26 @@
         } //funends
 
         function languagedataprocessing(data) {
-            console.log(data.Languages.length);
-            var count = data.Languages.length;
-            var entitytable = document.getElementById("languagetablebody");
-            console.log(data.Languages);
+            var count = data.length;
+            var tablebodyObj = document.getElementById("languagetablebody");
+            tablebodyObj.innerHTML = "";
+
             for (let index = 0; index < count; index++) {
-                var row = entitytable.insertRow(index);
+                var row = tablebodyObj.insertRow(index);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
-                cell1.innerHTML = data.Languages[index].LanguageCode;
-                cell2.innerHTML = data.Languages[index].Score;
+                cell1.innerHTML = data[index].LanguageCode;
+                cell2.innerHTML = data[index].Score;
             }
             document.getElementById("language_textaradisabled").innerHTML = textfromarea;
         }
 
         function keyphrasedataprocessing(data) {
             // console.log(data.KeyPhrases.length);
-            var count = data.KeyPhrases.length;
+            var count = data.length;
             var tablebodyObj = document.getElementById("keyphrasebody");
+            tablebodyObj.innerHTML = "";
+
             // console.log(data.KeyPhrases);
 
             //value from textarea i.e user input
@@ -1654,10 +1656,10 @@
                 var row = tablebodyObj.insertRow(index);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
-                phrase = data.KeyPhrases[index].Text;
+                phrase = data[index].Text;
                 // filling fields
                 cell1.innerHTML = phrase;
-                cell2.innerHTML = data.KeyPhrases[index].Score;
+                cell2.innerHTML = data[index].Score;
 
                 // replacing normal text to styled text
                 result = temp_textfromarea.replaceAll(phrase, `<span class="bb-entiry-person">` + phrase +
@@ -1668,14 +1670,13 @@
 
         }
 
-        function piidataprocessing(data) {
-            var count = data.Entities.length;
+        function piioffsetdataprocessing(data) {
+            var count = data.length;
 
-            // object of table used for PII label
-            var tablebodyObj = document.getElementById("piitablebody");
 
             // object of table used for PII offset
             var tablebodyObj2 = document.getElementById("tbody_piioffset");
+            tablebodyObj2.innerHTML = "";
 
             //value from textarea i.e user input
             var temp_textfromarea = textfromarea;
@@ -1683,45 +1684,64 @@
             let result = '';
 
             for (let index = 0; index < count; index++) {
+                // as in PII response no TEXT filed mentioned ,
+                //      using BeginOffset and EndOffset to extarct Text from orginal input
 
-                // filling label table
-                var row = tablebodyObj.insertRow(index);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = data.Entities[index].Type;
-                cell2.innerHTML = data.Entities[index].Score;
+                // text start and end of text
+                start = data[index].BeginOffset;
+                end = data[index].EndOffset;
+                // console.log(start + ' ' + end);
+                text = textfromarea.substring(start, end);
+
+                // adding extarcted text to orginal data(response received from API)
+                data[index].Text = text;
+
+                // console.log(text);
 
                 // highliting text from disabled text area
-                // text start and end of text
-                start = data.Entities[index].BeginOffset;
-                end = data.Entities[index].EndOffset;
-                console.log(start + ' ' + end);
                 // replacing normal text to styled text
-                text = textfromarea.substring(start, end);
-                console.log(text);
                 result = temp_textfromarea.replaceAll(text, `<span class="bb-entiry-location">` + text +
                     "</span>");
                 temp_textfromarea = result;
 
-
+                // filling table data
                 var row2 = tablebodyObj2.insertRow(index);
                 var row2_cell1 = row2.insertCell(0);
                 var row2_cell2 = row2.insertCell(1);
                 var row2_cell3 = row2.insertCell(2);
                 row2_cell1.innerHTML = text;
-                row2_cell2.innerHTML = data.Entities[index].Type;
-                row2_cell3.innerHTML = data.Entities[index].Score;
+                row2_cell2.innerHTML = data[index].Type;
+                row2_cell3.innerHTML = data[index].Score;
             }
-
             document.getElementById("piioffset_textaradisabled").innerHTML = temp_textfromarea;
+        }
+
+        function piilabeldataprocessing(data) {
+            var count = data.length;
+
+            // object of table used for PII label
+            var tablebodyObj = document.getElementById("piitablebody");
+            tablebodyObj.innerHTML = "";
+
+            for (let index = 0; index < count; index++) {
+
+                // filling label table
+                var row = tablebodyObj.insertRow(index);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                cell1.innerHTML = data[index].Type;
+                cell2.innerHTML = data[index].Score;
+            }
         }
 
         function sentimentdataprocessing(data) {
 
             var tablebodyObj = document.getElementById("tbodysentimenttable");
-            console.log(data.SentimentScore);
+            tablebodyObj.innerHTML = "";
 
-            if (data.SentimentScore) {
+            console.log(data);
+
+            if (data) {
                 var row = tablebodyObj.insertRow(0);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
@@ -1750,22 +1770,24 @@
         }
 
         function syntaxdataprocessing(data) {
-            console.log(data.SyntaxTokens.length);
-            var count = data.SyntaxTokens.length;
+            // console.log(data.SyntaxTokens.length);
+            var count = data.length;
             var tableobj = document.getElementById("tbodysyntaxtable");
+            tableobj.innerHTML = "";
+
             var divtextareadisabledobj = document.getElementById("entity_textaradisabled");
 
-            console.log(data.SyntaxTokens);
+            // console.log(data);
             for (let index = 0; index < count; index++) {
                 var row = tableobj.insertRow(index);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 var cell3 = row.insertCell(2);
-                console.log(data.SyntaxTokens[index]);
-                cell1.innerHTML = data.SyntaxTokens[index].Text;
-                text = data.SyntaxTokens[index].Text;
-                cell2.innerHTML = data.SyntaxTokens[index].PartOfSpeech.Tag;
-                cell3.innerHTML = data.SyntaxTokens[index].PartOfSpeech.Score;
+                // console.log(data[index]);
+                cell1.innerHTML = data[index].Text;
+                text = data[index].Text;
+                cell2.innerHTML = data[index].PartOfSpeech.Tag;
+                cell3.innerHTML = data[index].PartOfSpeech.Score;
             }
             document.getElementById("syntax_textaradisabled").innerHTML = textfromarea;
 
@@ -1938,23 +1960,119 @@
 
         }
 
-
-        function filterdata(data, filtervalue) {
-            data = entities;
-            filtervalue = "206";
-            filtervaluetype = 'OTHER';
-
-            datavalues = Object.values(data);
+        function entitidata_filter() {
+            var searchvalue = document.getElementById('searchentity').value;
+            searchvalue = searchvalue.toUpperCase();
+            console.log(searchvalue);
+            datavalues = Object.values(entities);
             console.log(datavalues);
 
-            var data_filter = datavalues.filter(element => element.Text == filtervalue);
-            console.log(data_filter);
+            var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+            console.log(text_filter.length);
 
-            var data_filter = (data_filter = ' ' ? datavalues : data_filter).filter(element => element.Type ==
-                filtervaluetype);
-            console.log(data_filter);
-            // entities = data_filter;
-            entitydataprocessing(data_filter);
+            var type_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.Type)
+                .toUpperCase()).search(searchvalue) != -1);
+            console.log(type_filter.length);
+
+
+            if (text_filter.length == 0 && type_filter.length == 0) {
+                tempentities = datavalues;
+            } else if (type_filter.length == 0) {
+                tempentities = text_filter;
+            } else {
+                tempentities = type_filter;
+            }
+
+            console.log(tempentities);
+            entitydataprocessing(tempentities);
+        }
+
+        function keyphrase_filter() {
+            var searchvalue = document.getElementById('keyphrasetext').value;
+            searchvalue = searchvalue.toUpperCase();
+
+            datavalues = Object.values(keyPhrases);
+            // console.log(datavalues);
+
+            var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+            // console.log(text_filter.length);
+
+            tempentities = text_filter.length == 0 ? datavalues : text_filter;
+
+            // console.log(tempentities);
+            keyphrasedataprocessing(tempentities);
+        }
+
+        function syntax_filter() {
+            var searchvalue = document.getElementById('syntaxseachtext').value;
+            searchvalue = searchvalue.toUpperCase();
+            console.log(searchvalue);
+            datavalues = Object.values(syntaxtokens);
+            console.log(datavalues);
+
+            var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+            console.log(text_filter.length);
+
+            var tag_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.PartOfSpeech
+                    .Tag)
+                .toUpperCase()).search(searchvalue) != -1);
+            console.log(tag_filter.length);
+
+
+            if (text_filter.length == 0 && tag_filter.length == 0) {
+                temdata = datavalues;
+            } else if (tag_filter.length == 0) {
+                temdata = text_filter;
+            } else {
+                temdata = tag_filter;
+            }
+
+            console.log(temdata);
+            syntaxdataprocessing(temdata);
+        }
+
+
+        function piioffset_filter() {
+            var searchvalue = document.getElementById('piioffsetseachtext').value;
+            searchvalue = searchvalue.toUpperCase();
+            console.log(searchvalue);
+            datavalues = Object.values(piioffsetentities);
+            console.log(datavalues);
+
+            var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+            console.log(text_filter.length);
+
+            var type_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.Type)
+                .toUpperCase()).search(searchvalue) != -1);
+            console.log(type_filter.length);
+
+
+            if (text_filter.length == 0 && type_filter.length == 0) {
+                temdata = datavalues;
+            } else if (type_filter.length == 0) {
+                temdata = text_filter;
+            } else {
+                temdata = type_filter;
+            }
+
+            console.log(temdata);
+            piioffsetdataprocessing(temdata);
+        }
+
+        function piilablset_filter() {
+            var searchvalue = document.getElementById('piilabelsearchtext').value;
+            searchvalue = searchvalue.toUpperCase();
+            console.log(searchvalue);
+            datavalues = Object.values(piioffsetentities);
+            console.log(datavalues);
+
+            var type_filter = datavalues.filter(element => ((element.Type)
+                .toUpperCase()).search(searchvalue) != -1);
+            console.log(type_filter.length);
+
+            temdata = type_filter.length == 0 ? datavalues : type_filter;
+            console.log(temdata);
+            piilabeldataprocessing(temdata);
         }
     </script>
     <script>
@@ -2003,8 +2121,7 @@
         <div class="textareadiv">
             <label for="comprehendtextara" class="headings">Input Text</label>
             <textarea id="comprehendtextara" class="textinput" name="" maxlength="100000"
-                placeholder="But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and"
-                onkeyup="textchange()">Hello Zhang Wei, I am John. Your AnyCompany Financial Services, LLC credit card account 1111-0000-1111-0008 has a minimum payment of $24.53 that is due by July 31st. Based on your autopay settings, we will withdraw your payment on the due date from your bank account number XXXXXX1111 with the routing number XXXXX0000.
+                placeholder="But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and">Hello Zhang Wei, I am John. Your AnyCompany Financial Services, LLC credit card account 1111-0000-1111-0008 has a minimum payment of $24.53 that is due by July 31st. Based on your autopay settings, we will withdraw your payment on the due date from your bank account number XXXXXX1111 with the routing number XXXXX0000.
 
 Your latest statement was mailed to 2200 West Cypress Creek Road, 1st Floor, Fort Lauderdale, Florida, 33309.
 After your payment is received, you will receive a confirmation text message at 206-555-0100.
@@ -2112,8 +2229,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search.."
-                            onkeyup="filterdata('hi','bye')">
+                        <input id="searchentity" class="nooutline searchtext" type="text" placeholder="Search.."
+                            onkeyup="entitidata_filter()">
                     </div>
 
                     <div id="paginationentity" class="pagination">
@@ -2151,7 +2268,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+                        <input id="keyphrasetext" class="nooutline searchtext" type="text" placeholder="Search.."
+                            onkeyup="keyphrase_filter()">
                     </div>
 
                     <div id="paginationtblkeyphrase" class="pagination">
@@ -2206,7 +2324,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+                        <input id="piilabelsearchtext" class="nooutline searchtext" type="text"
+                            placeholder="Search.." onkeyup="piilablset_filter()">
                     </div>
 
                     <div id="paginationpii" class="pagination">
@@ -2243,7 +2362,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+                        <input id="piioffsetseachtext" class="nooutline searchtext" type="text"
+                            placeholder="Search.." onkeyup="piioffset_filter()">
                     </div>
 
                     <div id="paginationentity" class="pagination">
@@ -2299,7 +2419,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+                        <input id="syntaxseachtext" class="nooutline searchtext" type="text" placeholder="Search.."
+                            onkeyup="syntax_filter()">
                     </div>
 
                     <div id="paginationsyntax" class="pagination">
@@ -2512,7 +2633,7 @@ If you have questions about your bill, AnyCompany Customer Service is available 
         display: flex;
     }
 
-    #searchtext {
+    .searchtext {
         font-size: 13px;
         font-family: "Open Sans", sans-serif;
         color: #000000 !important;
