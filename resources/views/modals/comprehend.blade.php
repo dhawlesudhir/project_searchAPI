@@ -73,6 +73,10 @@
         var syntaxtokens;
         var keyPhrases;
 
+        let perpage = 10;
+        let pages = 0;
+        let currentpage = 1;
+
 
         var textfromarea = document.getElementById("comprehendtextara").value;
 
@@ -1586,6 +1590,8 @@
                 .then(result => {
                     console.log(result)
                     responsedataprocessing(result);
+                    showentitytab();
+
                     document.getElementById("btnAnalyze").style.display = "block";
                     document.getElementById("btnanalyzing").style.display = "none";
                     // console.log(result.Entities);
@@ -1618,6 +1624,7 @@
         }
 
         function entitydataprocessing(data) {
+            // alert("called");
             var count = data.length;
             var entitytable = document.getElementById("entitytablebody");
             entitytable.innerHTML = "";
@@ -1678,13 +1685,19 @@
                 //column 3 filling
                 score = data[index].Score;
                 // fixedScore =
-                cell3.innerHTML = score.toFixed(10);
+                // score = score * 100;
+                cell3.innerHTML = scoreRound(score);
             } //for end
 
             document.getElementById("entity_textaradisabled").innerHTML = temp_textfromarea;
-
+            // createpagination('paginationentity', entities, 'entities', 1);
 
         } //funends
+
+        function scoreRound(score) {
+            return score.toString().substr(0, 4)
+        } //funends
+
 
         function languagedataprocessing(data) {
             var count = data.length;
@@ -1696,7 +1709,8 @@
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 cell1.innerHTML = data[index].LanguageCode;
-                cell2.innerHTML = data[index].Score;
+                // cell2.innerHTML = data[index].Score;
+                cell2.innerHTML = scoreRound(data[index].Score);
             }
             document.getElementById("language_textaradisabled").innerHTML = textfromarea;
             updateHTML_response(JSON.stringify(data, null, '\t'));
@@ -1722,7 +1736,7 @@
                 phrase = data[index].Text;
                 // filling fields
                 cell1.innerHTML = phrase;
-                cell2.innerHTML = data[index].Score;
+                cell2.innerHTML = scoreRound(data[index].Score);
 
                 // replacing normal text to styled text
                 result = temp_textfromarea.replaceAll(phrase, `<span class="bb-entiry-person">` + phrase +
@@ -1776,7 +1790,7 @@
                 var row2_cell3 = row2.insertCell(2);
                 row2_cell1.innerHTML = text;
                 row2_cell2.innerHTML = data[index].Type;
-                row2_cell3.innerHTML = data[index].Score;
+                row2_cell3.innerHTML = scoreRound(data[index].Score);
             }
             document.getElementById("piioffset_textaradisabled").innerHTML = temp_textfromarea;
             // updateHTML_response(JSON.stringify(data, null, '\t'));
@@ -1797,7 +1811,7 @@
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 cell1.innerHTML = data[index].Type;
-                cell2.innerHTML = data[index].Score;
+                cell2.innerHTML = scoreRound(data[index].Score);
             }
             // updateHTML_response(JSON.stringify(data, null, '\t'));
 
@@ -1815,25 +1829,25 @@
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 cell1.innerHTML = "Positive";
-                cell2.innerHTML = data.SentimentScore.Positive;
+                cell2.innerHTML = scoreRound(data.SentimentScore.Positive);
 
                 var row = tablebodyObj.insertRow(1);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 cell1.innerHTML = "Negative";
-                cell2.innerHTML = data.SentimentScore.Negative;
+                cell2.innerHTML = scoreRound(data.SentimentScore.Negative);
 
                 var row = tablebodyObj.insertRow(2);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 cell1.innerHTML = "Neutral";
-                cell2.innerHTML = data.SentimentScore.Neutral;
+                cell2.innerHTML = scoreRound(data.SentimentScore.Neutral);
 
                 var row = tablebodyObj.insertRow(3);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 cell1.innerHTML = "Mixed";
-                cell2.innerHTML = data.SentimentScore.Mixed;
+                cell2.innerHTML = scoreRound(data.SentimentScore.Mixed);
             }
             document.getElementById("sentiment_textaradisabled").innerHTML = textfromarea;
             // updateHTML_response(JSON.stringify(data, null, '\t'));
@@ -1845,33 +1859,28 @@
             var tableobj = document.getElementById("tbodysyntaxtable");
             tableobj.innerHTML = "";
             var textstyled = '';
-            // var payloaddata = '';
-            // var payloaddata1 = '';
-            // console.log(data);
+            var temp_textfromarea = textfromarea;
+
             for (let index = 0; index < count; index++) {
                 var row = tableobj.insertRow(index);
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
                 var cell3 = row.insertCell(2);
-                // console.log(data[index]);
+
+
                 cell1.innerHTML = data[index].Text;
                 text = data[index].Text;
-                // payloaddata = payloaddata + " " + text;
 
-                // if (payloaddata.length > 40) {
-                //     payloaddata1 = payloaddata1 + "\n" + payloaddata;
-                //     payloaddata = '';
-                // }
+                result = temp_textfromarea.replaceAll(text, `<span class="hoveronspan">` + text +
+                    "</span>");
+
+                temp_textfromarea = result;
 
 
-                textstyled = textstyled + ` <span class="hoveronspan">` + text + "</span>";
                 cell2.innerHTML = data[index].PartOfSpeech.Tag;
-                cell3.innerHTML = data[index].PartOfSpeech.Score;
+                cell3.innerHTML = scoreRound(data[index].PartOfSpeech.Score);
             }
-            document.getElementById("syntax_textaradisabled").innerHTML = textstyled;
-            // updateHTML_response(JSON.stringify(data, null, '\t'));
-
-
+            document.getElementById("syntax_textaradisabled").innerHTML = temp_textfromarea;
         }
 
         function addclass(id, className) {
@@ -1904,6 +1913,7 @@
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
             updateHTML_response(JSON.stringify(entities, null, '\t'));
+            createpagination('paginationentity', entities, 'entities', 1);
         }
 
         function showphrasetab() {
@@ -1928,6 +1938,7 @@
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
             updateHTML_response(JSON.stringify(keyPhrases, null, '\t'));
+            createpagination('paginationtblkeyphrase', keyPhrases, 'keyPhrases', 2);
 
         }
 
@@ -2030,6 +2041,7 @@
             document.getElementsByClassName("divtogglesyntax")[0].style.display = 'block';
             document.getElementsByClassName("divtogglesyntax")[1].style.display = 'block';
             updateHTML_response(JSON.stringify(syntaxtokens, null, '\t'));
+            createpagination('paginationsyntax', syntaxtokens, 'syntaxtokens', 5);
 
         }
 
@@ -2041,11 +2053,14 @@
                 document.getElementsByClassName('divtogglekeypii')[1].style.display = 'block';
                 document.getElementsByClassName('divtogglekeypii')[2].style.display = 'none';
                 document.getElementsByClassName('divtogglekeypii')[3].style.display = 'block';
+                createpagination('paginationpiioffset', piioffsetentities, 'piioffsetentities', 3);
+
 
             } else {
                 document.getElementsByClassName('divtogglekeypii')[1].style.display = 'none';
                 document.getElementsByClassName('divtogglekeypii')[2].style.display = 'block';
                 document.getElementsByClassName('divtogglekeypii')[3].style.display = 'none';
+                createpagination('paginationpiilabel', piilabelentities, 'piilabelentities', 4);
 
             }
 
@@ -2055,16 +2070,12 @@
         function entitidata_filter() {
             var searchvalue = document.getElementById('searchentity').value;
             searchvalue = searchvalue.toUpperCase();
-            console.log(searchvalue);
             datavalues = Object.values(entities);
-            console.log(datavalues);
 
             var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
-            console.log(text_filter.length);
 
             var type_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.Type)
                 .toUpperCase()).search(searchvalue) != -1);
-            console.log(type_filter.length);
 
 
             if (text_filter.length == 0 && type_filter.length == 0) {
@@ -2075,8 +2086,9 @@
                 tempentities = type_filter;
             }
 
-            console.log(tempentities);
             entitydataprocessing(tempentities);
+            createpagination('paginationentity', tempentities, 'tempentities', 1);
+
         }
 
         function keyphrase_filter() {
@@ -2093,14 +2105,16 @@
 
             // console.log(tempentities);
             keyphrasedataprocessing(tempentities);
+            createpagination('paginationtblkeyphrase', tempentities, 'tempentities', 2);
+
         }
 
         function syntax_filter() {
             var searchvalue = document.getElementById('syntaxseachtext').value;
             searchvalue = searchvalue.toUpperCase();
-            console.log(searchvalue);
+            // console.log(searchvalue);
             datavalues = Object.values(syntaxtokens);
-            console.log(datavalues);
+            // console.log(datavalues);
 
             var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
             console.log(text_filter.length);
@@ -2119,8 +2133,10 @@
                 temdata = tag_filter;
             }
 
-            console.log(temdata);
+            // console.log(temdata);
             syntaxdataprocessing(temdata);
+            createpagination('paginationsyntax', temdata, 'tempentities', 5);
+
         }
 
 
@@ -2149,6 +2165,7 @@
 
             console.log(temdata);
             piioffsetdataprocessing(temdata);
+            createpagination('paginationpiioffset', temdata, 'tempentities', 3);
         }
 
         function piilablset_filter() {
@@ -2165,6 +2182,7 @@
             temdata = type_filter.length == 0 ? datavalues : type_filter;
             console.log(temdata);
             piilabeldataprocessing(temdata);
+            createpagination('paginationpiilabel', temdata, 'tempentities', 4);
         }
 
         function copytext(element) {
@@ -2184,6 +2202,115 @@
 
             // Alert the copied text
             alert("Copied the text: " + copyText);
+        }
+        //now
+        function paginationwork(element, data, page, tablenumber) {
+            console.log(element + "  " + page + " current " + currentpage);
+
+            if (page == 'pre') {
+                page = currentpage - 1;
+                page = page < 1 ? 1 : page;
+            } else if (page == 'next') {
+                page = currentpage + 1;
+                page = page > pages ? pages : page;
+            }
+            currentpage = page;
+            console.log("  updated " + page);
+
+            start = (page * perpage) - perpage;
+            start = start < 0 ? 0 : start;
+            end = (page * perpage) - 1;
+            console.log(start + "/" + end);
+            var tempdata = [];
+            let index2 = 0;
+            for (let index = start; index <= end; index++) {
+                if (data[index]) {
+                    tempdata[index2] = data[index];
+                    index2++;
+                } else {
+                    break;
+                }
+            }
+
+            elementname = element.split('-')[0];
+            for (let index = 1; index <= pages; index++) {
+                elementid = elementname + "-" + index;
+                console.log("generatedid " + elementid);
+                if (index == page) {
+                    var element = document.getElementById(elementid);
+                    element.classList.add("selected");
+
+                } else {
+                    var element = document.getElementById(elementid);
+                    element.classList.remove("selected");
+                }
+
+            }
+
+
+            switch (tablenumber) {
+                case 1:
+                    entitydataprocessing(tempdata);
+                    break;
+
+                case 2:
+                    keyphrasedataprocessing(tempdata);
+                    break;
+
+                case 3:
+                    piioffsetdataprocessing(tempdata);
+                    break;
+
+
+                case 4:
+                    piilabeldataprocessing(tempdata);
+                    break;
+
+
+                default:
+                    syntaxdataprocessing(tempdata);
+            }
+
+
+        }
+
+        function createpagination(element, data, datasetname, tablenumber) {
+            // console.log(data);
+            let elementobj = document.getElementById(element);
+            elementobj.innerHTML = '';
+            pages = data.length / perpage;
+            pages = Math.ceil(pages);
+            console.log("pages " + pages);
+
+
+            elementobj.innerHTML += `<span id="previous" ` + `onclick="paginationwork('` +
+                element + `',` + datasetname +
+                `,'pre',` + tablenumber +
+                `)"> < </span>`;
+
+            for (let index = 1; index <= pages; index++) {
+                elementid = element + "-" + index;
+                if (index == 1) {
+                    elementobj.innerHTML += ` <a id="` + elementid + `"  onclick="paginationwork('` +
+                        elementid + `',` + datasetname +
+                        `,` + index + `,` + tablenumber +
+                        `)">` +
+                        index + `</a>`;
+
+                } else {
+                    elementobj.innerHTML += ` <a id="` + elementid + `"  onclick="paginationwork('` + elementid +
+                        `',` + datasetname + `,` + index + `,` + tablenumber +
+                        `)">` + index +
+                        `</a>`;
+                }
+            }
+            elementid = 'next';
+
+            elementobj.innerHTML += `<span id="nextpageentity" ` + `onclick="paginationwork('` +
+                element + `',` + datasetname +
+                `,'next',` + tablenumber +
+                `)"> > </span>`;
+            paginationwork(element + "-" + 1, data, 1, tablenumber);
         }
     </script>
 @endpush
@@ -2316,12 +2443,14 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                     </div>
 
                     <div id="paginationentity" class="pagination">
-                        <span>
+                        {{-- <span id="previouspageentity">
                             < </span>
-                                <a href="" class="selected">1</a>
+                                <a class="selected" onclick="paginationwork(entities,1)">1</a>
                                 <a href="">2</a>
                                 <a href="">3</a>
-                                <span> > </span>
+                                <span id="nextpageentity"> > </span> --}}
+                        {{-- code will be generated dynamically --}}
+
                     </div>
                 </div>
 
@@ -2355,12 +2484,14 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                     </div>
 
                     <div id="paginationtblkeyphrase" class="pagination">
-                        <span>
+                        {{-- <span>
                             < </span>
                                 <a href="" class="selected">1</a>
                                 <a href="">2</a>
                                 <a href="">3</a>
-                                <span> > </span>
+                                <span> > </span> --}}
+                        {{-- code will be generated dynamically --}}
+
                     </div>
                 </div>
 
@@ -2410,13 +2541,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                             placeholder="Search.." onkeyup="piilablset_filter()">
                     </div>
 
-                    <div id="paginationpii" class="pagination">
-                        <span>
-                            < </span>
-                                <a href="" class="selected">1</a>
-                                <a href="">2</a>
-                                <a href="">3</a>
-                                <span> > </span>
+                    <div id="paginationpiilabel" class="pagination">
+                        {{-- //pagination dynamically will be added --}}
                     </div>
                 </div>
 
@@ -2448,13 +2574,10 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                             placeholder="Search.." onkeyup="piioffset_filter()">
                     </div>
 
-                    <div id="paginationentity" class="pagination">
-                        <span>
-                            < </span>
-                                <a href="" class="selected">1</a>
-                                <a href="">2</a>
-                                <a href="">3</a>
-                                <span> > </span>
+                    <div id="paginationpiioffset" class="pagination">
+                        {{-- //pagination dynamically will be added --}}
+
+
                     </div>
                 </div>
 
@@ -2506,12 +2629,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
                     </div>
 
                     <div id="paginationsyntax" class="pagination">
-                        <span>
-                            < </span>
-                                <a href="" class="selected">1</a>
-                                <a href="">2</a>
-                                <a href="">3</a>
-                                <span> > </span>
+                        {{-- //pagination dynamically will be added --}}
+
                     </div>
                 </div>
 
@@ -2710,7 +2829,8 @@ If you have questions about your bill, AnyCompany Customer Service is available 
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
+        gap: 10px;
     }
 
     .iconinputbox {
@@ -2724,7 +2844,9 @@ If you have questions about your bill, AnyCompany Customer Service is available 
         font-size: 13px;
         font-family: "Open Sans", sans-serif;
         color: #000000 !important;
-        width: 400px;
+        width: auto;
+        min-width: 350px;
+        max-width: 400px;
         border: none;
         font-weight: 600;
     }
@@ -2734,11 +2856,12 @@ If you have questions about your bill, AnyCompany Customer Service is available 
     .pagination {
         display: flex;
         justify-content: space-between;
-        width: 150px;
+        width: auto;
         text-align: center;
         align-content: center;
         font-size: 16px;
         font-weight: 900;
+        column-gap: 10px;
     }
 
     .pagination a {
