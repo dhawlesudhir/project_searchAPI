@@ -2205,7 +2205,7 @@
         }
         //now
         function paginationwork(element, data, page, tablenumber) {
-            console.log(element + "  " + page + " current " + currentpage);
+            // console.log(element + "  " + page + " current " + currentpage);
 
             if (page == 'pre') {
                 page = currentpage - 1;
@@ -2215,7 +2215,7 @@
                 page = page > pages ? pages : page;
             }
             currentpage = page;
-            console.log("  updated " + page);
+            // console.log("  updated " + page);
 
             start = (page * perpage) - perpage;
             start = start < 0 ? 0 : start;
@@ -2235,7 +2235,7 @@
             elementname = element.split('-')[0];
             for (let index = 1; index <= pages; index++) {
                 elementid = elementname + "-" + index;
-                console.log("generatedid " + elementid);
+                // console.log("generatedid " + elementid);
                 if (index == page) {
                     var element = document.getElementById(elementid);
                     element.classList.add("selected");
