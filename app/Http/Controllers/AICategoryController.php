@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Validator;
+
 
 class AICategoryController extends Controller
 {
@@ -84,6 +86,88 @@ class AICategoryController extends Controller
         echo $response;
         die;
 
+
+        return response()->json([
+            'status' => 'success',
+            'response' => $response
+        ], 200);
+    }
+
+    public function AWSimagerecognization(Request $request)
+    {
+
+        // if (!$request->hasFile('image')) {
+        //     return response()->json([
+        //         'status' => 'failed',
+        //         'response' => "send or add 'image' data"
+        //     ], 400);
+        // }
+
+        // if (!($file_formate == 'jpeg') or !($file_formate == 'png')) {
+        //     return response()->json([
+        //         'status' => 'failed',
+        //         'response' => "supported file format: JPEG or PNG"
+        //     ], 400);
+        // }
+
+        if (!$request->hasFile('image')) {
+            return response()->json([
+                'status' => 'failed',
+                'response' => "send or add 'image' data"
+            ], 400);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'image' => 'mimes:png,jpeg',
+        ]);
+
+        if ($validator->fails()) {
+            return "supported file format: JPEG or PNG";
+        }
+
+        // Retrieve the validated input...
+        $validated = $validator->validated();
+
+        $file =  $validated['image'];
+
+        $file = file_get_contents($file);
+
+        if (!$file) {
+            echo "file has no content";
+        }
+        echo "file uploaded";
+        die;
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://u6r0dx9pzc.execute-api.us-east-1.amazonaws.com/v1/upload',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $file,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: image/jpeg'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        if (!$response) {
+            return response()->json([
+                'status' => 'failed',
+                'response' => 'failed to get response, try again'
+            ], 500);
+        }
+
+        echo $response;
+        die;
 
         return response()->json([
             'status' => 'success',

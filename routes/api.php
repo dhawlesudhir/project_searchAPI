@@ -25,3 +25,4 @@ Route::get('/text', [SpeechController::class, 'textToSpeech']);
 Route::get('/getText', [SpeechController::class, 'textExtract']);
 Route::get('/textspeechaws', [SpeechController::class, 'textToSpeechAWS']);
 Route::post('/comprehend', [AICategoryController::class, 'AWScomprehend']);
+Route::post('/imagerecognization', [AICategoryController::class, 'AWSimagerecognization']);

@@ -1,5 +1,19 @@
 @extends('layouts.modal')
 
+@push('scripts')
+    <script>
+        function uploadpicture(file) {
+            // console.log(file.files[0].name);
+            var imageobj = document.getElementById('imgUplded');
+            imageobj.src = URL.createObjectURL(file.target.files[0]);
+
+            console.log(URL.createObjectURL(file.target.files[0]));
+        }
+    </script>
+@endpush
+
+
+
 @push('header')
     <h1>Object Recognition</h1>
 @endpush
@@ -17,7 +31,7 @@
         <div class="imagediv">
             <p class="title">Document Name</p>
             <picture>
-                <img src="/assets/images/NoPath.png">
+                <img id="imgUplded" src="/assets/images/NoPath.png">
             </picture>
             <!-- <input type="file" class="btn" id="btnChoose" name="myfile"> -->
             <select class="btn" id="btnChoose">Choose Sample Document
@@ -26,11 +40,11 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-        <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
-            <input type="file" id="actual-btn" hidden />
+                                                                                                                                                                            <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+            <input type="file" id="btnUpldimage" onchange="uploadpicture(event)" hidden />
 
             <!--our custom file upload button-->
-            <label id="labelbtnUpld" for="actual-btn" class="btn" onclick="uploadpicture()">Upload Document</label>
+            <label id="labelbtnUpld" for="btnUpldimage" class="btn">Upload Document</label>
             <!-- </div> -->
 
         </div>
@@ -137,9 +151,10 @@
         /* height: 5px; */
     }
 
+
     img {
         height: 100%;
-        width: 80%;
+        width: 100%;
     }
 
     picture {
@@ -207,25 +222,25 @@
 
     /* Style the buttons inside the tab */
     /* .tab a {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
-  } */
+          background-color: inherit;
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          transition: 0.3s;
+          font-size: 17px;
+          } */
 
     /* Change background color of buttons on hover */
     /* .tab a:hover {
-  background-color: #ddd;
-  } */
+          background-color: #ddd;
+          } */
 
     /* Create an active/current tablink class */
     /* .tab a.active {
-  background-color: #0091FF;
-  } */
+          background-color: #0091FF;
+          } */
 
     /* Style the tab content */
     .tabcontent {
