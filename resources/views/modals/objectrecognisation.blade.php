@@ -364,13 +364,13 @@
                 </div>
             </picture>
 
-            <select class="btn" id="btnChoose">Choose Sample Document
+            {{-- <select class="btn" id="btnChoose">Choose Sample Document
                 <option value="">Choose Sample Document</option>
-            </select>
+            </select> --}}
             {{-- <a id="afordowload" href="bob:http://127.0.0.1:8000/8288ebc2-07c2-4a6b-9cc4-3a53b63e9064">testtstst</a> --}}
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="btnUpldimage" onchange="uploadpicture(event)" hidden />
 
             <!--our custom file upload button-->
@@ -397,34 +397,7 @@
             </div>
             <div id="Labelsinformation" class="objectinformation">
                 <p class="title">Results</p>
-                <div class="Oinfolist">
-                    <span>Person</span>
-                    <span class="alias">99%</span>
-                </div>
-                <div class="Oinfolist">
-                    <span>Person</span>
-                    <span class="alias">99%</span>
-                </div>
-                <div class="Oinfolist">
-                    <span>Person</span>
-                    <span class="alias">99%</span>
-                </div>
-                <div class="Oinfolist">
-                    <span>Person</span>
-                    <span class="alias">99%</span>
-                </div>
-                <div class="Oinfolist">
-                    <span>Person</span>
-                    <span class="alias">99%</span>
-                </div>
-                <div class="Oinfolist">
-                    <span>Person</span>
-                    <span class="alias">99%</span>
-                </div>
-                <div class="Oinfolist">
-                    <span>Person</span>
-                    <span class="alias">99%</span>
-                </div>
+
             </div>
         </div>
     </div>
@@ -478,8 +451,9 @@
     .imagediv {
         display: grid;
         grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
         /* grid-template-rows: 5% 75% 20%; */
-        column-gap: 15px;
+        /* column-gap: 15px; */
         /* background-color: #EEEEEE; */
         /* width: 500px;
         margin: 10px; */
@@ -551,6 +525,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-left: 250px;
     }
 
     #btnanalyzing {
@@ -639,6 +614,7 @@
         display: flex;
         justify-content: space-between;
         padding: 5px 0 5px 0;
+        /* transition: opacity 10s ease-in-out; */
     }
 
     .Oinfolist:last-child {
