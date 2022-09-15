@@ -6,8 +6,7 @@
             // console.log(file.files[0].name);
             var imageobj = document.getElementById('imgUplded');
             imageobj.src = URL.createObjectURL(file.target.files[0]);
-
-            console.log(URL.createObjectURL(file.target.files[0]));
+            // console.log();
         }
     </script>
 @endpush
@@ -40,7 +39,7 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                            <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                                <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="btnUpldimage" onchange="uploadpicture(event)" hidden />
 
             <!--our custom file upload button-->
@@ -49,7 +48,7 @@
 
         </div>
         <hr class="hrSeperator">
-        <div class="informationDiv2">
+        <div class="informationDiv">
             <div class="tools">
                 <div class="iconinputbox">
                     <span class="material-symbols-outlined">
@@ -115,8 +114,9 @@
     }
 
     .orcontainer {
-        margin: 15px 0 10px 0px;
+        /* margin: 15px 0 10px 0px; */
         display: flex;
+        width: 100%;
     }
 
     .footerDiv {
@@ -139,15 +139,15 @@
         grid-template-columns: 1fr;
         column-gap: 15px;
         /* background-color: #EEEEEE; */
-        width: 400px;
-        margin: 0 10px 0 10px;
+        /* width: 500px;
+        margin: 10px; */
 
     }
 
-    .imagediv p,
-    .informationDiv p {
+    .imagediv p {
         grid-column: 1/4;
-        margin: 5px 0 10px 15px;
+        /* margin: 5px 0 10px 15px; */
+        margin: 10px;
         /* height: 5px; */
     }
 
@@ -162,9 +162,9 @@
         grid-column: 1/4;
         border: 1px solid #DDDDDD;
         border-radius: 8px;
-        margin: 0px 0px 10px 20px;
-        height: 400px;
-        width: 360px;
+        margin: 10px;
+        height: 410px;
+        width: 450px;
     }
 
     #labelbtnUpld {
@@ -185,130 +185,11 @@
         /* width: max-content; */
     }
 
-
-    .informationDiv {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 7% 10% auto;
-        width: 100%;
-        align-items: start;
-    }
-
-    /* Style the tab */
-    #tabs {
-        overflow: hidden;
-        border-bottom: 1px solid #EEEEEE;
-        margin: 0 25px 0 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        grid-column: 1/4;
-    }
-
-    .tab {
-        /* margin: 5px; */
-        text-decoration: none;
-        font-size: 13px;
-        color: #111111;
-        font-weight: bold;
-        padding: 0 10px 8px 10px;
-        box-sizing: border-box;
-        border-bottom: 3px solid transparent;
-    }
-
-    .active {
-        border-bottom: 3px solid #0091FF;
-    }
-
-    /* Style the buttons inside the tab */
-    /* .tab a {
-          background-color: inherit;
-          float: left;
-          border: none;
-          outline: none;
-          cursor: pointer;
-          padding: 14px 16px;
-          transition: 0.3s;
-          font-size: 17px;
-          } */
-
-    /* Change background color of buttons on hover */
-    /* .tab a:hover {
-          background-color: #ddd;
-          } */
-
-    /* Create an active/current tablink class */
-    /* .tab a.active {
-          background-color: #0091FF;
-          } */
-
-    /* Style the tab content */
-    .tabcontent {
-        height: 100%;
-        /* width: 100%; */
-        margin: 0 20px 0 20px;
-        grid-column: 1/2;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 15% auto;
-    }
-
-    .tabcontent .tools {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-
     .iconinputbox {
         border: 1px solid #DDDDDD;
         border-radius: 16px;
         padding: 7px 5px 7px 10px;
         display: flex;
-    }
-
-    #searchtext {
-        font-size: 13px;
-        font-family: "Open Sans", sans-serif;
-        color: #000000;
-        width: 180px;
-        border: none;
-    }
-
-    #segmentline {
-        border-radius: 21px;
-        font-size: 13px;
-        border: 1px solid #DDDDDD;
-        padding: 7px 5px 7px 10px;
-        font-family: "Open Sans", sans-serif;
-        color: #000000;
-        height: 40px;
-    }
-
-
-    #searchtext::placeholder {
-        font-size: 13px;
-        color: #000000;
-    }
-
-    .tagstext {
-        display: flex;
-        flex-wrap: wrap;
-        /* justify-content: space-between; */
-        align-content: flex-start;
-        align-items: center;
-        /* grid-template-rows: 1fr; */
-    }
-
-    .tagstext span {
-        background-color: #F5F5F5;
-        padding: 5px 10px 5px 10px;
-        font-size: 14px;
-        margin: 7px;
-        color: #000000;
-        font-family: "Open Sans", sans-serif;
-        font-weight: 400;
-        text-transform: capitalize;
-        /* width: ; */
     }
 
     span.material-symbols-outlined {
@@ -324,184 +205,28 @@
             'opsz'24
     }
 
-
-    .download {
-        /* color: #FFFFFF !important; */
-        background-color: #0091FF !important;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 50px;
-        padding-left: 9px;
-    }
-
-    .download {
-        background-color: transparent !important;
-        color: #0091FF !important;
-        gap: 40px;
-    }
-
-    .reset {
-        text-align: center;
-        margin-right: 20px;
-    }
-
-    /* tab toggle manual */
-    .rawtext {
-        display: grid;
-    }
-
-    .tables {
-        display: none;
-    }
-
-    .forms {
-        display: none;
-    }
-
-    .queries {
-        display: none;
-    }
-
-
-
-    .forms #searchtext {
-        width: 350px;
-    }
-
-    .tables #searchtext {
-        width: 350px;
-    }
-
-    .fromsitems {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: repeat(5, 50px);
-        row-gap: 30px;
-        column-gap: 20px;
-        overflow: hidden;
-    }
-
-    .fromsitem p {
-        font-size: 13px;
-        margin: 0;
-    }
-
-    .fromsitem p:first-child {
-        font-weight: 700;
-        padding: 5px;
-    }
-
-    .fromsitem p:last-child {
-        width: 180px;
-        height: 20px;
-        background-color: #F5F5F5;
-        padding: 5px 10px 5px 10px;
-    }
-
-    /* css code for table tab */
-
-
-    table td {
-        background-color: #F0F0F0;
-        padding: 5px;
-    }
-
-    table th {
-        text-align: start;
-    }
-
-    table .itemname {
-        width: 400px;
-    }
-
-    table .qty {
-        width: 150px;
-    }
-
-    table .price {
-        width: 150px;
-    }
-
-    table .total {
-        width: 150px;
-    }
-
-
-    /* css for queries tab   */
-
-    .queries {
-        overflow: hidden;
-    }
-
-    #notetext {
-        font-size: 10px;
-    }
-
-    .qryitems {
-        display: grid;
-        /* margin-left: 20px; */
-        margin-top: 20px;
-    }
-
-    .qryitem {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(6, 30px);
-        height: 80px;
-    }
-
-    .qryitem span:first-child {
-        font-weight: bold;
-        margin-left: 10px;
-    }
-
-    .qryitem .alias {
-        font-weight: 400;
-    }
-
-    .qryitem p {
-        height: 20px;
-        background-color: #F5F5F5;
-        padding: 5px 10px 5px 10px;
-        margin: 0;
-    }
-
-    #qrysubmit {
-        width: 100px;
-    }
-
-    #qrysearch {
-        font-size: 13px;
-        font-family: "Open Sans", sans-serif;
-        color: #000000;
-        border: none;
-        width: 220px;
-    }
-
-    /* css for Object recognixation  */
-
-
-    .informationDiv2 {
+    .informationDiv {
         display: grid;
         /* display: none; */
 
         grid-template-columns: 1fr;
         grid-template-rows: 15% auto;
-        row-gap: 20px
+        row-gap: 20px;
+        margin: 10px 0;
     }
 
-    .informationDiv2 .tools {
-        margin-left: 25px;
-        width: 400px;
+    .informationDiv .tools {
+        margin-left: 80px;
+        width: 300px;
         display: grid;
         grid-template-columns: 1fr;
     }
 
-    .informationDiv2 .tools p {
-        margin-top: 15px;
+    .informationDiv .tools p {
+        /* color: #000000 !important; */
+        margin-top: 10px;
         text-align: center;
-        font-weight: 600;
+        font-weight: 400;
     }
 
     /* 9175431127 avinash*/
@@ -519,7 +244,7 @@
     }
 
     .objectinformation {
-        margin-left: 20px;
+        margin-left: 10px;
     }
 
     .objectinformation .Oinfolist {
