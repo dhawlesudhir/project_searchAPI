@@ -135,8 +135,8 @@ class AICategoryController extends Controller
         if (!$file) {
             echo "file has no content";
         }
-        echo "file uploaded";
-        die;
+        // echo "file uploaded";
+        // die;
 
         $curl = curl_init();
 
