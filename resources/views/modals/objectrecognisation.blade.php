@@ -8,7 +8,7 @@
         let Labels = '';
         let dataforDownload = [];
         let imageWidth = '450';
-        let imageHeight = '410';
+        let imageHeight = '400';
 
 
         // data for tesing
@@ -171,6 +171,7 @@
 
             imageWidth = imgobj.width;
             imageHeight = imgobj.height;
+            imageHeight = imgobj.height;
             console.log(" img width " + imageWidth);
             console.log("img height" + imageHeight);
         }
@@ -198,18 +199,26 @@
             document.getElementById("btnanalyzing").style.display = "block";
 
             fetch("http://127.0.0.1:8000/api/imagerecognization", requestOptions)
-                .then(response => response.json())
+                .then(response => {
+                    document.getElementById("btnanalyze").style.display = "flex";
+                    document.getElementById("btnanalyzing").style.display = "none";
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    if (response.status == 415) {
+                        let divobj = document.getElementById('Labelsinformation');
+                        divobj.innerHTML = '';
+                        divobj.innerHTML =
+                            `<p class="title">Results</p> <p class="errortext"> Unsupported file/image uploaded </p>`;
+                        throw new Error(415);
+                    }
+                })
                 .then(result => {
                     console.log("fetch response - " + result);
                     responseData = result;
-                    document.getElementById("btnanalyze").style.display = "flex";
-                    document.getElementById("btnanalyzing").style.display = "none";
                     processResponseData(result);
                 })
                 .catch(error => console.log('error', error));
-            // document.getElementById("btnanalyze").style.display = "flex";
-            // document.getElementById("btnanalyzing").style.display = "none";
-
         }
 
         processResponseData(TESTresponseData);
@@ -221,7 +230,6 @@
             processLabels(Labels, 1);
             // processInstances(Labels);
         }
-
 
         // data - reponse received from server
         // mode - 1=actual response   2=filter data
@@ -254,7 +262,12 @@
             // return false;
             let divobj = document.getElementById('div_imgcontainer');
 
-            console.log("labels " + instances.length);
+            // getting actula image height after customazation by HTML
+            imgobj = document.getElementById('imgUplded');
+
+            imageHeight = getImgSizeInfo(imgobj).height;;
+            // console.log("labels " + instances.length);
+            console.log("W & H " + imageWidth + " " + imageHeight);
 
             for (let index = 0; index < instances.length; index++) {
 
@@ -332,6 +345,33 @@
 
             processLabels(temp_labels, 2);
         }
+
+        function getRenderedSize(contains, cWidth, cHeight, width, height, pos) {
+            var oRatio = width / height,
+                cRatio = cWidth / cHeight;
+            return function() {
+                if (contains ? (oRatio > cRatio) : (oRatio < cRatio)) {
+                    this.width = cWidth;
+                    this.height = cWidth / oRatio;
+                } else {
+                    this.width = cHeight * oRatio;
+                    this.height = cHeight;
+                }
+                this.left = (cWidth - this.width) * (pos / 100);
+                this.right = this.width + this.left;
+                return this;
+            }.call({});
+        }
+
+        function getImgSizeInfo(img) {
+            var pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
+            return getRenderedSize(true,
+                img.width,
+                img.height,
+                img.naturalWidth,
+                img.naturalHeight,
+                parseInt(pos[0]));
+        }
     </script>
 @endpush
 
@@ -353,7 +393,8 @@
     <div class="orcontainer">
         <div class="imagediv">
             <p class="title">Document Name</p>
-            <picture>
+            <div class="divimgcontainer">
+                {{-- <picture> --}}
                 <div id="div_imgcontainer" class="imgcontainer">
                     <img id="imgUplded" src="{{ asset('/images/batting.jpg', true) }}">
                     {{-- <div class="imghighlight" style="top:100px;right:100px;width:100px;height:100px">
@@ -361,7 +402,8 @@
                         </div>
                     </div> --}}
                 </div>
-            </picture>
+                {{-- </picture> --}}
+            </div>
 
             {{-- <select class="btn" id="btnChoose">Choose Sample Document
                 <option value="">Choose Sample Document</option>
@@ -369,7 +411,7 @@
             {{-- <a id="afordowload" href="bob:http://127.0.0.1:8000/8288ebc2-07c2-4a6b-9cc4-3a53b63e9064">testtstst</a> --}}
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="btnUpldimage" onchange="uploadpicture(event)" hidden />
 
             <!--our custom file upload button-->
@@ -396,7 +438,7 @@
             </div>
             <div id="Labelsinformation" class="objectinformation">
                 <p class="title">Results</p>
-
+                <p>No results found</p>
             </div>
         </div>
     </div>
@@ -466,15 +508,30 @@
         /* height: 5px; */
     }
 
+    .divimgcontainer {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        grid-column: 1/4;
+        border: 1px solid #DDDDDD;
+        border-radius: 8px;
+        margin: 10px;
+        height: 400px;
+        width: 450px;
+    }
+
+
     .imgcontainer {
-        height: 100%;
-        width: 100%;
+        width: 450px;
         position: relative;
     }
 
     img {
         height: 100%;
         width: 100%;
+        max-height: 400px;
+        object-fit: contain;
+        object-position: 25% 0%;
     }
 
     .imghighlight {
@@ -509,15 +566,6 @@
 
 
 
-    picture {
-        text-align: center;
-        grid-column: 1/4;
-        border: 1px solid #DDDDDD;
-        border-radius: 8px;
-        margin: 10px;
-        height: 420px;
-        width: 450px;
-    }
 
     .labelbtnUpld {
         width: 140px;
@@ -625,5 +673,9 @@
     .objectinformation::-webkit-scrollbar {
         display: none;
         /* Safari and Chrome */
+    }
+
+    .errortext {
+        text-align: center
     }
 </style>

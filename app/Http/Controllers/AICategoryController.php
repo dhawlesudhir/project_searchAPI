@@ -122,7 +122,10 @@ class AICategoryController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return "supported file format: JPEG or PNG";
+            return response()->json([
+                'status' => 'failed',
+                'response' => "supported file format: JPEG or PNG"
+            ], 415);
         }
 
         // Retrieve the validated input...
