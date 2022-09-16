@@ -1,5 +1,64 @@
 @extends('layouts.modal')
 
+@push('scripts')
+    <script>
+        let fileobjURL = '';
+        let fileidfromserver = '';
+        let responseData = '';
+        let APP_URL = '';
+
+        function uploadAudio(files) {
+            const file = files.target.files[0];
+            fileobjURL = URL.createObjectURL(file);
+            console.log("file saved " + fileobjURL);
+            if (fileobjURL) {
+
+            }
+        }
+
+
+        function apicallsubmit() {
+
+            var formdata = new FormData();
+            formdata.append("File", fileobjURL);
+            formdata.append("Settings", "{\"setting1\": \"settings\", \"settings2\": \"settings\"}");
+
+            var requestOptions = {
+                method: 'POST',
+                body: formdata,
+                redirect: 'follow'
+            };
+
+            document.getElementById("btnSubmit").style.display = "none";
+            document.getElementById("btnanalyzing").style.display = "block";
+
+            fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/upload", requestOptions)
+                .then(response => {
+                    document.getElementById("btnSubmit").style.display = "flex";
+                    document.getElementById("btnanalyzing").style.display = "none";
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    if (response.status == 415) {
+                        alert('Unsupported file/image uploaded');
+                        throw new Error(415);
+                    }
+                })
+                .then(result => {
+                    console.log("fetch response - " + result);
+                    responseData = result;
+                })
+                .catch(error => console.log('error', error));
+        }
+
+        function apicallget() {
+
+        }
+
+        function
+    </script>
+@endpush
+
 @push('header')
     Speech To Text
 @endpush
@@ -13,16 +72,27 @@
 
 @push('artical')
     <!-- speech to text container -->
-    <div class="orcontainer">
-        <div class="imagediv">
+    <div class="articalcontainer">
+        <div class="transdiv">
             <p class="title">Transcription Output</p>
             <div name="" id="textfromaudio">
                 Click <strong>Start Transcribing</strong> below to begin a real-time transcription of what you speak into
                 your microphone
             </div>
-            <div class="divrecord">
-                <p>Current language: <span>English, US</span> </p>
-                <button id="btnRecord" for="actual-btn" class="btn" onclick="startRecording()">
+
+            {{-- <div class="divrecord"> --}}
+            <p class="transcriptlanguage">Current language: <span>English, US</span> </p>
+
+            <input type="file" id="btnUpldimage" onchange="uploadAudio(event)" hidden />
+            <!--our custom file upload button-->
+            <label id="btnanalyze" for="btnUpldimage" class="btn labelbtnUpld">Upload Audio</label>
+
+            <button id="btnanalyzing" type="button" class="labelbtnUpld btn">
+                <i id="converting" class="fa fa-spinner fa-spin"></i> Uploading
+            </button>
+            <button id="btnSubmit" class="btn" onclick="apicallsubmit()">Submit</button>
+
+            {{-- <button id="btnRecord" for="actual-btn" class="btn" onclick="startRecording()">
                     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
                         <path fill="#0091ff"
                             d="M10.021 12.208q-1.25 0-2.146-.896-.896-.895-.896-2.145V4.146q0-1.25.896-2.136.896-.885 2.146-.885t2.135.885q.886.886.886 2.136v5.021q0 1.25-.875 2.145-.875.896-2.146.896Zm-1.167 6v-2.437q-2.437-.333-4-2.219-1.562-1.885-1.562-4.385h2.291q0 1.854 1.302 3.125 1.303 1.27 3.136 1.27 1.833 0 3.125-1.27 1.292-1.271 1.292-3.125h2.291q0 2.5-1.562 4.385-1.563 1.886-4.021 2.219v2.437Z" />
@@ -38,8 +108,9 @@
                         <div class="box box5"></div>
                     </div>
                     <p>click to stop</p>
-                </div>
-            </div>
+                </div> --}}
+
+            {{-- </div> --}}
 
         </div>
 
@@ -398,8 +469,8 @@
 
 
 <style>
-    .orcontainer {
-        margin: 10px 0 0 5px;
+    .articalcontainer {
+        /* margin: 10px 0 0 5px; */
         display: flex;
         width: 100%;
     }
@@ -409,6 +480,7 @@
         font-size: 13px !important;
         font-weight: bold !important;
         /* margin: 0 0 10px 0 !important; */
+        height: 25px;
     }
 
     .footerDiv {
@@ -421,21 +493,26 @@
         align-items: center;
     }
 
-    .hrSeperator {
-        border: 1px solid #EEEEEE;
-        margin: 5px 0 20px 0;
-    }
 
-    .imagediv {
+
+    .transdiv {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 7% auto 16%;
-        column-gap: 15px;
+        /* grid-template-rows: 7% auto 16%; */
+        grid-template-rows: 40px 335px 35px 50px 50px;
+        ;
         /* border: 1px dotted black; */
         /* padding: 0 15px 0px 15px; */
+        width: 50%;
+        margin: 10px;
+        align-items: center;
     }
 
-    .imagediv p,
+    .transcriptlanguage {
+        grid-column: 1/4;
+    }
+
+    .transdiv p,
     .informationDiv p {
         grid-column: 1/4;
         margin: 5px 0 10px 15px;
@@ -444,7 +521,7 @@
 
     #textfromaudio {
         width: 380px;
-        height: 400px;
+        height: 325px;
         grid-column: 1/4;
         border-radius: 8px;
         resize: none;
@@ -453,7 +530,6 @@
         box-sizing: border-box;
         border: 1px solid #DDDDDD;
         color: #888888;
-
     }
 
     .imagediv strong {
@@ -465,6 +541,39 @@
     }
 
 
+    .labelbtnUpld {
+        width: 370px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* margin-left: 250px; */
+        grid-column: 1/4;
+        margin-left: 15px;
+    }
+
+    #btnSubmit {
+        display: block;
+    }
+
+    #btnanalyzing {
+        background-color: #0091FF;
+        color: white;
+        display: none;
+    }
+
+    #btnSubmit {
+        grid-column: 1/4;
+        width: 370px;
+        margin-left: 15px;
+        background-color: #0091FF;
+        color: white;
+    }
+
+    .hrSeperator {
+        border: 1px solid #EEEEEE;
+        margin: 5px 0 20px 0;
+    }
+
     .informationDiv {
         display: grid;
         grid-template-columns: 1fr;
@@ -474,12 +583,12 @@
         /* overflow-y: scroll; */
     }
 
-    .divrecord p {
-        margin: 0;
+    .transdiv p {
+        /* margin: 0; */
         font-size: 13px;
     }
 
-    .divrecord p span {
+    .transdiv p span {
         font-weight: bold;
     }
 
