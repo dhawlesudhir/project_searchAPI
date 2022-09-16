@@ -7,15 +7,15 @@
         let responseData = '';
         let APP_URL = '';
 
+        disableSubmit();
+
         function uploadAudio(files) {
             const file = files.target.files[0];
-            fileobjURL = URL.createObjectURL(file);
+            // fileobjURL = URL.createObjectURL(file);
+            fileobjURL = file;
             console.log("file saved " + fileobjURL);
-            if (fileobjURL) {
-
-            }
+            disableSubmit();
         }
-
 
         function apicallsubmit() {
 
@@ -34,10 +34,10 @@
 
             fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/upload", requestOptions)
                 .then(response => {
-                    document.getElementById("btnSubmit").style.display = "flex";
+                    document.getElementById("btnSubmit").style.display = "block";
                     document.getElementById("btnanalyzing").style.display = "none";
                     if (response.ok) {
-                        return response.json()
+                        return response.json();
                     }
                     if (response.status == 415) {
                         alert('Unsupported file/image uploaded');
@@ -45,7 +45,7 @@
                     }
                 })
                 .then(result => {
-                    console.log("fetch response - " + result);
+                    console.log("fetch response - " + result.TranscriptionJobName);
                     responseData = result;
                 })
                 .catch(error => console.log('error', error));
@@ -55,7 +55,15 @@
 
         }
 
-        function
+        // prevent submit action if nofile data
+        function disableSubmit() {
+            const button = document.getElementById('btnSubmit')
+            if (!fileobjURL) {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        }
     </script>
 @endpush
 
@@ -549,10 +557,12 @@
         /* margin-left: 250px; */
         grid-column: 1/4;
         margin-left: 15px;
+        cursor: pointer;
     }
 
     #btnSubmit {
         display: block;
+        cursor: pointer;
     }
 
     #btnanalyzing {
