@@ -77,6 +77,7 @@
         let pages = 0;
         let currentpage = 1;
 
+        var localhost = "{{ env('APP_URL') }}";
 
         var textfromarea = document.getElementById("comprehendtextara").value;
 
@@ -1584,7 +1585,8 @@
                 method: 'POST',
                 redirect: 'follow'
             };
-            fetch("http://127.0.0.1:8000/api/comprehend?text=" + textfromarea,
+
+            fetch(localhost+"/api/comprehend?text=" + textfromarea,
                     requestOptions)
                 .then(response => response.json())
                 .then(result => {
