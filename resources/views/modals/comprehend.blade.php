@@ -1,105 +1,105 @@
 @extends('layouts.modal')
 @push('style')
-    <style>
+<style>
 
 
-    </style>
+</style>
 @endpush
 
 @push('scripts')
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/codemirror.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/htmlmixed/htmlmixed.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/javascript/javascript.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/xml/xml.js'></script>
-    <script>
-        //
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/codemirror.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/htmlmixed/htmlmixed.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/javascript/javascript.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.16.0/mode/xml/xml.js'></script>
+<script>
+    //
 
-        var HTMLContainer_response = document.querySelector(".HTMLContainercallresponse");
-        var HTMLContainer_request = document.querySelector(".HTMLContainercall");
-
-
-
-        // function updateEditor_request() {
-        //     if (!tinymce.activeEditor.hasFocus()) {
-        //         tinymce.activeEditor.setContent(editor_request.getDoc().getValue());
-        //     }
-        // }
+    var HTMLContainer_response = document.querySelector(".HTMLContainercallresponse");
+    var HTMLContainer_request = document.querySelector(".HTMLContainercall");
 
 
-        // function updateEditor_response() {
-        //     if (!tinymce.activeEditor.hasFocus()) {
-        //         tinymce.activeEditor.setContent(editor_response.getDoc().getValue());
-        //     }
-        // }
+
+    // function updateEditor_request() {
+    //     if (!tinymce.activeEditor.hasFocus()) {
+    //         tinymce.activeEditor.setContent(editor_request.getDoc().getValue());
+    //     }
+    // }
 
 
-        var editor_request = CodeMirror(HTMLContainer_request, {
-            lineNumbers: true,
-            mode: "htmlmixed"
-        });
-
-        // editor_request.on("change", (editor) => {
-        //     updateHTML_request();
-        // });
-
-        var editor_response = CodeMirror(HTMLContainer_response, {
-            lineNumbers: true,
-            mode: "htmlmixed"
-        });
-
-        // editor_response.on("change", (editor) => {
-        //     updateHTML_response();
-        // });
-
-        function updateHTML_response(content) {
-            // loading into Var to copytext function use
-            responseload = content;
-            editor_response.getDoc().setValue(content);
-        }
-
-        function updateHTML_request(content) {
-            editor_request.getDoc().setValue(content);
-        }
+    // function updateEditor_response() {
+    //     if (!tinymce.activeEditor.hasFocus()) {
+    //         tinymce.activeEditor.setContent(editor_response.getDoc().getValue());
+    //     }
+    // }
 
 
-        // updateHTML_response(payload);
-    </script>
-    <script>
-        var entityTypeArray = {};
-        var entities;
-        var sentiment;
-        var languages;
-        var piientities;
-        var syntaxtokens;
-        var keyPhrases;
+    var editor_request = CodeMirror(HTMLContainer_request, {
+        lineNumbers: true,
+        mode: "htmlmixed"
+    });
 
-        let perpage = 10;
-        let pages = 0;
-        let currentpage = 1;
+    // editor_request.on("change", (editor) => {
+    //     updateHTML_request();
+    // });
 
-        var localhost = "{{ env('APP_URL') }}";
+    var editor_response = CodeMirror(HTMLContainer_response, {
+        lineNumbers: true,
+        mode: "htmlmixed"
+    });
 
-        var textfromarea = document.getElementById("comprehendtextara").value;
+    // editor_response.on("change", (editor) => {
+    //     updateHTML_response();
+    // });
 
-        payloadtext = textfromarea;
-        var responseload = '';
+    function updateHTML_response(content) {
+        // loading into Var to copytext function use
+        responseload = content;
+        editor_response.getDoc().setValue(content);
+    }
 
-        var multilinedata = '';
-        while (payloadtext.length >= (multilinedata.length + 40)) {
-            // console.log(data.length);
-            // console.log(multilinedata.length);
-            multilinedata = multilinedata + payloadtext.substr(0, 40) + '\n';
-            payloadtext = payloadtext.substr(41);
-        }
-        multilinedata = multilinedata + payloadtext;
+    function updateHTML_request(content) {
+        editor_request.getDoc().setValue(content);
+    }
 
-        var payloaddata = `{\n 'text':"` + multilinedata + `" \n}`;
-        // updateHTML_request(payload);
-        const obj = JSON.stringify(payloaddata);
 
-        updateHTML_request(payloaddata);
+    // updateHTML_response(payload);
+</script>
+<script>
+    var entityTypeArray = {};
+    var entities;
+    var sentiment;
+    var languages;
+    var piientities;
+    var syntaxtokens;
+    var keyPhrases;
 
-        var testdataobject = `{
+    let perpage = 10;
+    let pages = 0;
+    let currentpage = 1;
+
+    var localhost = "{{ env('APP_URL') }}";
+
+    var textfromarea = document.getElementById("comprehendtextara").value;
+
+    payloadtext = textfromarea;
+    var responseload = '';
+
+    var multilinedata = '';
+    while (payloadtext.length >= (multilinedata.length + 40)) {
+        // console.log(data.length);
+        // console.log(multilinedata.length);
+        multilinedata = multilinedata + payloadtext.substr(0, 40) + '\n';
+        payloadtext = payloadtext.substr(41);
+    }
+    multilinedata = multilinedata + payloadtext;
+
+    var payloaddata = `{\n 'text':"` + multilinedata + `" \n}`;
+    // updateHTML_request(payload);
+    const obj = JSON.stringify(payloaddata);
+
+    updateHTML_request(payloaddata);
+
+    var testdataobject = `{
     "entities": {
         "Index": 0,
         "Entities": [
@@ -1567,1113 +1567,1105 @@
         ]
     }
 }`;
-        responsedataprocessing(JSON.parse(testdataobject));
-        showentitytab();
+    responsedataprocessing(JSON.parse(testdataobject));
+    showentitytab();
 
-        function callcomprehend() {
+    function callcomprehend() {
 
-            if (textfromarea.length < 30) {
-                alert('Minimum 30 charecter long text required');
-                return false;
-            }
-            document.getElementById("btnAnalyze").style.display = "none";
-            document.getElementById("btnanalyzing").style.display = "block";
-            textfromarea = document.getElementById("comprehendtextara").value;
-
-
-            var requestOptions = {
-                method: 'POST',
-                redirect: 'follow'
-            };
-
-            fetch(localhost+"/api/comprehend?text=" + textfromarea,
-                    requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    console.log(result)
-                    responsedataprocessing(result);
-                    showentitytab();
-
-                    document.getElementById("btnAnalyze").style.display = "block";
-                    document.getElementById("btnanalyzing").style.display = "none";
-                    // console.log(result.Entities);
-                })
-                .catch(error => console.log('error', error));
+        if (textfromarea.length < 30) {
+            alert('Minimum 30 charecter long text required');
+            return false;
         }
+        document.getElementById("btnAnalyze").style.display = "none";
+        document.getElementById("btnanalyzing").style.display = "block";
+        textfromarea = document.getElementById("comprehendtextara").value;
 
-        function responsedataprocessing(data) {
 
-            entities = data.entities.Entities;
-            sentiment = data.sentiment;
-            languages = data.languageResults.Languages;
-            piidata = data.piiEntitiesResults.Entities;
-            piioffsetentities = data.piiEntitiesResults.Entities;
-            piilabelentities = data.piiEntitiesResults.Entities;
-            syntaxtokens = data.syntaxResults.SyntaxTokens;
-            keyPhrases = data.keyPhaseResults.KeyPhrases;
+        var requestOptions = {
+            method: 'POST',
+            redirect: 'follow'
+        };
 
-            entitydataprocessing(entities);
-            keyphrasedataprocessing(keyPhrases);
-            languagedataprocessing(languages);
-            piioffsetdataprocessing(piioffsetentities);
-            piilabeldataprocessing(piilabelentities);
-            sentimentdataprocessing(sentiment);
-            syntaxdataprocessing(syntaxtokens);
-        }
+        fetch(localhost + "/api/comprehend?text=" + textfromarea,
+                requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                responsedataprocessing(result);
+                showentitytab();
 
-        function cleartext() {
-            document.getElementById("comprehendtextara").value = '';
-        }
+                document.getElementById("btnAnalyze").style.display = "block";
+                document.getElementById("btnanalyzing").style.display = "none";
+                // console.log(result.Entities);
+            })
+            .catch(error => console.log('error', error));
+    }
 
-        function entitydataprocessing(data) {
-            // alert("called");
-            var count = data.length;
-            var entitytable = document.getElementById("entitytablebody");
-            entitytable.innerHTML = "";
-            var temp_textfromarea = textfromarea;
-            for (let index = 0; index < count; index++) {
-                var row = entitytable.insertRow(index);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
-                entity = data[index].Text;
-                entitytype = data[index].Type;
-                // 'entity':'type' array for formate disabled text
-                entityTypeArray[entity] = entitytype;
+    function responsedataprocessing(data) {
 
-                //column 1 filling
-                cell1.innerHTML = entity;
+        entities = data.entities.Entities;
+        sentiment = data.sentiment;
+        languages = data.languageResults.Languages;
+        piidata = data.piiEntitiesResults.Entities;
+        piioffsetentities = data.piiEntitiesResults.Entities;
+        piilabelentities = data.piiEntitiesResults.Entities;
+        syntaxtokens = data.syntaxResults.SyntaxTokens;
+        keyPhrases = data.keyPhaseResults.KeyPhrases;
 
-                // result field to get replaced string
-                let result = '';
+        entitydataprocessing(entities);
+        keyphrasedataprocessing(keyPhrases);
+        languagedataprocessing(languages);
+        piioffsetdataprocessing(piioffsetentities);
+        piilabeldataprocessing(piilabelentities);
+        sentimentdataprocessing(sentiment);
+        syntaxdataprocessing(syntaxtokens);
+    }
 
-                //column 2 filling & styling based on type of
-                if (entitytype == "PERSON") {
-                    cell2.innerHTML = `<span class="line bc-entiry-person"></span>
+    function cleartext() {
+        document.getElementById("comprehendtextara").value = '';
+    }
+
+    function entitydataprocessing(data) {
+        // alert("called");
+        var count = data.length;
+        var entitytable = document.getElementById("entitytablebody");
+        entitytable.innerHTML = "";
+        var temp_textfromarea = textfromarea;
+        for (let index = 0; index < count; index++) {
+            var row = entitytable.insertRow(index);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            entity = data[index].Text;
+            entitytype = data[index].Type;
+            // 'entity':'type' array for formate disabled text
+            entityTypeArray[entity] = entitytype;
+
+            //column 1 filling
+            cell1.innerHTML = entity;
+
+            // result field to get replaced string
+            let result = '';
+
+            //column 2 filling & styling based on type of
+            if (entitytype == "PERSON") {
+                cell2.innerHTML = `<span class="line bc-entiry-person"></span>
                                     Person`;
 
-                    result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-person">` + entity +
-                        "</span>");
-                } else if (entitytype == "ORGANIZATION") {
-                    cell2.innerHTML = `<span class="line bc-entiry-organization"></span>
+                result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-person">` + entity +
+                    "</span>");
+            } else if (entitytype == "ORGANIZATION") {
+                cell2.innerHTML = `<span class="line bc-entiry-organization"></span>
                                     Organization`;
-                    result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-organization">` +
-                        entity +
-                        "</span>");
-                } else if (entitytype == "QUANTITY") {
-                    cell2.innerHTML = `<span class="line bc-entiry-quantity"></span>
+                result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-organization">` +
+                    entity +
+                    "</span>");
+            } else if (entitytype == "QUANTITY") {
+                cell2.innerHTML = `<span class="line bc-entiry-quantity"></span>
                                     Quantity`;
 
-                    result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-quantity">` + entity +
-                        "</span>");
-                } else if (entitytype == "DATE") {
-                    cell2.innerHTML = `<span class="line bc-entiry-date"></span>
+                result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-quantity">` + entity +
+                    "</span>");
+            } else if (entitytype == "DATE") {
+                cell2.innerHTML = `<span class="line bc-entiry-date"></span>
                                     Date`;
-                    result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-date">` + entity +
-                        "</span>");
-                } else if (entitytype == "LOCATION") {
-                    cell2.innerHTML = `<span class="line bc-entiry-location"></span>
+                result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-date">` + entity +
+                    "</span>");
+            } else if (entitytype == "LOCATION") {
+                cell2.innerHTML = `<span class="line bc-entiry-location"></span>
                                     Location`;
-                    result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-location">` + entity +
-                        "</span>");
-                } else {
-                    cell2.innerHTML = `<span class="line bc-entiry-other"></span>
+                result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-location">` + entity +
+                    "</span>");
+            } else {
+                cell2.innerHTML = `<span class="line bc-entiry-other"></span>
                                     Other`;
-                    result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-other">` + entity +
-                        "</span>");
-                }
-                temp_textfromarea = result;
-
-                //column 3 filling
-                score = data[index].Score;
-                // fixedScore =
-                // score = score * 100;
-                cell3.innerHTML = scoreRound(score);
-            } //for end
-
-            document.getElementById("entity_textaradisabled").innerHTML = temp_textfromarea;
-            // createpagination('paginationentity', entities, 'entities', 1);
-
-        } //funends
-
-        function scoreRound(score) {
-            return score.toString().substr(0, 4)
-        } //funends
-
-
-        function languagedataprocessing(data) {
-            var count = data.length;
-            var tablebodyObj = document.getElementById("languagetablebody");
-            tablebodyObj.innerHTML = "";
-
-            for (let index = 0; index < count; index++) {
-                var row = tablebodyObj.insertRow(index);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = data[index].LanguageCode;
-                // cell2.innerHTML = data[index].Score;
-                cell2.innerHTML = scoreRound(data[index].Score);
-            }
-            document.getElementById("language_textaradisabled").innerHTML = textfromarea;
-            updateHTML_response(JSON.stringify(data, null, '\t'));
-
-        }
-
-        function keyphrasedataprocessing(data) {
-            // console.log(data.KeyPhrases.length);
-            var count = data.length;
-            var tablebodyObj = document.getElementById("keyphrasebody");
-            tablebodyObj.innerHTML = "";
-
-            // console.log(data.KeyPhrases);
-
-            //value from textarea i.e user input
-            var temp_textfromarea = textfromarea;
-            // result field to get replaced string
-            let result = '';
-            for (let index = 0; index < count; index++) {
-                var row = tablebodyObj.insertRow(index);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                phrase = data[index].Text;
-                // filling fields
-                cell1.innerHTML = phrase;
-                cell2.innerHTML = scoreRound(data[index].Score);
-
-                // replacing normal text to styled text
-                result = temp_textfromarea.replaceAll(phrase, `<span class="bb-entiry-person">` + phrase +
+                result = temp_textfromarea.replaceAll(entity, `<span class="bb-entiry-other">` + entity +
                     "</span>");
-                temp_textfromarea = result;
             }
-            document.getElementById("keyphrase_textaradisabled").innerHTML = temp_textfromarea;
-            // updateHTML_response(JSON.stringify(data, null, '\t'));
+            temp_textfromarea = result;
 
+            //column 3 filling
+            score = data[index].Score;
+            // fixedScore =
+            // score = score * 100;
+            cell3.innerHTML = scoreRound(score);
+        } //for end
+
+        document.getElementById("entity_textaradisabled").innerHTML = temp_textfromarea;
+        // createpagination('paginationentity', entities, 'entities', 1);
+
+    } //funends
+
+    function scoreRound(score) {
+        return score.toString().substr(0, 4)
+    } //funends
+
+
+    function languagedataprocessing(data) {
+        var count = data.length;
+        var tablebodyObj = document.getElementById("languagetablebody");
+        tablebodyObj.innerHTML = "";
+
+        for (let index = 0; index < count; index++) {
+            var row = tablebodyObj.insertRow(index);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = data[index].LanguageCode;
+            // cell2.innerHTML = data[index].Score;
+            cell2.innerHTML = scoreRound(data[index].Score);
+        }
+        document.getElementById("language_textaradisabled").innerHTML = textfromarea;
+        updateHTML_response(JSON.stringify(data, null, '\t'));
+
+    }
+
+    function keyphrasedataprocessing(data) {
+        // console.log(data.KeyPhrases.length);
+        var count = data.length;
+        var tablebodyObj = document.getElementById("keyphrasebody");
+        tablebodyObj.innerHTML = "";
+
+        // console.log(data.KeyPhrases);
+
+        //value from textarea i.e user input
+        var temp_textfromarea = textfromarea;
+        // result field to get replaced string
+        let result = '';
+        for (let index = 0; index < count; index++) {
+            var row = tablebodyObj.insertRow(index);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            phrase = data[index].Text;
+            // filling fields
+            cell1.innerHTML = phrase;
+            cell2.innerHTML = scoreRound(data[index].Score);
+
+            // replacing normal text to styled text
+            result = temp_textfromarea.replaceAll(phrase, `<span class="bb-entiry-person">` + phrase +
+                "</span>");
+            temp_textfromarea = result;
+        }
+        document.getElementById("keyphrase_textaradisabled").innerHTML = temp_textfromarea;
+        // updateHTML_response(JSON.stringify(data, null, '\t'));
+
+
+    }
+
+    function piioffsetdataprocessing(data) {
+        var count = data.length;
+
+
+        // object of table used for PII offset
+        var tablebodyObj2 = document.getElementById("tbody_piioffset");
+        tablebodyObj2.innerHTML = "";
+
+        //value from textarea i.e user input
+        var temp_textfromarea = textfromarea;
+        // result field to get replaced string
+        let result = '';
+
+        for (let index = 0; index < count; index++) {
+            // as in PII response no TEXT filed mentioned ,
+            //      using BeginOffset and EndOffset to extarct Text from orginal input
+
+            // text start and end of text
+            start = data[index].BeginOffset;
+            end = data[index].EndOffset;
+            // console.log(start + ' ' + end);
+            text = textfromarea.substring(start, end);
+
+            // adding extarcted text to orginal data(response received from API)
+            data[index].Text = text;
+
+            // console.log(text);
+
+            // highliting text from disabled text area
+            // replacing normal text to styled text
+            result = temp_textfromarea.replaceAll(text, `<span class="bb-entiry-location">` + text +
+                "</span>");
+            temp_textfromarea = result;
+
+            // filling table data
+            var row2 = tablebodyObj2.insertRow(index);
+            var row2_cell1 = row2.insertCell(0);
+            var row2_cell2 = row2.insertCell(1);
+            var row2_cell3 = row2.insertCell(2);
+            row2_cell1.innerHTML = text;
+            row2_cell2.innerHTML = data[index].Type;
+            row2_cell3.innerHTML = scoreRound(data[index].Score);
+        }
+        document.getElementById("piioffset_textaradisabled").innerHTML = temp_textfromarea;
+        // updateHTML_response(JSON.stringify(data, null, '\t'));
+
+    }
+
+    function piilabeldataprocessing(data) {
+        var count = data.length;
+
+        // object of table used for PII label
+        var tablebodyObj = document.getElementById("piitablebody");
+        tablebodyObj.innerHTML = "";
+
+        for (let index = 0; index < count; index++) {
+
+            // filling label table
+            var row = tablebodyObj.insertRow(index);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = data[index].Type;
+            cell2.innerHTML = scoreRound(data[index].Score);
+        }
+        // updateHTML_response(JSON.stringify(data, null, '\t'));
+
+    }
+
+    function sentimentdataprocessing(data) {
+
+        var tablebodyObj = document.getElementById("tbodysentimenttable");
+        tablebodyObj.innerHTML = "";
+
+        console.log(data);
+
+        if (data) {
+            var row = tablebodyObj.insertRow(0);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = "Positive";
+            cell2.innerHTML = scoreRound(data.SentimentScore.Positive);
+
+            var row = tablebodyObj.insertRow(1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = "Negative";
+            cell2.innerHTML = scoreRound(data.SentimentScore.Negative);
+
+            var row = tablebodyObj.insertRow(2);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = "Neutral";
+            cell2.innerHTML = scoreRound(data.SentimentScore.Neutral);
+
+            var row = tablebodyObj.insertRow(3);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = "Mixed";
+            cell2.innerHTML = scoreRound(data.SentimentScore.Mixed);
+        }
+        document.getElementById("sentiment_textaradisabled").innerHTML = textfromarea;
+        // updateHTML_response(JSON.stringify(data, null, '\t'));
+
+    }
+
+    function syntaxdataprocessing(data) {
+        var count = data.length;
+        var tableobj = document.getElementById("tbodysyntaxtable");
+        tableobj.innerHTML = "";
+        var textstyled = '';
+        var temp_textfromarea = textfromarea;
+
+        for (let index = 0; index < count; index++) {
+            var row = tableobj.insertRow(index);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+
+
+            cell1.innerHTML = data[index].Text;
+            text = data[index].Text;
+
+            result = temp_textfromarea.replaceAll(text, `<span class="hoveronspan">` + text +
+                "</span>");
+
+            temp_textfromarea = result;
+
+
+            cell2.innerHTML = data[index].PartOfSpeech.Tag;
+            cell3.innerHTML = scoreRound(data[index].PartOfSpeech.Score);
+        }
+        document.getElementById("syntax_textaradisabled").innerHTML = temp_textfromarea;
+    }
+
+    function addclass(id, className) {
+        for (let index = 0; index < 6; index++) {
+            document.getElementsByClassName("tab")[index].classList.remove(className);
+        }
+        var obj = document.getElementById(id);
+        obj.classList.add(className);
+    }
+
+    function showentitytab() {
+        addclass("a_tab_entity", "active");
+        document.getElementsByClassName('divtoggleentity')[0].style.display = 'block';
+        document.getElementsByClassName('divtoggleentity')[1].style.display = 'block';
+
+        document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
+
+        document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+        updateHTML_response(JSON.stringify(entities, null, '\t'));
+        createpagination('paginationentity', entities, 'entities', 1);
+    }
+
+    function showphrasetab() {
+        addclass("a_tab_phrase", "active");
+        document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
+        document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'block';
+        document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'block';
+
+        document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
+
+        document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+        updateHTML_response(JSON.stringify(keyPhrases, null, '\t'));
+        createpagination('paginationtblkeyphrase', keyPhrases, 'keyPhrases', 2);
+
+    }
+
+    function showlanguagetab() {
+        addclass("a_tab_language", "active");
+        document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
+        document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
+
+        document.getElementsByClassName("divtogglelanguage")[0].style.display = 'block';
+        document.getElementsByClassName("divtogglelanguage")[1].style.display = 'block';
+
+        document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+        updateHTML_response(JSON.stringify(languages, null, '\t'));
+
+    }
+
+    function showpiitab() {
+        addclass("a_tab_pii", "active");
+        document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
+        document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeypii")[0].style.display = 'block';
+        document.getElementsByClassName("divtogglekeypii")[1].style.display = 'block';
+        document.getElementsByClassName("divtogglekeypii")[2].style.display = 'block';
+        document.getElementsByClassName("divtogglekeypii")[3].style.display = 'block';
+
+        document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+        togglepiioptions();
+        updateHTML_response(JSON.stringify(piidata, null, '\t'));
+
+    }
+
+    function showsentimenttab() {
+        addclass("a_tab_sentiment", "active");
+        document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
+        document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
+
+        document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesentiment")[0].style.display = 'block';
+        document.getElementsByClassName("divtogglesentiment")[1].style.display = 'block';
+
+        document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
+        updateHTML_response(JSON.stringify(sentiment, null, '\t'));
+
+    }
+
+    function showsyntaxtab() {
+        addclass("a_tab_syntax", "active");
+
+        document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
+        document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
+        document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
+
+        document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
+        document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
+
+        document.getElementsByClassName("divtogglesyntax")[0].style.display = 'block';
+        document.getElementsByClassName("divtogglesyntax")[1].style.display = 'block';
+        updateHTML_response(JSON.stringify(syntaxtokens, null, '\t'));
+        createpagination('paginationsyntax', syntaxtokens, 'syntaxtokens', 5);
+
+    }
+
+    function togglepiioptions() {
+        radios = document.getElementsByName('piioptions');
+        var selected = Array.from(radios).find(radio => radio.checked);
+
+        if (selected.value == 'offset') {
+            document.getElementsByClassName('divtogglekeypii')[1].style.display = 'block';
+            document.getElementsByClassName('divtogglekeypii')[2].style.display = 'none';
+            document.getElementsByClassName('divtogglekeypii')[3].style.display = 'block';
+            createpagination('paginationpiioffset', piioffsetentities, 'piioffsetentities', 3);
+
+
+        } else {
+            document.getElementsByClassName('divtogglekeypii')[1].style.display = 'none';
+            document.getElementsByClassName('divtogglekeypii')[2].style.display = 'block';
+            document.getElementsByClassName('divtogglekeypii')[3].style.display = 'none';
+            createpagination('paginationpiilabel', piilabelentities, 'piilabelentities', 4);
 
         }
 
-        function piioffsetdataprocessing(data) {
-            var count = data.length;
+
+    }
+
+    function entitidata_filter() {
+        var searchvalue = document.getElementById('searchentity').value;
+        searchvalue = searchvalue.toUpperCase();
+        datavalues = Object.values(entities);
+
+        var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+
+        var type_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.Type)
+            .toUpperCase()).search(searchvalue) != -1);
 
 
-            // object of table used for PII offset
-            var tablebodyObj2 = document.getElementById("tbody_piioffset");
-            tablebodyObj2.innerHTML = "";
+        if (text_filter.length == 0 && type_filter.length == 0) {
+            tempentities = datavalues;
+        } else if (type_filter.length == 0) {
+            tempentities = text_filter;
+        } else {
+            tempentities = type_filter;
+        }
 
-            //value from textarea i.e user input
-            var temp_textfromarea = textfromarea;
-            // result field to get replaced string
-            let result = '';
+        entitydataprocessing(tempentities);
+        createpagination('paginationentity', tempentities, 'tempentities', 1);
 
-            for (let index = 0; index < count; index++) {
-                // as in PII response no TEXT filed mentioned ,
-                //      using BeginOffset and EndOffset to extarct Text from orginal input
+    }
 
-                // text start and end of text
-                start = data[index].BeginOffset;
-                end = data[index].EndOffset;
-                // console.log(start + ' ' + end);
-                text = textfromarea.substring(start, end);
+    function keyphrase_filter() {
+        var searchvalue = document.getElementById('keyphrasetext').value;
+        searchvalue = searchvalue.toUpperCase();
 
-                // adding extarcted text to orginal data(response received from API)
-                data[index].Text = text;
+        datavalues = Object.values(keyPhrases);
+        // console.log(datavalues);
 
-                // console.log(text);
+        var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+        // console.log(text_filter.length);
 
-                // highliting text from disabled text area
-                // replacing normal text to styled text
-                result = temp_textfromarea.replaceAll(text, `<span class="bb-entiry-location">` + text +
-                    "</span>");
-                temp_textfromarea = result;
+        tempentities = text_filter.length == 0 ? datavalues : text_filter;
 
-                // filling table data
-                var row2 = tablebodyObj2.insertRow(index);
-                var row2_cell1 = row2.insertCell(0);
-                var row2_cell2 = row2.insertCell(1);
-                var row2_cell3 = row2.insertCell(2);
-                row2_cell1.innerHTML = text;
-                row2_cell2.innerHTML = data[index].Type;
-                row2_cell3.innerHTML = scoreRound(data[index].Score);
+        // console.log(tempentities);
+        keyphrasedataprocessing(tempentities);
+        createpagination('paginationtblkeyphrase', tempentities, 'tempentities', 2);
+
+    }
+
+    function syntax_filter() {
+        var searchvalue = document.getElementById('syntaxseachtext').value;
+        searchvalue = searchvalue.toUpperCase();
+        // console.log(searchvalue);
+        datavalues = Object.values(syntaxtokens);
+        // console.log(datavalues);
+
+        var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+        console.log(text_filter.length);
+
+        var tag_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.PartOfSpeech
+                .Tag)
+            .toUpperCase()).search(searchvalue) != -1);
+        console.log(tag_filter.length);
+
+
+        if (text_filter.length == 0 && tag_filter.length == 0) {
+            temdata = datavalues;
+        } else if (tag_filter.length == 0) {
+            temdata = text_filter;
+        } else {
+            temdata = tag_filter;
+        }
+
+        // console.log(temdata);
+        syntaxdataprocessing(temdata);
+        createpagination('paginationsyntax', temdata, 'tempentities', 5);
+
+    }
+
+
+    function piioffset_filter() {
+        var searchvalue = document.getElementById('piioffsetseachtext').value;
+        searchvalue = searchvalue.toUpperCase();
+        console.log(searchvalue);
+        datavalues = Object.values(piioffsetentities);
+        console.log(datavalues);
+
+        var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+        console.log(text_filter.length);
+
+        var type_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.Type)
+            .toUpperCase()).search(searchvalue) != -1);
+        console.log(type_filter.length);
+
+
+        if (text_filter.length == 0 && type_filter.length == 0) {
+            temdata = datavalues;
+        } else if (type_filter.length == 0) {
+            temdata = text_filter;
+        } else {
+            temdata = type_filter;
+        }
+
+        console.log(temdata);
+        piioffsetdataprocessing(temdata);
+        createpagination('paginationpiioffset', temdata, 'tempentities', 3);
+    }
+
+    function piilablset_filter() {
+        var searchvalue = document.getElementById('piilabelsearchtext').value;
+        searchvalue = searchvalue.toUpperCase();
+        console.log(searchvalue);
+        datavalues = Object.values(piioffsetentities);
+        console.log(datavalues);
+
+        var type_filter = datavalues.filter(element => ((element.Type)
+            .toUpperCase()).search(searchvalue) != -1);
+        console.log(type_filter.length);
+
+        temdata = type_filter.length == 0 ? datavalues : type_filter;
+        console.log(temdata);
+        piilabeldataprocessing(temdata);
+        createpagination('paginationpiilabel', temdata, 'tempentities', 4);
+    }
+
+    function copytext(element) {
+        // Get the text field
+        if (element == 1) {
+            copyText = payloaddata;
+        } else {
+            copyText = responseload;
+        }
+
+        // Select the text field
+        // copyText.select();
+        // copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText);
+
+        // Alert the copied text
+        alert("Copied the text: " + copyText);
+    }
+    //now
+    function paginationwork(element, data, page, tablenumber) {
+        // console.log(element + "  " + page + " current " + currentpage);
+
+        if (page == 'pre') {
+            page = currentpage - 1;
+            page = page < 1 ? 1 : page;
+        } else if (page == 'next') {
+            page = currentpage + 1;
+            page = page > pages ? pages : page;
+        }
+        currentpage = page;
+        // console.log("  updated " + page);
+
+        start = (page * perpage) - perpage;
+        start = start < 0 ? 0 : start;
+        end = (page * perpage) - 1;
+        console.log(start + "/" + end);
+        var tempdata = [];
+        let index2 = 0;
+        for (let index = start; index <= end; index++) {
+            if (data[index]) {
+                tempdata[index2] = data[index];
+                index2++;
+            } else {
+                break;
             }
-            document.getElementById("piioffset_textaradisabled").innerHTML = temp_textfromarea;
-            // updateHTML_response(JSON.stringify(data, null, '\t'));
-
         }
 
-        function piilabeldataprocessing(data) {
-            var count = data.length;
-
-            // object of table used for PII label
-            var tablebodyObj = document.getElementById("piitablebody");
-            tablebodyObj.innerHTML = "";
-
-            for (let index = 0; index < count; index++) {
-
-                // filling label table
-                var row = tablebodyObj.insertRow(index);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = data[index].Type;
-                cell2.innerHTML = scoreRound(data[index].Score);
-            }
-            // updateHTML_response(JSON.stringify(data, null, '\t'));
-
-        }
-
-        function sentimentdataprocessing(data) {
-
-            var tablebodyObj = document.getElementById("tbodysentimenttable");
-            tablebodyObj.innerHTML = "";
-
-            console.log(data);
-
-            if (data) {
-                var row = tablebodyObj.insertRow(0);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = "Positive";
-                cell2.innerHTML = scoreRound(data.SentimentScore.Positive);
-
-                var row = tablebodyObj.insertRow(1);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = "Negative";
-                cell2.innerHTML = scoreRound(data.SentimentScore.Negative);
-
-                var row = tablebodyObj.insertRow(2);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = "Neutral";
-                cell2.innerHTML = scoreRound(data.SentimentScore.Neutral);
-
-                var row = tablebodyObj.insertRow(3);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                cell1.innerHTML = "Mixed";
-                cell2.innerHTML = scoreRound(data.SentimentScore.Mixed);
-            }
-            document.getElementById("sentiment_textaradisabled").innerHTML = textfromarea;
-            // updateHTML_response(JSON.stringify(data, null, '\t'));
-
-        }
-
-        function syntaxdataprocessing(data) {
-            var count = data.length;
-            var tableobj = document.getElementById("tbodysyntaxtable");
-            tableobj.innerHTML = "";
-            var textstyled = '';
-            var temp_textfromarea = textfromarea;
-
-            for (let index = 0; index < count; index++) {
-                var row = tableobj.insertRow(index);
-                var cell1 = row.insertCell(0);
-                var cell2 = row.insertCell(1);
-                var cell3 = row.insertCell(2);
-
-
-                cell1.innerHTML = data[index].Text;
-                text = data[index].Text;
-
-                result = temp_textfromarea.replaceAll(text, `<span class="hoveronspan">` + text +
-                    "</span>");
-
-                temp_textfromarea = result;
-
-
-                cell2.innerHTML = data[index].PartOfSpeech.Tag;
-                cell3.innerHTML = scoreRound(data[index].PartOfSpeech.Score);
-            }
-            document.getElementById("syntax_textaradisabled").innerHTML = temp_textfromarea;
-        }
-
-        function addclass(id, className) {
-            for (let index = 0; index < 6; index++) {
-                document.getElementsByClassName("tab")[index].classList.remove(className);
-            }
-            var obj = document.getElementById(id);
-            obj.classList.add(className);
-        }
-
-        function showentitytab() {
-            addclass("a_tab_entity", "active");
-            document.getElementsByClassName('divtoggleentity')[0].style.display = 'block';
-            document.getElementsByClassName('divtoggleentity')[1].style.display = 'block';
-
-            document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
-
-            document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
-            updateHTML_response(JSON.stringify(entities, null, '\t'));
-            createpagination('paginationentity', entities, 'entities', 1);
-        }
-
-        function showphrasetab() {
-            addclass("a_tab_phrase", "active");
-            document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
-            document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'block';
-            document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'block';
-
-            document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
-
-            document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
-            updateHTML_response(JSON.stringify(keyPhrases, null, '\t'));
-            createpagination('paginationtblkeyphrase', keyPhrases, 'keyPhrases', 2);
-
-        }
-
-        function showlanguagetab() {
-            addclass("a_tab_language", "active");
-            document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
-            document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
-
-            document.getElementsByClassName("divtogglelanguage")[0].style.display = 'block';
-            document.getElementsByClassName("divtogglelanguage")[1].style.display = 'block';
-
-            document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
-            updateHTML_response(JSON.stringify(languages, null, '\t'));
-
-        }
-
-        function showpiitab() {
-            addclass("a_tab_pii", "active");
-            document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
-            document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeypii")[0].style.display = 'block';
-            document.getElementsByClassName("divtogglekeypii")[1].style.display = 'block';
-            document.getElementsByClassName("divtogglekeypii")[2].style.display = 'block';
-            document.getElementsByClassName("divtogglekeypii")[3].style.display = 'block';
-
-            document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
-            togglepiioptions();
-            updateHTML_response(JSON.stringify(piidata, null, '\t'));
-
-        }
-
-        function showsentimenttab() {
-            addclass("a_tab_sentiment", "active");
-            document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
-            document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
-
-            document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesentiment")[0].style.display = 'block';
-            document.getElementsByClassName("divtogglesentiment")[1].style.display = 'block';
-
-            document.getElementsByClassName("divtogglesyntax")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesyntax")[1].style.display = 'none';
-            updateHTML_response(JSON.stringify(sentiment, null, '\t'));
-
-        }
-
-        function showsyntaxtab() {
-            addclass("a_tab_syntax", "active");
-
-            document.getElementsByClassName('divtoggleentity')[0].style.display = 'none';
-            document.getElementsByClassName('divtoggleentity')[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeyphrase")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeyphrase")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglekeypii")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[1].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[2].style.display = 'none';
-            document.getElementsByClassName("divtogglekeypii")[3].style.display = 'none';
-
-            document.getElementsByClassName("divtogglelanguage")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglelanguage")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesentiment")[0].style.display = 'none';
-            document.getElementsByClassName("divtogglesentiment")[1].style.display = 'none';
-
-            document.getElementsByClassName("divtogglesyntax")[0].style.display = 'block';
-            document.getElementsByClassName("divtogglesyntax")[1].style.display = 'block';
-            updateHTML_response(JSON.stringify(syntaxtokens, null, '\t'));
-            createpagination('paginationsyntax', syntaxtokens, 'syntaxtokens', 5);
-
-        }
-
-        function togglepiioptions() {
-            radios = document.getElementsByName('piioptions');
-            var selected = Array.from(radios).find(radio => radio.checked);
-
-            if (selected.value == 'offset') {
-                document.getElementsByClassName('divtogglekeypii')[1].style.display = 'block';
-                document.getElementsByClassName('divtogglekeypii')[2].style.display = 'none';
-                document.getElementsByClassName('divtogglekeypii')[3].style.display = 'block';
-                createpagination('paginationpiioffset', piioffsetentities, 'piioffsetentities', 3);
-
+        elementname = element.split('-')[0];
+        for (let index = 1; index <= pages; index++) {
+            elementid = elementname + "-" + index;
+            // console.log("generatedid " + elementid);
+            if (index == page) {
+                var element = document.getElementById(elementid);
+                element.classList.add("selected");
 
             } else {
-                document.getElementsByClassName('divtogglekeypii')[1].style.display = 'none';
-                document.getElementsByClassName('divtogglekeypii')[2].style.display = 'block';
-                document.getElementsByClassName('divtogglekeypii')[3].style.display = 'none';
-                createpagination('paginationpiilabel', piilabelentities, 'piilabelentities', 4);
-
+                var element = document.getElementById(elementid);
+                element.classList.remove("selected");
             }
-
 
         }
 
-        function entitidata_filter() {
-            var searchvalue = document.getElementById('searchentity').value;
-            searchvalue = searchvalue.toUpperCase();
-            datavalues = Object.values(entities);
 
-            var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
+        switch (tablenumber) {
+            case 1:
+                entitydataprocessing(tempdata);
+                break;
 
-            var type_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.Type)
-                .toUpperCase()).search(searchvalue) != -1);
+            case 2:
+                keyphrasedataprocessing(tempdata);
+                break;
+
+            case 3:
+                piioffsetdataprocessing(tempdata);
+                break;
 
 
-            if (text_filter.length == 0 && type_filter.length == 0) {
-                tempentities = datavalues;
-            } else if (type_filter.length == 0) {
-                tempentities = text_filter;
+            case 4:
+                piilabeldataprocessing(tempdata);
+                break;
+
+
+            default:
+                syntaxdataprocessing(tempdata);
+        }
+
+
+    }
+
+    function createpagination(element, data, datasetname, tablenumber) {
+        // console.log(data);
+        let elementobj = document.getElementById(element);
+        elementobj.innerHTML = '';
+        pages = data.length / perpage;
+        pages = Math.ceil(pages);
+        console.log("pages " + pages);
+
+
+        elementobj.innerHTML += `<span id="previous" ` + `onclick="paginationwork('` +
+            element + `',` + datasetname +
+            `,'pre',` + tablenumber +
+            `)"> < </span>`;
+
+        for (let index = 1; index <= pages; index++) {
+            elementid = element + "-" + index;
+            if (index == 1) {
+                elementobj.innerHTML += ` <a id="` + elementid + `"  onclick="paginationwork('` +
+                    elementid + `',` + datasetname +
+                    `,` + index + `,` + tablenumber +
+                    `)">` +
+                    index + `</a>`;
+
             } else {
-                tempentities = type_filter;
+                elementobj.innerHTML += ` <a id="` + elementid + `"  onclick="paginationwork('` + elementid +
+                    `',` + datasetname + `,` + index + `,` + tablenumber +
+                    `)">` + index +
+                    `</a>`;
             }
-
-            entitydataprocessing(tempentities);
-            createpagination('paginationentity', tempentities, 'tempentities', 1);
-
         }
+        elementid = 'next';
 
-        function keyphrase_filter() {
-            var searchvalue = document.getElementById('keyphrasetext').value;
-            searchvalue = searchvalue.toUpperCase();
-
-            datavalues = Object.values(keyPhrases);
-            // console.log(datavalues);
-
-            var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
-            // console.log(text_filter.length);
-
-            tempentities = text_filter.length == 0 ? datavalues : text_filter;
-
-            // console.log(tempentities);
-            keyphrasedataprocessing(tempentities);
-            createpagination('paginationtblkeyphrase', tempentities, 'tempentities', 2);
-
-        }
-
-        function syntax_filter() {
-            var searchvalue = document.getElementById('syntaxseachtext').value;
-            searchvalue = searchvalue.toUpperCase();
-            // console.log(searchvalue);
-            datavalues = Object.values(syntaxtokens);
-            // console.log(datavalues);
-
-            var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
-            console.log(text_filter.length);
-
-            var tag_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.PartOfSpeech
-                    .Tag)
-                .toUpperCase()).search(searchvalue) != -1);
-            console.log(tag_filter.length);
-
-
-            if (text_filter.length == 0 && tag_filter.length == 0) {
-                temdata = datavalues;
-            } else if (tag_filter.length == 0) {
-                temdata = text_filter;
-            } else {
-                temdata = tag_filter;
-            }
-
-            // console.log(temdata);
-            syntaxdataprocessing(temdata);
-            createpagination('paginationsyntax', temdata, 'tempentities', 5);
-
-        }
-
-
-        function piioffset_filter() {
-            var searchvalue = document.getElementById('piioffsetseachtext').value;
-            searchvalue = searchvalue.toUpperCase();
-            console.log(searchvalue);
-            datavalues = Object.values(piioffsetentities);
-            console.log(datavalues);
-
-            var text_filter = datavalues.filter(element => ((element.Text).toUpperCase()).search(searchvalue) != -1);
-            console.log(text_filter.length);
-
-            var type_filter = (text_filter.length == 0 ? datavalues : text_filter).filter(element => ((element.Type)
-                .toUpperCase()).search(searchvalue) != -1);
-            console.log(type_filter.length);
-
-
-            if (text_filter.length == 0 && type_filter.length == 0) {
-                temdata = datavalues;
-            } else if (type_filter.length == 0) {
-                temdata = text_filter;
-            } else {
-                temdata = type_filter;
-            }
-
-            console.log(temdata);
-            piioffsetdataprocessing(temdata);
-            createpagination('paginationpiioffset', temdata, 'tempentities', 3);
-        }
-
-        function piilablset_filter() {
-            var searchvalue = document.getElementById('piilabelsearchtext').value;
-            searchvalue = searchvalue.toUpperCase();
-            console.log(searchvalue);
-            datavalues = Object.values(piioffsetentities);
-            console.log(datavalues);
-
-            var type_filter = datavalues.filter(element => ((element.Type)
-                .toUpperCase()).search(searchvalue) != -1);
-            console.log(type_filter.length);
-
-            temdata = type_filter.length == 0 ? datavalues : type_filter;
-            console.log(temdata);
-            piilabeldataprocessing(temdata);
-            createpagination('paginationpiilabel', temdata, 'tempentities', 4);
-        }
-
-        function copytext(element) {
-            // Get the text field
-            if (element == 1) {
-                copyText = payloaddata;
-            } else {
-                copyText = responseload;
-            }
-
-            // Select the text field
-            // copyText.select();
-            // copyText.setSelectionRange(0, 99999); // For mobile devices
-
-            // Copy the text inside the text field
-            navigator.clipboard.writeText(copyText);
-
-            // Alert the copied text
-            alert("Copied the text: " + copyText);
-        }
-        //now
-        function paginationwork(element, data, page, tablenumber) {
-            // console.log(element + "  " + page + " current " + currentpage);
-
-            if (page == 'pre') {
-                page = currentpage - 1;
-                page = page < 1 ? 1 : page;
-            } else if (page == 'next') {
-                page = currentpage + 1;
-                page = page > pages ? pages : page;
-            }
-            currentpage = page;
-            // console.log("  updated " + page);
-
-            start = (page * perpage) - perpage;
-            start = start < 0 ? 0 : start;
-            end = (page * perpage) - 1;
-            console.log(start + "/" + end);
-            var tempdata = [];
-            let index2 = 0;
-            for (let index = start; index <= end; index++) {
-                if (data[index]) {
-                    tempdata[index2] = data[index];
-                    index2++;
-                } else {
-                    break;
-                }
-            }
-
-            elementname = element.split('-')[0];
-            for (let index = 1; index <= pages; index++) {
-                elementid = elementname + "-" + index;
-                // console.log("generatedid " + elementid);
-                if (index == page) {
-                    var element = document.getElementById(elementid);
-                    element.classList.add("selected");
-
-                } else {
-                    var element = document.getElementById(elementid);
-                    element.classList.remove("selected");
-                }
-
-            }
-
-
-            switch (tablenumber) {
-                case 1:
-                    entitydataprocessing(tempdata);
-                    break;
-
-                case 2:
-                    keyphrasedataprocessing(tempdata);
-                    break;
-
-                case 3:
-                    piioffsetdataprocessing(tempdata);
-                    break;
-
-
-                case 4:
-                    piilabeldataprocessing(tempdata);
-                    break;
-
-
-                default:
-                    syntaxdataprocessing(tempdata);
-            }
-
-
-        }
-
-        function createpagination(element, data, datasetname, tablenumber) {
-            // console.log(data);
-            let elementobj = document.getElementById(element);
-            elementobj.innerHTML = '';
-            pages = data.length / perpage;
-            pages = Math.ceil(pages);
-            console.log("pages " + pages);
-
-
-            elementobj.innerHTML += `<span id="previous" ` + `onclick="paginationwork('` +
-                element + `',` + datasetname +
-                `,'pre',` + tablenumber +
-                `)"> < </span>`;
-
-            for (let index = 1; index <= pages; index++) {
-                elementid = element + "-" + index;
-                if (index == 1) {
-                    elementobj.innerHTML += ` <a id="` + elementid + `"  onclick="paginationwork('` +
-                        elementid + `',` + datasetname +
-                        `,` + index + `,` + tablenumber +
-                        `)">` +
-                        index + `</a>`;
-
-                } else {
-                    elementobj.innerHTML += ` <a id="` + elementid + `"  onclick="paginationwork('` + elementid +
-                        `',` + datasetname + `,` + index + `,` + tablenumber +
-                        `)">` + index +
-                        `</a>`;
-                }
-            }
-            elementid = 'next';
-
-            elementobj.innerHTML += `<span id="nextpageentity" ` + `onclick="paginationwork('` +
-                element + `',` + datasetname +
-                `,'next',` + tablenumber +
-                `)"> > </span>`;
-            paginationwork(element + "-" + 1, data, 1, tablenumber);
-        }
-    </script>
+        elementobj.innerHTML += `<span id="nextpageentity" ` + `onclick="paginationwork('` +
+            element + `',` + datasetname +
+            `,'next',` + tablenumber +
+            `)"> > </span>`;
+        paginationwork(element + "-" + 1, data, 1, tablenumber);
+    }
+</script>
 @endpush
 
 @push('header')
-    <h1>Comprehend Demonstration</h1>
+<h1>Comprehend Demonstration</h1>
 @endpush
 
 @push('aside')
-    <h4 class="selected">Comprehend</h4>
+<h4 class="selected">Comprehend</h4>
 @endpush
 
 @push('artical')
-    <div class="comprehendbodydiv">
+<div class="comprehendbodydiv">
 
-        {{-- text area div --}}
-        <div class="textareadiv">
-            <label for="comprehendtextara" class="headings">Input Text</label>
-            <textarea id="comprehendtextara" class="textinput" name="" maxlength="100000"
-                placeholder="But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and">Hello Zhang Wei, I am John. Your AnyCompany Financial Services, LLC credit card account 1111-0000-1111-0008 has a minimum payment of $24.53 that is due by July 31st. Based on your autopay settings, we will withdraw your payment on the due date from your bank account number XXXXXX1111 with the routing number XXXXX0000.
+    {{-- text area div --}}
+    <div class="textareadiv">
+        <label for="comprehendtextara" class="headings">Input Text</label>
+        <textarea id="comprehendtextara" class="textinput" name="" maxlength="100000" placeholder="But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and">Hello Zhang Wei, I am John. Your AnyCompany Financial Services, LLC credit card account 1111-0000-1111-0008 has a minimum payment of $24.53 that is due by July 31st. Based on your autopay settings, we will withdraw your payment on the due date from your bank account number XXXXXX1111 with the routing number XXXXX0000.
 
 Your latest statement was mailed to 2200 West Cypress Creek Road, 1st Floor, Fort Lauderdale, Florida, 33309.
 After your payment is received, you will receive a confirmation text message at 206-555-0100.
 If you have questions about your bill, AnyCompany Customer Service is available by phone at 206-555-0199 or email at support@anycompany.com.</textarea>
-            <p id="textremaining-p" class="pChars">100000 Characters remaining</p>
+        <p id="textremaining-p" class="pChars">100000 Characters remaining</p>
 
-            <div class="textareadivbtns">
-                <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
-                <button id="btnAnalyze" class="btnAnalyze btn" onclick="callcomprehend()">analyze</button>
+        <div class="textareadivbtns">
+            <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
+            <button id="btnAnalyze" class="btnAnalyze btn" onclick="callcomprehend()">analyze</button>
 
-                <button id="btnanalyzing" type="button" class="btnAnalyze btn" onclick="convert()">
-                    <i id="converting" class="fa fa-spinner fa-spin"></i> analyzing
-                </button>
+            <button id="btnanalyzing" type="button" class="btnAnalyze btn" onclick="convert()">
+                <i id="converting" class="fa fa-spinner fa-spin"></i> analyzing
+            </button>
+
+        </div>
+    </div>
+    <div class="comprehendresultdiv">
+        <p class="headings tabtitlep">Insights</p>
+        <div id="tabs" class="responsive sticky-top bg-white">
+            <!-- <div class="tabs tabs-center"> -->
+            <a id="a_tab_entity" class="tab" onclick="showentitytab()">
+                Entities
+            </a>
+            <a id="a_tab_phrase" class="tab" onclick="showphrasetab()">
+                Key phrases
+            </a>
+            <a id="a_tab_language" class="tab" onclick="showlanguagetab()">
+                Languages
+            </a>
+            <a id="a_tab_pii" class="tab" onclick="showpiitab()">
+                PII
+            </a>
+            <a id="a_tab_sentiment" class="tab" onclick="showsentimenttab()">
+                Sentiment
+            </a>
+            <a id="a_tab_syntax" class="tab" onclick="showsyntaxtab()">
+                Syntax
+            </a>
+            <!-- </div> -->
+        </div>
+
+        <div class="piielements divtogglekeypii">
+            <p class="subtextappintegration">Personally Identifiable information (PII) analysis mode</p>
+            <div class="radiospii">
+
+                <label class="form-control">
+                    <input type="radio" id="piioffset" name="piioptions" value="offset" checked onclick="togglepiioptions()" />
+                    <span class="radiotitle">Offsets</span>
+                    <p> Identify the location of PII in your text documents.</p>
+                </label>
+
+                <label class="form-control">
+                    <input type="radio" id="piilabel" name="piioptions" value="labels" onclick="togglepiioptions()" />
+                    <span class="radiotitle">Labels</span>
+                    <p>Label text documents with PII.</p>
+                </label>
 
             </div>
         </div>
-        <div class="comprehendresultdiv">
-            <p class="headings tabtitlep">Insights</p>
-            <div id="tabs" class="responsive sticky-top bg-white">
-                <!-- <div class="tabs tabs-center"> -->
-                <a id="a_tab_entity" class="tab" onclick="showentitytab()">
-                    Entities
-                </a>
-                <a id="a_tab_phrase" class="tab" onclick="showphrasetab()">
-                    Key phrases
-                </a>
-                <a id="a_tab_language" class="tab" onclick="showlanguagetab()">
-                    Languages
-                </a>
-                <a id="a_tab_pii" class="tab" onclick="showpiitab()">
-                    PII
-                </a>
-                <a id="a_tab_sentiment" class="tab" onclick="showsentimenttab()">
-                    Sentiment
-                </a>
-                <a id="a_tab_syntax" class="tab" onclick="showsyntaxtab()">
-                    Syntax
-                </a>
-                <!-- </div> -->
-            </div>
 
-            <div class="piielements divtogglekeypii">
-                <p class="subtextappintegration">Personally Identifiable information (PII) analysis mode</p>
-                <div class="radiospii">
 
-                    <label class="form-control">
-                        <input type="radio" id="piioffset" name="piioptions" value="offset" checked
-                            onclick="togglepiioptions()" />
-                        <span class="radiotitle">Offsets</span>
-                        <p> Identify the location of PII in your text documents.</p>
-                    </label>
+        <div class="entityanalyzedtextdiv analyzedtextdiv divtoggleentity">
+            <p class="titleanalyzedtextp">Analyzed Text</p>
+            <div id="entity_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
 
-                    <label class="form-control">
-                        <input type="radio" id="piilabel" name="piioptions" value="labels"
-                            onclick="togglepiioptions()" />
-                        <span class="radiotitle">Labels</span>
-                        <p>Label text documents with PII.</p>
-                    </label>
+        </div>
 
+        <div class="keyphraseanalyzedtextdiv analyzedtextdiv divtogglekeyphrase">
+            <p class="titleanalyzedtextp">Analyzed Text</p>
+            <div id="keyphrase_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
+
+        </div>
+
+        <div class="piioffsetanalyzedtextdiv analyzedtextdiv divtogglekeypii">
+            <p class="titleanalyzedtextp">Analyzed Text</p>
+            <div id="piioffset_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
+
+        </div>
+
+        <div class="languageanalyzedtextdiv analyzedtextdiv divtogglelanguage">
+            <p class="titleanalyzedtextp">Analyzed Text</p>
+            <div id="language_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
+        </div>
+
+        <div class="sentimentanalyzedtextdiv analyzedtextdiv divtogglesentiment">
+            <p class="titleanalyzedtextp">Analyzed Text</p>
+            <div id="sentiment_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
+        </div>
+
+        <div class="syntaxanalyzedtextdiv analyzedtextdiv divtogglesyntax">
+            <p class="titleanalyzedtextp">Analyzed Text</p>
+            <div id="syntax_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
+        </div>
+
+
+
+        <div id="tblEntity" class="table results divtoggleentity">
+            <p class="headings">Results</p>
+
+            <div class="tools">
+
+                <div class="iconinputbox">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input id="searchentity" class="nooutline searchtext" type="text" placeholder="Search.." onkeyup="entitidata_filter()">
                 </div>
-            </div>
 
-
-            <div class="entityanalyzedtextdiv analyzedtextdiv divtoggleentity">
-                <p class="titleanalyzedtextp">Analyzed Text</p>
-                <div id="entity_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
-
-            </div>
-
-            <div class="keyphraseanalyzedtextdiv analyzedtextdiv divtogglekeyphrase">
-                <p class="titleanalyzedtextp">Analyzed Text</p>
-                <div id="keyphrase_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
-
-            </div>
-
-            <div class="piioffsetanalyzedtextdiv analyzedtextdiv divtogglekeypii">
-                <p class="titleanalyzedtextp">Analyzed Text</p>
-                <div id="piioffset_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
-
-            </div>
-
-            <div class="languageanalyzedtextdiv analyzedtextdiv divtogglelanguage">
-                <p class="titleanalyzedtextp">Analyzed Text</p>
-                <div id="language_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
-            </div>
-
-            <div class="sentimentanalyzedtextdiv analyzedtextdiv divtogglesentiment">
-                <p class="titleanalyzedtextp">Analyzed Text</p>
-                <div id="sentiment_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
-            </div>
-
-            <div class="syntaxanalyzedtextdiv analyzedtextdiv divtogglesyntax">
-                <p class="titleanalyzedtextp">Analyzed Text</p>
-                <div id="syntax_textaradisabled" class="textinput comprehendtextaradisabled" disabled></div>
-            </div>
-
-
-
-            <div id="tblEntity" class="table results divtoggleentity">
-                <p class="headings">Results</p>
-
-                <div class="tools">
-
-                    <div class="iconinputbox">
-                        <span class="material-symbols-outlined">
-                            search
-                        </span>
-                        <input id="searchentity" class="nooutline searchtext" type="text" placeholder="Search.."
-                            onkeyup="entitidata_filter()">
-                    </div>
-
-                    <div id="paginationentity" class="pagination">
-                        {{-- <span id="previouspageentity">
+                <div id="paginationentity" class="pagination">
+                    {{-- <span id="previouspageentity">
                             < </span>
                                 <a class="selected" onclick="paginationwork(entities,1)">1</a>
                                 <a href="">2</a>
                                 <a href="">3</a>
                                 <span id="nextpageentity"> > </span> --}}
-                        {{-- code will be generated dynamically --}}
+                    {{-- code will be generated dynamically --}}
 
-                    </div>
-                </div>
-
-                <div class="tablebody">
-                    <table id="entitytable">
-                        <thead>
-                            <tr>
-                                <th class="col1">Entity</th>
-                                <th class="col2">Type</th>
-                                <th class="col3">Confidence</th>
-                            </tr>
-                        </thead>
-                        <tbody id="entitytablebody">
-
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
-            <div id="tblkeyphrase" class="table results divtogglekeyphrase">
-                <p class="headings">Results</p>
+            <div class="tablebody">
+                <table id="entitytable">
+                    <thead>
+                        <tr>
+                            <th class="col1">Entity</th>
+                            <th class="col2">Type</th>
+                            <th class="col3">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="entitytablebody">
 
-                <div class="tools">
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                    <div class="iconinputbox">
-                        <span class="material-symbols-outlined">
-                            search
-                        </span>
-                        <input id="keyphrasetext" class="nooutline searchtext" type="text" placeholder="Search.."
-                            onkeyup="keyphrase_filter()">
-                    </div>
+        <div id="tblkeyphrase" class="table results divtogglekeyphrase">
+            <p class="headings">Results</p>
 
-                    <div id="paginationtblkeyphrase" class="pagination">
-                        {{-- <span>
+            <div class="tools">
+
+                <div class="iconinputbox">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input id="keyphrasetext" class="nooutline searchtext" type="text" placeholder="Search.." onkeyup="keyphrase_filter()">
+                </div>
+
+                <div id="paginationtblkeyphrase" class="pagination">
+                    {{-- <span>
                             < </span>
                                 <a href="" class="selected">1</a>
                                 <a href="">2</a>
                                 <a href="">3</a>
                                 <span> > </span> --}}
-                        {{-- code will be generated dynamically --}}
+                    {{-- code will be generated dynamically --}}
 
-                    </div>
-                </div>
-
-                <div class="keyphrasetablediv cols-2">
-                    <table id="keyphrasetable">
-                        <thead>
-                            <tr>
-                                <th class="col1">Key phrases</th>
-                                <th class="col2">Confidence</th>
-                            </tr>
-                        </thead>
-                        <tbody id="keyphrasebody">
-
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
-            <div id="tbllanguage" class="table results divtogglelanguage">
-                <p class="headings">Results</p>
+            <div class="keyphrasetablediv cols-2">
+                <table id="keyphrasetable">
+                    <thead>
+                        <tr>
+                            <th class="col1">Key phrases</th>
+                            <th class="col2">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keyphrasebody">
 
-                <div class="languagetable cols-2 ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="col1">Language</th>
-                                <th class="col2">Confidence</th>
-                            </tr>
-                        </thead>
-                        <tbody id="languagetablebody">
-
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
-
-            <div id="div_tbl_piilabel" class="table results divtogglekeypii">
-                <p class="headings"></p>
-
-                <div class="tools">
-
-                    <div class="iconinputbox">
-                        <span class="material-symbols-outlined">
-                            search
-                        </span>
-                        <input id="piilabelsearchtext" class="nooutline searchtext" type="text"
-                            placeholder="Search.." onkeyup="piilablset_filter()">
-                    </div>
-
-                    <div id="paginationpiilabel" class="pagination">
-                        {{-- //pagination dynamically will be added --}}
-                    </div>
-                </div>
-
-                <div class="divpiitable cols-2">
-                    <table id="piitable">
-                        <thead>
-                            <tr>
-                                <th class="col1">Type</th>
-                                <th class="col2">Confidence</th>
-                            </tr>
-                        </thead>
-                        <tbody id="piitablebody">
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="div_tbl_piioffset" class="table results divtogglekeypii">
-                <p class="headings">Results</p>
-
-                <div class="tools">
-
-                    <div class="iconinputbox">
-                        <span class="material-symbols-outlined">
-                            search
-                        </span>
-                        <input id="piioffsetseachtext" class="nooutline searchtext" type="text"
-                            placeholder="Search.." onkeyup="piioffset_filter()">
-                    </div>
-
-                    <div id="paginationpiioffset" class="pagination">
-                        {{-- //pagination dynamically will be added --}}
-
-
-                    </div>
-                </div>
-
-                <div class="tablebody">
-                    <table id="entitytable">
-                        <thead>
-                            <tr>
-                                <th class="col1">Entity</th>
-                                <th class="col2">Type</th>
-                                <th class="col3">Confidence</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbody_piioffset">
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="tblsentiment" class="table results divtogglesentiment">
-                <p class="headings">Results</p>
-
-                <div class="divsentimenttable cols-2">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="col1">Sentiment</th>
-                                <th class="col2">Confidence</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodysentimenttable">
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="divtblsyntax" class="table results divtogglesyntax">
-                <p class="headings">Results</p>
-
-                <div class="tools">
-
-                    <div class="iconinputbox">
-                        <span class="material-symbols-outlined">
-                            search
-                        </span>
-                        <input id="syntaxseachtext" class="nooutline searchtext" type="text" placeholder="Search.."
-                            onkeyup="syntax_filter()">
-                    </div>
-
-                    <div id="paginationsyntax" class="pagination">
-                        {{-- //pagination dynamically will be added --}}
-
-                    </div>
-                </div>
-
-                <div class="tablebody">
-                    <table id="entitytable">
-                        <thead>
-                            <tr>
-                                <th class="col1">Word</th>
-                                <th class="col2">Part of speech</th>
-                                <th class="col3">Confidence</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodysyntaxtable">
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-            <div class="appintegration">
-                <p class="headings">Application Integration</p>
-                <p class="subtextappintegration">API call and API response of DetectEntities API.</p>
-                <div class="callresponsedivs">
-                    <div class="divapicall">
-                        <div id="HTMLContainercall" class="HTMLContainer HTMLContainercall"></div>
-                        <button class="btn btncpycall" onclick="copytext(1)">COPY TEXT</button>
-                    </div>
-                    <div class="divapiresponse">
-                        <div id="HTMLContainerresponse" class="HTMLContainer HTMLContainercallresponse"></div>
-                        <button class="btn btncpyresponse" onclick="copytext(2)">COPY TEXT</button>
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <div class="loaderdiv">
-            <div class="loader"></div>
 
+        <div id="tbllanguage" class="table results divtogglelanguage">
+            <p class="headings">Results</p>
+
+            <div class="languagetable cols-2 ">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col1">Language</th>
+                            <th class="col2">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="languagetablebody">
+
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div id="div_tbl_piilabel" class="table results divtogglekeypii">
+            <p class="headings"></p>
+
+            <div class="tools">
+
+                <div class="iconinputbox">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input id="piilabelsearchtext" class="nooutline searchtext" type="text" placeholder="Search.." onkeyup="piilablset_filter()">
+                </div>
+
+                <div id="paginationpiilabel" class="pagination">
+                    {{-- //pagination dynamically will be added --}}
+                </div>
+            </div>
+
+            <div class="divpiitable cols-2">
+                <table id="piitable">
+                    <thead>
+                        <tr>
+                            <th class="col1">Type</th>
+                            <th class="col2">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="piitablebody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="div_tbl_piioffset" class="table results divtogglekeypii">
+            <p class="headings">Results</p>
+
+            <div class="tools">
+
+                <div class="iconinputbox">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input id="piioffsetseachtext" class="nooutline searchtext" type="text" placeholder="Search.." onkeyup="piioffset_filter()">
+                </div>
+
+                <div id="paginationpiioffset" class="pagination">
+                    {{-- //pagination dynamically will be added --}}
+
+
+                </div>
+            </div>
+
+            <div class="tablebody">
+                <table id="entitytable">
+                    <thead>
+                        <tr>
+                            <th class="col1">Entity</th>
+                            <th class="col2">Type</th>
+                            <th class="col3">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_piioffset">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tblsentiment" class="table results divtogglesentiment">
+            <p class="headings">Results</p>
+
+            <div class="divsentimenttable cols-2">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col1">Sentiment</th>
+                            <th class="col2">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodysentimenttable">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="divtblsyntax" class="table results divtogglesyntax">
+            <p class="headings">Results</p>
+
+            <div class="tools">
+
+                <div class="iconinputbox">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input id="syntaxseachtext" class="nooutline searchtext" type="text" placeholder="Search.." onkeyup="syntax_filter()">
+                </div>
+
+                <div id="paginationsyntax" class="pagination">
+                    {{-- //pagination dynamically will be added --}}
+
+                </div>
+            </div>
+
+            <div class="tablebody">
+                <table id="entitytable">
+                    <thead>
+                        <tr>
+                            <th class="col1">Word</th>
+                            <th class="col2">Part of speech</th>
+                            <th class="col3">Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodysyntaxtable">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="appintegration">
+            <p class="headings">Application Integration</p>
+            <p class="subtextappintegration">API call and API response of DetectEntities API.</p>
+            <div class="callresponsedivs">
+                <div class="divapicall">
+                    <div id="HTMLContainercall" class="HTMLContainer HTMLContainercall"></div>
+                    <button class="btn btncpycall" onclick="copytext(1)">COPY TEXT</button>
+                </div>
+                <div class="divapiresponse">
+                    <div id="HTMLContainerresponse" class="HTMLContainer HTMLContainercallresponse"></div>
+                    <button class="btn btncpyresponse" onclick="copytext(2)">COPY TEXT</button>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <div class="loaderdiv">
+        <div class="loader"></div>
+
+    </div>
+</div>
 @endpush
 
 @push('footer')
@@ -2917,7 +2909,7 @@ If you have questions about your bill, AnyCompany Customer Service is available 
         width: 50px;
     }
 
-    tbody tr .tdcol2 {}
+    /* tbody tr .tdcol2 {} */
 
     tbody tr td {
         /* text-align: center; */
@@ -3035,9 +3027,9 @@ If you have questions about your bill, AnyCompany Customer Service is available 
         font-weight: 600;
     }
 
-    .comprehendresultdiv {
-        /* display: none; */
-    }
+    /* .comprehendresultdiv {
+      display: none; 
+    } */
 
     .loaderdiv {
         display: none;
