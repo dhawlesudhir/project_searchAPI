@@ -1,106 +1,269 @@
 @extends('layouts.modal')
 
 @push('scripts')
-    <script>
-        let fileobjURL = '';
-        let fileidfromserver = '';
-        let responseData = '';
-        let APP_URL = '';
+<script>
+    let fileobjURL = '';
+    let fileidfromserver = '';
+    let postresponseData = '';
+    let getresponseData = '';
+    let APP_URL = '';
 
-        disableSubmit();
+    disableSubmit();
 
-        function uploadAudio(files) {
-            const file = files.target.files[0];
-            // fileobjURL = URL.createObjectURL(file);
-            fileobjURL = file;
-            console.log("file saved " + fileobjURL);
-            disableSubmit();
-        }
 
-        function apicallsubmit() {
-
-            var formdata = new FormData();
-            formdata.append("File", fileobjURL);
-            formdata.append("Settings", "{\"setting1\": \"settings\", \"settings2\": \"settings\"}");
-
-            var requestOptions = {
-                method: 'POST',
-                body: formdata,
-                redirect: 'follow'
-            };
-
-            document.getElementById("btnSubmit").style.display = "none";
-            document.getElementById("btnanalyzing").style.display = "block";
-
-            fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/upload", requestOptions)
-                .then(response => {
-                    document.getElementById("btnSubmit").style.display = "block";
-                    document.getElementById("btnanalyzing").style.display = "none";
-                    if (response.ok) {
-                        return response.json();
-                    }
-                    if (response.status == 415) {
-                        alert('Unsupported file/image uploaded');
-                        throw new Error(415);
-                    }
-                })
-                .then(result => {
-                    console.log("fetch response - " + result.TranscriptionJobName);
-                    responseData = result;
-                })
-                .catch(error => console.log('error', error));
-        }
-
-        function apicallget() {
-
-        }
-
-        // prevent submit action if nofile data
-        function disableSubmit() {
-            const button = document.getElementById('btnSubmit')
-            if (!fileobjURL) {
-                button.disabled = true;
-            } else {
-                button.disabled = false;
+    let testData = `{
+    "status": "COMPLETED",
+    "response": {
+        "jobResponse": {
+            "TranscriptionJobName": "c746a713-b000-4f74-9aab-19224087e93c-371fba6b9f6649518ac9eb16c58949c6.mp3",
+            "TranscriptionJobStatus": "COMPLETED",
+            "LanguageCode": "en-US",
+            "MediaSampleRateHertz": 24000,
+            "MediaFormat": "mp3",
+            "Media": {
+                "MediaFileUri": "s3://transcribe-file-upload-storage/c746a713-b000-4f74-9aab-19224087e93c-371fba6b9f6649518ac9eb16c58949c6.mp3"
+            },
+            "Transcript": {
+                "TranscriptFileUri": "https://s3.ap-south-1.amazonaws.com/transcribe-job-output/c746a713-b000-4f74-9aab-19224087e93c-371fba6b9f6649518ac9eb16c58949c6.mp3.json"
+            },
+            "StartTime": "2022-09-17 16:20:10.318000+00:00",
+            "CreationTime": "2022-09-17 16:20:10.300000+00:00",
+            "CompletionTime": "2022-09-17 16:20:29.718000+00:00",
+            "Settings": {
+                "ChannelIdentification": false,
+                "ShowAlternatives": false
             }
+        },
+        "data": {
+            "jobName": "c746a713-b000-4f74-9aab-19224087e93c-371fba6b9f6649518ac9eb16c58949c6.mp3",
+            "accountId": "968134349448",
+            "results": {
+                "transcripts": [
+                    {
+                        "transcript": "For Prime Minister Narendra modi's birthday today superstar."
+                    }
+                ],
+                "items": [
+                    {
+                        "start_time": "0.11",
+                        "end_time": "0.3",
+                        "alternatives": [
+                            {
+                                "confidence": "0.9983",
+                                "content": "For"
+                            }
+                        ],
+                        "type": "pronunciation"
+                    },
+                    {
+                        "start_time": "0.3",
+                        "end_time": "0.61",
+                        "alternatives": [
+                            {
+                                "confidence": "1.0",
+                                "content": "Prime"
+                            }
+                        ],
+                        "type": "pronunciation"
+                    },
+                    {
+                        "start_time": "0.61",
+                        "end_time": "1.01",
+                        "alternatives": [
+                            {
+                                "confidence": "1.0",
+                                "content": "Minister"
+                            }
+                        ],
+                        "type": "pronunciation"
+                    },
+                    {
+                        "start_time": "1.01",
+                        "end_time": "1.53",
+                        "alternatives": [
+                            {
+                                "confidence": "1.0",
+                                "content": "Narendra"
+                            }
+                        ],
+                        "type": "pronunciation"
+                    },
+                    {
+                        "start_time": "1.53",
+                        "end_time": "1.98",
+                        "alternatives": [
+                            {
+                                "confidence": "0.975",
+                                "content": "modi's"
+                            }
+                        ],
+                        "type": "pronunciation"
+                    },
+                    {
+                        "start_time": "1.98",
+                        "end_time": "2.48",
+                        "alternatives": [
+                            {
+                                "confidence": "1.0",
+                                "content": "birthday"
+                            }
+                        ],
+                        "type": "pronunciation"
+                    },
+                    {
+                        "start_time": "2.48",
+                        "end_time": "3.02",
+                        "alternatives": [
+                            {
+                                "confidence": "1.0",
+                                "content": "today"
+                            }
+                        ],
+                        "type": "pronunciation"
+                    },
+                    {
+                        "start_time": "3.18",
+                        "end_time": "4.01",
+                        "alternatives": [
+                            {
+                                "confidence": "0.9986",
+                                "content": "superstar"
+                            }
+                        ],
+                        "type": "pronunciation"
+                    },
+                    {
+                        "alternatives": [
+                            {
+                                "confidence": "0.0",
+                                "content": "."
+                            }
+                        ],
+                        "type": "punctuation"
+                    }
+                ]
+            },
+            "status": "COMPLETED"
         }
-    </script>
+    }
+}`;
+
+
+
+    function uploadAudio(files) {
+        const file = files.target.files[0];
+        // fileobjURL = URL.createObjectURL(file);
+        fileobjURL = file;
+        console.log("file saved " + fileobjURL);
+        disableSubmit();
+    }
+
+    function apicallsubmit() {
+
+        var formdata = new FormData();
+        formdata.append("File", fileobjURL);
+        formdata.append("Settings", "{\"setting1\": \"settings\", \"settings2\": \"settings\"}");
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+
+        document.getElementById("btnSubmit").style.display = "none";
+        document.getElementById("btnanalyzing").style.display = "block";
+
+        fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/upload", requestOptions)
+            .then(response => {
+                document.getElementById("btnSubmit").style.display = "block";
+                document.getElementById("btnanalyzing").style.display = "none";
+                if (response.ok) {
+                    return response.json();
+                }
+                if (response.status == 415) {
+                    alert('Unsupported file/image uploaded');
+                    throw new Error(415);
+                }
+            })
+            .then(result => {
+                console.log("fetch response - " + result.TranscriptionJobName);
+                responseData = result;
+                apicallget();
+            })
+            .catch(error => console.log('error', error));
+    }
+
+    function apicallget() {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+
+        fetch("https://7khsyf0wyi.execute-api.ap-south-1.amazonaws.com/dev/get-transcribe?name=" +
+                responseData.TranscriptionJobName, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                getresponseData = result;
+                console.log(result);
+                processResponse(getresponseData);
+            })
+            .catch(error => console.log('error', error));
+    }
+    processResponse(JSON.parse(testData));
+
+    function processResponse(response) {
+        console.log(response.status);
+        console.log(response.response.jobResponse.TranscriptionJobStatus);
+        transcript = response.response.data.results.transcripts[0].transcript;
+        document.getElementById('textfromaudio').innerHTML = transcript;
+    }
+
+    // prevent submit action if nofile data
+    function disableSubmit() {
+        const button = document.getElementById('btnSubmit')
+        if (!fileobjURL) {
+            button.disabled = true;
+        } else {
+            button.disabled = false;
+        }
+    }
+</script>
 @endpush
 
 @push('header')
-    Speech To Text
+Speech To Text
 @endpush
 
 
 @push('aside')
-    <h4 class="selected">Speech To Text</h4>
+<h4 class="selected">Speech To Text</h4>
 @endpush
 
 
 
 @push('artical')
-    <!-- speech to text container -->
-    <div class="articalcontainer">
-        <div class="transdiv">
-            <p class="title">Transcription Output</p>
-            <div name="" id="textfromaudio">
-                Click <strong>Start Transcribing</strong> below to begin a real-time transcription of what you speak into
-                your microphone
-            </div>
+<!-- speech to text container -->
+<div class="articalcontainer">
+    <div class="transdiv">
+        <p class="title">Transcription Output</p>
+        <div name="" id="textfromaudio">
+            Click <strong>Start Transcribing</strong> below to begin a real-time transcription of what you speak into
+            your microphone
+        </div>
 
-            {{-- <div class="divrecord"> --}}
-            <p class="transcriptlanguage">Current language: <span>English, US</span> </p>
+        {{-- <div class="divrecord"> --}}
+        <p class="transcriptlanguage">Current language: <span>English, US</span> </p>
 
-            <input type="file" id="btnUpldimage" onchange="uploadAudio(event)" hidden />
-            <!--our custom file upload button-->
-            <label id="btnanalyze" for="btnUpldimage" class="btn labelbtnUpld">Upload Audio</label>
+        <input type="file" id="btnUpldimage" onchange="uploadAudio(event)" hidden />
+        <!--our custom file upload button-->
+        <label id="btnanalyze" for="btnUpldimage" class="btn labelbtnUpld">Upload Audio</label>
 
-            <button id="btnanalyzing" type="button" class="labelbtnUpld btn">
-                <i id="converting" class="fa fa-spinner fa-spin"></i> Uploading
-            </button>
-            <button id="btnSubmit" class="btn" onclick="apicallsubmit()">Submit</button>
+        <button id="btnanalyzing" type="button" class="labelbtnUpld btn">
+            <i id="converting" class="fa fa-spinner fa-spin"></i> Uploading
+        </button>
+        <button id="btnSubmit" class="btn" onclick="apicallsubmit()">Submit</button>
 
-            {{-- <button id="btnRecord" for="actual-btn" class="btn" onclick="startRecording()">
+        {{-- <button id="btnRecord" for="actual-btn" class="btn" onclick="startRecording()">
                     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
                         <path fill="#0091ff"
                             d="M10.021 12.208q-1.25 0-2.146-.896-.896-.895-.896-2.145V4.146q0-1.25.896-2.136.896-.885 2.146-.885t2.135.885q.886.886.886 2.136v5.021q0 1.25-.875 2.145-.875.896-2.146.896Zm-1.167 6v-2.437q-2.437-.333-4-2.219-1.562-1.885-1.562-4.385h2.291q0 1.854 1.302 3.125 1.303 1.27 3.136 1.27 1.833 0 3.125-1.27 1.292-1.271 1.292-3.125h2.291q0 2.5-1.562 4.385-1.563 1.886-4.021 2.219v2.437Z" />
@@ -118,263 +281,121 @@
                     <p>click to stop</p>
                 </div> --}}
 
-            {{-- </div> --}}
+        {{-- </div> --}}
 
-        </div>
+    </div>
 
-        <hr class="hrSeperator">
+    <hr class="hrSeperator">
 
-        <div class="informationDiv">
-            <p class="title">Settings</p>
-            <div class="divcollapses">
+    <div class="informationDiv">
+        <p class="title">Settings</p>
+        <div class="divcollapses">
 
-                <div class="divcollapse languagesettings">
-                    <div class="collabseheader" onclick="show('bodylanguagesettingsdiv','187px','arrowicon1')">
-                        <span id="languagesettingbtn">Language Settings</span>
-                        <span>
-                            <svg id="arrowicon1" class="arrowdown" xmlns="http://www.w3.org/2000/svg" height="20"
-                                width="20">
-                                <path d="M10 12.333 5.292 7.667h9.416Z" />
-                            </svg>
-                        </span>
-                    </div>
-
-                    <div id="bodylanguagesettingsdiv" class="collabsebody">
-                        <div>
-                            <label class="form-control">
-                                <input type="radio" id="engine" name="engine" value="neural" />
-                                <span class="radiotitle">Specific language</span>
-                                <p> If you know the language spoken in your source audio, choose this option to get the most
-                                    accurate results.
-                                </p>
-                            </label>
-                        </div>
-                        <div>
-                            <label class="form-control">
-                                <input type="radio" id="engine" name="engine" value="neural" />
-                                <span class="radiotitle">Automatic language identification</span>
-                                <p>Produces natural-sounding speech</p>
-                            </label>
-                        </div>
-                        <fieldset class="optionsFieldSet">
-                            <label for="languageSelected" class="lbloption">Choose Language</label>
-                            <select class="optselect" name="" id="languageSelected">
-                                <option value="xyz" class="sltOption">Chinese, CN (zh-CN)</option>
-                                <option value="abc">English, US</option>
-                            </select>
-                        </fieldset>
-                    </div>
-
+            <div class="divcollapse languagesettings">
+                <div class="collabseheader" onclick="show('bodylanguagesettingsdiv','187px','arrowicon1')">
+                    <span id="languagesettingbtn">Language Settings</span>
+                    <span>
+                        <svg id="arrowicon1" class="arrowdown" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+                            <path d="M10 12.333 5.292 7.667h9.416Z" />
+                        </svg>
+                    </span>
                 </div>
 
-                <div class="divcollapse audiosettings">
-                    <div class="collabseheader" onclick="show('audiosettingsdiv','75px','arrowicon2')">
-                        <span id="audiosettingsbtn">Audio Settings</span>
-                        <span>
-                            <svg id="arrowicon2" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
-                                <path d="M10 12.333 5.292 7.667h9.416Z" />
-                            </svg>
-                        </span>
+                <div id="bodylanguagesettingsdiv" class="collabsebody">
+                    <div>
+                        <label class="form-control">
+                            <input type="radio" id="engine" name="engine" value="neural" />
+                            <span class="radiotitle">Specific language</span>
+                            <p> If you know the language spoken in your source audio, choose this option to get the most
+                                accurate results.
+                            </p>
+                        </label>
                     </div>
-
-                    <div class="collabsebody" id="audiosettingsdiv">
-                        <div>
-                            <label class="form-control">
-                                <div class="formcntlelement">
-                                    <div class="formcntlelementheader">
-                                        <span class="radiotitle">Speaker identification</span>
-                                        <label class="switch">
-                                            <input type="checkbox">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                    <p class="formcntlelementdesc">
-                                        Identify the different speakers in the stream. Speaker identification might vary in
-                                        availability between languages.
-                                    </p>
-                                </div>
-                            </label>
-                        </div>
+                    <div>
+                        <label class="form-control">
+                            <input type="radio" id="engine" name="engine" value="neural" />
+                            <span class="radiotitle">Automatic language identification</span>
+                            <p>Produces natural-sounding speech</p>
+                        </label>
                     </div>
+                    <fieldset class="optionsFieldSet">
+                        <label for="languageSelected" class="lbloption">Choose Language</label>
+                        <select class="optselect" name="" id="languageSelected">
+                            <option value="xyz" class="sltOption">Chinese, CN (zh-CN)</option>
+                            <option value="abc">English, US</option>
+                        </select>
+                    </fieldset>
                 </div>
 
-                <div class="divcollapse contentremovalsettings">
-                    <div class="collabseheader" onclick="show('contentremovalsettingsdiv','auto','arrowicon3')">
-                        <span id="contentremovalsettingsbtn">Content Removal Settings</span>
-                        <span>
-                            <svg id="arrowicon3" xmlns=" http://www.w3.org/2000/svg" height="20" width="20">
-                                <path d="M10 12.333 5.292 7.667h9.416Z" />
-                            </svg>
-                        </span>
-                    </div>
+            </div>
 
-                    <div class="collabsebody" id="contentremovalsettingsdiv">
-                        <div>
-                            <label class="form-control">
-                                <div class="formcntlelement">
-                                    <div class="formcntlelementheader">
-                                        <span class="radiotitle">Vocabulary filtering</span>
-                                        <label class="switch">
-                                            <input id="vocabularyswitch" type="checkbox" value="vocabularyfilter"
-                                                onclick="togglediv('vocabularyswitch','vocabularyextradiv','115px')">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                    <p class="formcntlelementdesc">
-                                        Vocabulary filtering removes, masks, or tags words that you specify in your
-                                        vocabulary filter. Choose a vocabulary filter to see an example.
-                                    </p>
-                                    <div class="formcntlelementbody" id="vocabularyextradiv">
-                                        <div class="formcntlelementheader">
-                                            <span class="radiotitle">Filter selection</span>
-                                        </div>
-                                        <p class="formcntlelementdesc">
-                                            The vocabulary filters shown here are based on your language settings. You can
-                                            choose up to one vocabulary filter per language.
-                                        </p>
-                                        <select class="optselect" name="" id="vocabularyfilterSelected">
-                                            <option value="xyz" class="sltOption">Choose a Vocabulary filter...
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </label>
-                            <label class="form-control">
-                                <div class="formcntlelement">
-                                    <div class="formcntlelementheader">
-                                        <span class="radiotitle">PII Identification & redaction</span>
-                                        <label class="switch">
-                                            <input type="checkbox" id="identificationandredactionswitch"
-                                                onclick="togglediv('identificationandredactionswitch','identificationandredactionextradiv','auto')">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                    <p class="formcntlelementdesc">
-                                        Identify or redact one or more types of personally identifiable information (PII) in
-                                        your transcript
-                                    </p>
-                                    <div class="formcntlelementbody" id="identificationandredactionextradiv">
-                                        <div>
-                                            <label class="form-control">
-                                                <input type="radio" id="engine" name="engine" value="neural" />
-                                                <span class="radiotitle">Identification only</span>
-                                                <p>
-                                                    Label the type of PII identified but not redact it in the transcription
-                                                    output
-                                                </p>
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label class="form-control">
-                                                <input type="radio" id="engine" name="engine" value="neural" />
-                                                <span class="radiotitle">Identification & redaction</span>
-                                                <p>
-                                                    Label the type of PII and also mask the content with the PII entity type
-                                                    in the transcription output. For example, (123)456-7890 will be masked
-                                                    as [PHONE]
-                                                </p>
-                                            </label>
-                                        </div>
-                                        <div class="identificationandredactionSelecttorDiv">
-                                            <p class="selectorsheadings">Select PII entity types (11 of 11 selected)</p>
-                                            <input type="checkbox" id="chkall" name="chkall" value="chkall">
-                                            <label for="chkall">Select All</label>
-
-                                            <div class="checkgrp1">
-                                                <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                    value="chkallfina">
-                                                <label for="chkallfina">Finacial (0 of 6 selected)</label> <br>
-                                                <div class="checksubgrp">
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">BANK_ACCOUNT_NUMBER</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">BANK_ROUTING</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">CREDIT_DEBIT_NUMBER</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">CREDIT_DEBIT_CVV</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">CREDIT_DEBIT_EXPIRY</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">PIN</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="checkgrp2">
-                                                <input type="checkbox" id="chkallpersonal" name="chkallpersonal"
-                                                    value="chkallpersonal">
-                                                <label for="chkallpersonal">Finacial (0 of 5 selected)</label><br>
-                                                <div class="checksubgrp">
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">NAME</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">ADDRESS</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">PHONE</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">EMAIL</label><br>
-                                                    <input type="checkbox" id="chkallfina" name="chkallfina"
-                                                        value="chkallfina">
-                                                    <label for="chkallfina">SSN</label><br>
-                                                    {{-- <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
-                            <label for="chkallfina">Finacial (6 of 6 selected)</label> --}}
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
+            <div class="divcollapse audiosettings">
+                <div class="collabseheader" onclick="show('audiosettingsdiv','75px','arrowicon2')">
+                    <span id="audiosettingsbtn">Audio Settings</span>
+                    <span>
+                        <svg id="arrowicon2" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+                            <path d="M10 12.333 5.292 7.667h9.416Z" />
+                        </svg>
+                    </span>
                 </div>
 
-                <div class="divcollapse customizationssettings">
-                    <div class="collabseheader" onclick="show('customizationssettingsdiv','auto','arrowicon4')">
-                        <span id="customizationssettingsid">Customizations</span>
-                        <span>
-                            <svg id="arrowicon4" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
-                                <path d="M10 12.333 5.292 7.667h9.416Z" />
-                            </svg>
-                        </span>
-                    </div>
-
-                    <div class="collabsebody" id="customizationssettingsdiv">
-                        <!-- <div> -->
+                <div class="collabsebody" id="audiosettingsdiv">
+                    <div>
                         <label class="form-control">
                             <div class="formcntlelement">
                                 <div class="formcntlelementheader">
-                                    <span class="radiotitle">Custom vocabulary</span>
+                                    <span class="radiotitle">Speaker identification</span>
                                     <label class="switch">
-                                        <input type="checkbox" id="customvocabularyswitch"
-                                            onclick="togglediv('customvocabularyswitch','customvocabularyextradiv','115px')">
+                                        <input type="checkbox">
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
                                 <p class="formcntlelementdesc">
-                                    A custom vocabulary improves the accuracy of recognizing words and phrases specific to
-                                    your use case.
+                                    Identify the different speakers in the stream. Speaker identification might vary in
+                                    availability between languages.
                                 </p>
-                                <div class="formcntlelementbody" id="customvocabularyextradiv">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divcollapse contentremovalsettings">
+                <div class="collabseheader" onclick="show('contentremovalsettingsdiv','auto','arrowicon3')">
+                    <span id="contentremovalsettingsbtn">Content Removal Settings</span>
+                    <span>
+                        <svg id="arrowicon3" xmlns=" http://www.w3.org/2000/svg" height="20" width="20">
+                            <path d="M10 12.333 5.292 7.667h9.416Z" />
+                        </svg>
+                    </span>
+                </div>
+
+                <div class="collabsebody" id="contentremovalsettingsdiv">
+                    <div>
+                        <label class="form-control">
+                            <div class="formcntlelement">
+                                <div class="formcntlelementheader">
+                                    <span class="radiotitle">Vocabulary filtering</span>
+                                    <label class="switch">
+                                        <input id="vocabularyswitch" type="checkbox" value="vocabularyfilter" onclick="togglediv('vocabularyswitch','vocabularyextradiv','115px')">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <p class="formcntlelementdesc">
+                                    Vocabulary filtering removes, masks, or tags words that you specify in your
+                                    vocabulary filter. Choose a vocabulary filter to see an example.
+                                </p>
+                                <div class="formcntlelementbody" id="vocabularyextradiv">
                                     <div class="formcntlelementheader">
-                                        <span class="radiotitle">Vocabulary selection</span>
+                                        <span class="radiotitle">Filter selection</span>
                                     </div>
                                     <p class="formcntlelementdesc">
-                                        The vocabularies shown here are based on your language settings. You can choose up
-                                        to one vocabulary per language.
+                                        The vocabulary filters shown here are based on your language settings. You can
+                                        choose up to one vocabulary filter per language.
                                     </p>
                                     <select class="optselect" name="" id="vocabularyfilterSelected">
-                                        <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
+                                        <option value="xyz" class="sltOption">Choose a Vocabulary filter...
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -382,97 +403,219 @@
                         <label class="form-control">
                             <div class="formcntlelement">
                                 <div class="formcntlelementheader">
-                                    <span class="radiotitle">Partial results stabilization</span>
+                                    <span class="radiotitle">PII Identification & redaction</span>
                                     <label class="switch">
-                                        <input type="checkbox" id="partialresultswitch"
-                                            onclick="togglediv('partialresultswitch','partialresultsextradiv','auto')">
+                                        <input type="checkbox" id="identificationandredactionswitch" onclick="togglediv('identificationandredactionswitch','identificationandredactionextradiv','auto')">
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
                                 <p class="formcntlelementdesc">
-                                    Configure Amazon Transcribe to present results that don't change as it processes the
-                                    transcription output from your stream.
+                                    Identify or redact one or more types of personally identifiable information (PII) in
+                                    your transcript
                                 </p>
-                                <div class="formcntlelementbody" id="partialresultsextradiv">
+                                <div class="formcntlelementbody" id="identificationandredactionextradiv">
                                     <div>
                                         <label class="form-control">
                                             <input type="radio" id="engine" name="engine" value="neural" />
-                                            <span class="radiotitle">High</span>
+                                            <span class="radiotitle">Identification only</span>
                                             <p>
-                                                Provides the most stable partial transcript results with lower accuracy
-                                                compared to the Medium and Low settings.
+                                                Label the type of PII identified but not redact it in the transcription
+                                                output
                                             </p>
                                         </label>
                                     </div>
                                     <div>
                                         <label class="form-control">
                                             <input type="radio" id="engine" name="engine" value="neural" />
-                                            <span class="radiotitle">Medium</span>
+                                            <span class="radiotitle">Identification & redaction</span>
                                             <p>
-                                                Provides partial transcription results that have a balance between stability
-                                                and accuracy. </p>
+                                                Label the type of PII and also mask the content with the PII entity type
+                                                in the transcription output. For example, (123)456-7890 will be masked
+                                                as [PHONE]
+                                            </p>
                                         </label>
                                     </div>
-                                    <div>
-                                        <label class="form-control">
-                                            <input type="radio" id="engine" name="engine" value="neural" />
-                                            <span class="radiotitle">Low</span>
-                                            <p>
-                                                Provides the relatively less stable partial transcription result with higher
-                                                accuracy compared to the High and Medium settings. </p>
-                                        </label>
+                                    <div class="identificationandredactionSelecttorDiv">
+                                        <p class="selectorsheadings">Select PII entity types (11 of 11 selected)</p>
+                                        <input type="checkbox" id="chkall" name="chkall" value="chkall">
+                                        <label for="chkall">Select All</label>
+
+                                        <div class="checkgrp1">
+                                            <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                            <label for="chkallfina">Finacial (0 of 6 selected)</label> <br>
+                                            <div class="checksubgrp">
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">BANK_ACCOUNT_NUMBER</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">BANK_ROUTING</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">CREDIT_DEBIT_NUMBER</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">CREDIT_DEBIT_CVV</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">CREDIT_DEBIT_EXPIRY</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">PIN</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="checkgrp2">
+                                            <input type="checkbox" id="chkallpersonal" name="chkallpersonal" value="chkallpersonal">
+                                            <label for="chkallpersonal">Finacial (0 of 5 selected)</label><br>
+                                            <div class="checksubgrp">
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">NAME</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">ADDRESS</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">PHONE</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">EMAIL</label><br>
+                                                <input type="checkbox" id="chkallfina" name="chkallfina" value="chkallfina">
+                                                <label for="chkallfina">SSN</label><br>
+                                                {{-- <input type="checkbox" id="chkallfina"  name="chkallfina" value="chkallfina">
+                            <label for="chkallfina">Finacial (6 of 6 selected)</label> --}}
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </label>
-                        <label class="form-control">
-                            <div class="formcntlelement">
-                                <div class="formcntlelementheader">
-                                    <span class="radiotitle">Custom language model</span>
-                                    <label class="switch">
-                                        <input id="customlanguageswitch" type="checkbox"
-                                            onclick="togglediv('customlanguageswitch','customlanguageextradiv','115px')">
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
-                                <p class="formcntlelementdesc">
-                                    Select the model you want to use with this streaming session.
-                                </p>
-                                <div class="formcntlelementbody" id="customlanguageextradiv">
-                                    <div class="formcntlelementheader">
-                                        <span class="radiotitle">Custom model selection</span>
-                                    </div>
-                                    <p class="formcntlelementdesc">
-                                        The models shown here are based on your language settings. You can choose up to one
-                                        model per language </p>
-                                    <select class="optselect" name="" id="vocabularyfilterSelected">
-                                        <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </label>
-                        <!-- </div> -->
                     </div>
                 </div>
+            </div>
 
+            <div class="divcollapse customizationssettings">
+                <div class="collabseheader" onclick="show('customizationssettingsdiv','auto','arrowicon4')">
+                    <span id="customizationssettingsid">Customizations</span>
+                    <span>
+                        <svg id="arrowicon4" xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+                            <path d="M10 12.333 5.292 7.667h9.416Z" />
+                        </svg>
+                    </span>
+                </div>
+
+                <div class="collabsebody" id="customizationssettingsdiv">
+                    <!-- <div> -->
+                    <label class="form-control">
+                        <div class="formcntlelement">
+                            <div class="formcntlelementheader">
+                                <span class="radiotitle">Custom vocabulary</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="customvocabularyswitch" onclick="togglediv('customvocabularyswitch','customvocabularyextradiv','115px')">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <p class="formcntlelementdesc">
+                                A custom vocabulary improves the accuracy of recognizing words and phrases specific to
+                                your use case.
+                            </p>
+                            <div class="formcntlelementbody" id="customvocabularyextradiv">
+                                <div class="formcntlelementheader">
+                                    <span class="radiotitle">Vocabulary selection</span>
+                                </div>
+                                <p class="formcntlelementdesc">
+                                    The vocabularies shown here are based on your language settings. You can choose up
+                                    to one vocabulary per language.
+                                </p>
+                                <select class="optselect" name="" id="vocabularyfilterSelected">
+                                    <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                    <label class="form-control">
+                        <div class="formcntlelement">
+                            <div class="formcntlelementheader">
+                                <span class="radiotitle">Partial results stabilization</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="partialresultswitch" onclick="togglediv('partialresultswitch','partialresultsextradiv','auto')">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <p class="formcntlelementdesc">
+                                Configure Amazon Transcribe to present results that don't change as it processes the
+                                transcription output from your stream.
+                            </p>
+                            <div class="formcntlelementbody" id="partialresultsextradiv">
+                                <div>
+                                    <label class="form-control">
+                                        <input type="radio" id="engine" name="engine" value="neural" />
+                                        <span class="radiotitle">High</span>
+                                        <p>
+                                            Provides the most stable partial transcript results with lower accuracy
+                                            compared to the Medium and Low settings.
+                                        </p>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="form-control">
+                                        <input type="radio" id="engine" name="engine" value="neural" />
+                                        <span class="radiotitle">Medium</span>
+                                        <p>
+                                            Provides partial transcription results that have a balance between stability
+                                            and accuracy. </p>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label class="form-control">
+                                        <input type="radio" id="engine" name="engine" value="neural" />
+                                        <span class="radiotitle">Low</span>
+                                        <p>
+                                            Provides the relatively less stable partial transcription result with higher
+                                            accuracy compared to the High and Medium settings. </p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                    <label class="form-control">
+                        <div class="formcntlelement">
+                            <div class="formcntlelementheader">
+                                <span class="radiotitle">Custom language model</span>
+                                <label class="switch">
+                                    <input id="customlanguageswitch" type="checkbox" onclick="togglediv('customlanguageswitch','customlanguageextradiv','115px')">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <p class="formcntlelementdesc">
+                                Select the model you want to use with this streaming session.
+                            </p>
+                            <div class="formcntlelementbody" id="customlanguageextradiv">
+                                <div class="formcntlelementheader">
+                                    <span class="radiotitle">Custom model selection</span>
+                                </div>
+                                <p class="formcntlelementdesc">
+                                    The models shown here are based on your language settings. You can choose up to one
+                                    model per language </p>
+                                <select class="optselect" name="" id="vocabularyfilterSelected">
+                                    <option value="xyz" class="sltOption">Choose a Vocabulary filter...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </label>
+                    <!-- </div> -->
+                </div>
             </div>
 
         </div>
+
     </div>
+</div>
 @endpush
 
 @push('footer')
-    <div class="footerDiv">
-        <button class="btn downloadtranscription">
-            <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)"
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
-                <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
-            </svg>DOWNLOAD TRANSCRIPTION
-        </button>
-        <button class="btn reset">
-            RESET DEMO</button>
-    </div>
+<div class="footerDiv">
+    <button class="btn downloadtranscription">
+        <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
+            <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
+        </svg>DOWNLOAD TRANSCRIPTION
+    </button>
+    <button class="btn reset">
+        RESET DEMO</button>
+</div>
 @endpush
 
 
@@ -538,16 +681,12 @@
         box-sizing: border-box;
         border: 1px solid #DDDDDD;
         color: #888888;
+        font-weight: 400;
     }
 
     .imagediv strong {
         color: #888888;
     }
-
-    #textfromaudio::placeholder {
-        color: #888888;
-    }
-
 
     .labelbtnUpld {
         width: 370px !important;
