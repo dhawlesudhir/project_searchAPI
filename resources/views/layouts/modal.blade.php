@@ -148,6 +148,7 @@
     font-size: 13px;
     font-family: "Open Sans", sans-serif;
     font-weight: bold;
+    cursor: pointer;
   }
 
   .modal aside h4 {
