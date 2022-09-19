@@ -1,18 +1,20 @@
 @extends('layouts.modal')
 
 @push('scripts')
-    <script>
-        // varible declaration here
-        let fileobjURL = '';
-        let responseData = '';
-        let Labels = '';
-        let dataforDownload = [];
-        let imageWidth = '450';
-        let imageHeight = '400';
+<script>
+    // varible declaration here
+    let fileobjURL = '';
+    let responseData = '';
+    let Labels = '';
+    let dataforDownload = [];
+    let imageWidth = '450';
+    let imageHeight = '400';
+    var localhost = "{{ env('APP_URL') }}";
 
+    // alert(localhost);
 
-        // data for tesing
-        let TESTresponseData = `{
+    // data for tesing
+    let TESTresponseData = `{
     "statusCode": 200,
     "body": {
         "Labels": [
@@ -151,313 +153,311 @@
         }
     }
 }`;
-        TESTresponseData = JSON.parse(TESTresponseData);
+    TESTresponseData = JSON.parse(TESTresponseData);
 
-        function reset(mode) {
-            let divobj_Labelsinformation = document.getElementById('Labelsinformation');
-            divobj_Labelsinformation.innerHTML = '';
-            let divobj_div_imgcontainer = document.getElementById('div_imgcontainer');
+    function reset(mode) {
+        let divobj_Labelsinformation = document.getElementById('Labelsinformation');
+        divobj_Labelsinformation.innerHTML = '';
+        let divobj_div_imgcontainer = document.getElementById('div_imgcontainer');
 
-            if (!mode) {
-                divobj_div_imgcontainer.innerHTML =
-                    `<img id="imgUplded" src="` + fileobjURL + `">`;
-            } else {
-                divobj_div_imgcontainer.innerHTML =
-                    `<img id="imgUplded" src="{{ asset('/images/batting.jpg') }}">`;
-                processResponseData(TESTresponseData);
+        if (!mode) {
+            divobj_div_imgcontainer.innerHTML =
+                `<img id="imgUplded" src="` + fileobjURL + `">`;
+        } else {
+            divobj_div_imgcontainer.innerHTML =
+                `<img id="imgUplded" src="{{ asset('/images/batting.jpg') }}">`;
+            processResponseData(TESTresponseData);
 
-            }
-            let imgobj = document.getElementById('imgUplded');
-
-            imageWidth = imgobj.width;
-            imageHeight = imgobj.height;
-            imageHeight = imgobj.height;
-            console.log(" img width " + imageWidth);
-            console.log("img height" + imageHeight);
         }
+        let imgobj = document.getElementById('imgUplded');
+
+        imageWidth = imgobj.width;
+        imageHeight = imgobj.height;
+        imageHeight = imgobj.height;
+        console.log(" img width " + imageWidth);
+        console.log("img height" + imageHeight);
+    }
 
 
-        function uploadpicture(files) {
-            const file = files.target.files[0];
-            fileobjURL = URL.createObjectURL(file);
-            reset(false);
-            apicall(file);
-        }
+    function uploadpicture(files) {
+        const file = files.target.files[0];
+        fileobjURL = URL.createObjectURL(file);
+        reset(false);
+        apicall(file);
+    }
 
-        function apicall(file) {
+    function apicall(file) {
 
-            var formdata = new FormData();
-            formdata.append("image", file);
+        var formdata = new FormData();
+        formdata.append("image", file);
 
-            var requestOptions = {
-                method: 'POST',
-                body: formdata,
-                redirect: 'follow'
-            };
+        var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
 
-            document.getElementById("btnanalyze").style.display = "none";
-            document.getElementById("btnanalyzing").style.display = "block";
+        document.getElementById("btnanalyze").style.display = "none";
+        document.getElementById("btnanalyzing").style.display = "block";
 
-            fetch("http://127.0.0.1:8000/api/imagerecognization", requestOptions)
-                .then(response => {
-                    document.getElementById("btnanalyze").style.display = "flex";
-                    document.getElementById("btnanalyzing").style.display = "none";
-                    if (response.ok) {
-                        return response.json()
-                    }
-                    if (response.status == 415) {
-                        let divobj = document.getElementById('Labelsinformation');
-                        divobj.innerHTML = '';
-                        divobj.innerHTML =
-                            `<p class="title">Results</p> <p class="errortext"> Unsupported file/image uploaded </p>`;
-                        throw new Error(415);
-                    }
-                })
-                .then(result => {
-                    console.log("fetch response - " + result);
-                    responseData = result;
-                    processResponseData(result);
-                })
-                .catch(error => console.log('error', error));
-        }
+        fetch(localhost + "/api/imagerecognization", requestOptions)
+            .then(response => {
+                document.getElementById("btnanalyze").style.display = "flex";
+                document.getElementById("btnanalyzing").style.display = "none";
+                if (response.ok) {
+                    return response.json()
+                }
+                if (response.status == 415) {
+                    let divobj = document.getElementById('Labelsinformation');
+                    divobj.innerHTML = '';
+                    divobj.innerHTML =
+                        `<p class="title">Results</p> <p class="errortext"> Unsupported file/image uploaded </p>`;
+                    throw new Error(415);
+                }
+            })
+            .then(result => {
+                console.log("fetch response - " + result);
+                responseData = result;
+                processResponseData(result);
+            })
+            .catch(error => console.log('error', error));
+    }
 
-        processResponseData(TESTresponseData);
+    processResponseData(TESTresponseData);
 
 
-        function processResponseData(response) {
-            // console.log(TESTresponseData);
-            Labels = response.body.Labels;
-            processLabels(Labels, 1);
-            // processInstances(Labels);
-        }
+    function processResponseData(response) {
+        // console.log(TESTresponseData);
+        Labels = response.body.Labels;
+        processLabels(Labels, 1);
+        // processInstances(Labels);
+    }
 
-        // data - reponse received from server
-        // mode - 1=actual response   2=filter data
-        function processLabels(data, mode) {
-            console.log(data);
-            // console.log("labels " + data.length);
-            let divobj = document.getElementById('Labelsinformation');
-            divobj.innerHTML = '';
-            divobj.innerHTML = `<p class="title">Results</p>`;
-            let temp = [];
-            for (let index = 0; index < data.length; index++) {
-                let instances = data[index].Instances;
-                let name = data[index].Name;
-                let confidence = scoreRound(data[index].Confidence) + " %";
+    // data - reponse received from server
+    // mode - 1=actual response   2=filter data
+    function processLabels(data, mode) {
+        console.log(data);
+        // console.log("labels " + data.length);
+        let divobj = document.getElementById('Labelsinformation');
+        divobj.innerHTML = '';
+        divobj.innerHTML = `<p class="title">Results</p>`;
+        let temp = [];
+        for (let index = 0; index < data.length; index++) {
+            let instances = data[index].Instances;
+            let name = data[index].Name;
+            let confidence = scoreRound(data[index].Confidence) + " %";
 
-                temp = [name, confidence];
-                dataforDownload[index] = temp;
+            temp = [name, confidence];
+            dataforDownload[index] = temp;
 
-                divobj.innerHTML += `<div class="Oinfolist">
+            divobj.innerHTML += `<div class="Oinfolist">
             <span>` + name + `</span> <span class="alias"> ` + confidence + ` </span > </div>`;
 
-                // if instances found draw it
-                if (instances.length > 0 && mode == 1) {
-                    drawInstances(instances, name);
-                }
+            // if instances found draw it
+            if (instances.length > 0 && mode == 1) {
+                drawInstances(instances, name);
             }
         }
+    }
 
-        function drawInstances(instances, instanceName) {
-            // return false;
-            let divobj = document.getElementById('div_imgcontainer');
+    function drawInstances(instances, instanceName) {
+        // return false;
+        let divobj = document.getElementById('div_imgcontainer');
 
-            // getting actula image height after customazation by HTML
-            imgobj = document.getElementById('imgUplded');
+        // getting actula image height after customazation by HTML
+        imgobj = document.getElementById('imgUplded');
 
-            imageHeight = getImgSizeInfo(imgobj).height;;
-            // console.log("labels " + instances.length);
-            console.log("W & H " + imageWidth + " " + imageHeight);
+        imageHeight = getImgSizeInfo(imgobj).height;;
+        // console.log("labels " + instances.length);
+        console.log("W & H " + imageWidth + " " + imageHeight);
 
-            for (let index = 0; index < instances.length; index++) {
+        for (let index = 0; index < instances.length; index++) {
 
-                // // formul found in AWS docs
-                // width = imageWidth * BoundingBox.Width and height = imageHeight * BoundingBox.Height
-                let height = instances[index].BoundingBox.Height * imageHeight;
-                let width = instances[index].BoundingBox.Width * imageWidth;
+            // // formul found in AWS docs
+            // width = imageWidth * BoundingBox.Width and height = imageHeight * BoundingBox.Height
+            let height = instances[index].BoundingBox.Height * imageHeight;
+            let width = instances[index].BoundingBox.Width * imageWidth;
 
-                // // formul found in AWS docs
-                // left = imageWidth * BoundingBox.Left and top = imageHeight * BoundingBox.Top
-                let toplocation = Math.round(instances[index].BoundingBox.Top * imageHeight);
-                let left = Math.round(instances[index].BoundingBox.Left * imageWidth);
+            // // formul found in AWS docs
+            // left = imageWidth * BoundingBox.Left and top = imageHeight * BoundingBox.Top
+            let toplocation = Math.round(instances[index].BoundingBox.Top * imageHeight);
+            let left = Math.round(instances[index].BoundingBox.Left * imageWidth);
 
-                let instanceHTML = `<div class="imghighlight" style="top:` + toplocation + `px;left:` + left + `px;width:` +
-                    width + `px;height:` +
-                    height + `px">
+            let instanceHTML = `<div class="imghighlight" style="top:` + toplocation + `px;left:` + left + `px;width:` +
+                width + `px;height:` +
+                height + `px">
                                 <div class="innerDiv-imghighlight" text="` + instanceName + `">
                                 </div>
                             </div>`;
-                divobj.innerHTML += instanceHTML;
-            }
+            divobj.innerHTML += instanceHTML;
+        }
+    }
+
+    function scoreRound(score) {
+        return score.toString().substr(0, 4)
+    } //funends
+
+    function downloadData() {
+        alert('...under development');
+        return false;
+        //sample data array
+        // var csvFileData = [
+        //     ['Alan Walker', 'Singer'],
+        //     ['Cristiano Ronaldo', 'Footballer'],
+        //     ['Saina Nehwal', 'Badminton Player'],
+        //     ['Arijit Singh', 'Singer'],
+        //     ['Terence Lewis', 'Dancer']
+        // ];
+
+        //define the heading for each row of the data
+        var csv = 'Label , Confidence\n';
+
+        //merge the data with CSV
+        dataforDownload.forEach(function(row) {
+            csv += row.join(' , ');
+            csv += "\n";
+        });
+
+        //display the created CSV data on the web browser
+        document.write(csv);
+
+        uri = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        const link = document.createElement("a");
+        link.download = 'LabelsConfidence.csv';
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+
+
+    function labels_filter() {
+        var searchvalue = document.getElementById('searchLabel').value;
+        searchvalue = searchvalue.toUpperCase();
+        datavalues = Object.values(Labels);
+
+        var name_filter = datavalues.filter(element => ((element.Name).toUpperCase()).search(searchvalue) != -1);
+
+        if (name_filter.length == 0) {
+            temp_labels = datavalues;
+        } else {
+            temp_labels = name_filter;
         }
 
-        function scoreRound(score) {
-            return score.toString().substr(0, 4)
-        } //funends
+        processLabels(temp_labels, 2);
+    }
 
-        function downloadData() {
-            alert('...under development');
-            return false;
-            //sample data array
-            // var csvFileData = [
-            //     ['Alan Walker', 'Singer'],
-            //     ['Cristiano Ronaldo', 'Footballer'],
-            //     ['Saina Nehwal', 'Badminton Player'],
-            //     ['Arijit Singh', 'Singer'],
-            //     ['Terence Lewis', 'Dancer']
-            // ];
-
-            //define the heading for each row of the data
-            var csv = 'Label , Confidence\n';
-
-            //merge the data with CSV
-            dataforDownload.forEach(function(row) {
-                csv += row.join(' , ');
-                csv += "\n";
-            });
-
-            //display the created CSV data on the web browser
-            document.write(csv);
-
-            uri = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-            const link = document.createElement("a");
-            link.download = 'LabelsConfidence.csv';
-            link.href = uri;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-
-
-        function labels_filter() {
-            var searchvalue = document.getElementById('searchLabel').value;
-            searchvalue = searchvalue.toUpperCase();
-            datavalues = Object.values(Labels);
-
-            var name_filter = datavalues.filter(element => ((element.Name).toUpperCase()).search(searchvalue) != -1);
-
-            if (name_filter.length == 0) {
-                temp_labels = datavalues;
+    function getRenderedSize(contains, cWidth, cHeight, width, height, pos) {
+        var oRatio = width / height,
+            cRatio = cWidth / cHeight;
+        return function() {
+            if (contains ? (oRatio > cRatio) : (oRatio < cRatio)) {
+                this.width = cWidth;
+                this.height = cWidth / oRatio;
             } else {
-                temp_labels = name_filter;
+                this.width = cHeight * oRatio;
+                this.height = cHeight;
             }
+            this.left = (cWidth - this.width) * (pos / 100);
+            this.right = this.width + this.left;
+            return this;
+        }.call({});
+    }
 
-            processLabels(temp_labels, 2);
-        }
-
-        function getRenderedSize(contains, cWidth, cHeight, width, height, pos) {
-            var oRatio = width / height,
-                cRatio = cWidth / cHeight;
-            return function() {
-                if (contains ? (oRatio > cRatio) : (oRatio < cRatio)) {
-                    this.width = cWidth;
-                    this.height = cWidth / oRatio;
-                } else {
-                    this.width = cHeight * oRatio;
-                    this.height = cHeight;
-                }
-                this.left = (cWidth - this.width) * (pos / 100);
-                this.right = this.width + this.left;
-                return this;
-            }.call({});
-        }
-
-        function getImgSizeInfo(img) {
-            var pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
-            return getRenderedSize(true,
-                img.width,
-                img.height,
-                img.naturalWidth,
-                img.naturalHeight,
-                parseInt(pos[0]));
-        }
-    </script>
+    function getImgSizeInfo(img) {
+        var pos = window.getComputedStyle(img).getPropertyValue('object-position').split(' ');
+        return getRenderedSize(true,
+            img.width,
+            img.height,
+            img.naturalWidth,
+            img.naturalHeight,
+            parseInt(pos[0]));
+    }
+</script>
 @endpush
 
 
 
 @push('header')
-    <h1>Object Recognition</h1>
+<h1>Object Recognition</h1>
 @endpush
 
 
 @push('aside')
-    <h4 class="selected">Object Recognition</h4>
+<h4 class="selected">Object Recognition</h4>
 @endpush
 
 
 
 @push('artical')
-    <!-- object recognixation container -->
-    <div class="orcontainer">
-        <div class="imagediv">
-            <p class="title">Document Name</p>
-            <div class="divimgcontainer">
-                {{-- <picture> --}}
-                <div id="div_imgcontainer" class="imgcontainer">
-                    <img id="imgUplded" src="{{ asset('/images/batting.jpg', true) }}">
-                    {{-- <div class="imghighlight" style="top:100px;right:100px;width:100px;height:100px">
+<!-- object recognixation container -->
+<div class="orcontainer">
+    <div class="imagediv">
+        <p class="title">Document Name</p>
+        <div class="divimgcontainer">
+            {{-- <picture> --}}
+            <div id="div_imgcontainer" class="imgcontainer">
+                <img id="imgUplded" src="{{ asset('/images/batting.jpg', true) }}">
+                {{-- <div class="imghighlight" style="top:100px;right:100px;width:100px;height:100px">
                         <div class="innerDiv-imghighlight" text="popups">
                         </div>
                     </div> --}}
-                </div>
-                {{-- </picture> --}}
             </div>
+            {{-- </picture> --}}
+        </div>
 
-            {{-- <select class="btn" id="btnChoose">Choose Sample Document
+        {{-- <select class="btn" id="btnChoose">Choose Sample Document
                 <option value="">Choose Sample Document</option>
             </select> --}}
-            {{-- <a id="afordowload" href="bob:http://127.0.0.1:8000/8288ebc2-07c2-4a6b-9cc4-3a53b63e9064">testtstst</a> --}}
-            <!-- <div> -->
-            <!-- <input id="uploadimage" type="file" name="myfile" hidden />
+        {{-- <a id="afordowload" href="bob:http://127.0.0.1:8000/8288ebc2-07c2-4a6b-9cc4-3a53b63e9064">testtstst</a> --}}
+        <!-- <div> -->
+        <!-- <input id="uploadimage" type="file" name="myfile" hidden />
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
-            <input type="file" id="btnUpldimage" onchange="uploadpicture(event)" hidden />
+        <input type="file" id="btnUpldimage" onchange="uploadpicture(event)" hidden />
 
-            <!--our custom file upload button-->
-            <label id="btnanalyze" for="btnUpldimage" class="btn labelbtnUpld">Upload Document</label>
-            <!-- </div> -->
-            <button id="btnanalyzing" type="button" class="labelbtnUpld btn">
-                <i id="converting" class="fa fa-spinner fa-spin"></i> analyzing
-            </button>
+        <!--our custom file upload button-->
+        <label id="btnanalyze" for="btnUpldimage" class="btn labelbtnUpld">Upload Document</label>
+        <!-- </div> -->
+        <button id="btnanalyzing" type="button" class="labelbtnUpld btn">
+            Analyzing <i id="converting" class="fa fa-spinner fa-spin"></i>
+        </button>
 
+    </div>
+
+    <hr class="hrSeperator">
+
+    <div class="informationDiv">
+        <div class="tools">
+            <div class="iconinputbox">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+                <input id="searchLabel" class="nooutline lblsearch" type="text" placeholder="Search for a Label..." onkeyup="labels_filter()">
+            </div>
+            <p id="notetext">Check whether we support your label</p>
         </div>
-
-        <hr class="hrSeperator">
-
-        <div class="informationDiv">
-            <div class="tools">
-                <div class="iconinputbox">
-                    <span class="material-symbols-outlined">
-                        search
-                    </span>
-                    <input id="searchLabel" class="nooutline lblsearch" type="text" placeholder="Search for a Label..."
-                        onkeyup="labels_filter()">
-                </div>
-                <p id="notetext">Check whether we support your label</p>
-            </div>
-            <div id="Labelsinformation" class="objectinformation">
-                <p class="title">Results</p>
-                <p>No results found</p>
-            </div>
+        <div id="Labelsinformation" class="objectinformation">
+            <p class="title">Results</p>
+            <p>No results found</p>
         </div>
     </div>
+</div>
 @endpush
 
 @push('footer')
-    <div class="footerDiv">
-        <button class="btn download" onclick="downloadData()">
-            <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)"
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
-                <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
-            </svg>
-            Download
-        </button>
-        <button class="btn reset" onclick="reset(true)">
-            RESET DEMO
-        </button>
-    </div>
+<div class="footerDiv">
+    <button class="btn download" onclick="downloadData()">
+        Download
+        <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24">
+            <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
+            <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
+        </svg>
+    </button>
+    <button class="btn reset" onclick="reset(true)">
+        RESET DEMO
+    </button>
+</div>
 @endpush
 
 
@@ -493,12 +493,14 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr;
+        grid-template-rows: 30px 420px 50px;
+        row-gap: 10px;
         /* grid-template-rows: 5% 75% 20%; */
         /* column-gap: 15px; */
         /* background-color: #EEEEEE; */
         /* width: 500px;
         margin: 10px; */
-
+        align-items: center;
     }
 
     .imagediv p {
@@ -677,5 +679,15 @@
 
     .errortext {
         text-align: center
+    }
+
+    .download {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .reset {
+        width: 120px !important;
     }
 </style>
