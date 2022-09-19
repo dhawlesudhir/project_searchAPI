@@ -28,7 +28,7 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="actual-btn" hidden />
 
             <!--our custom file upload button-->
@@ -249,7 +249,7 @@
 
     .hrSeperator {
         border: 1px solid #EEEEEE;
-        margin: 5px 0 20px 0;
+        /* margin: 5px 0 20px 0; */
     }
 
     .imagediv {
@@ -257,8 +257,8 @@
         grid-template-columns: 1fr;
         grid-auto-rows: 45px 420px 45px;
         /* background-color: #EEEEEE; */
-        width: 450px;
-        margin: 10px;
+        width: 460px;
+        margin: 10px 20px;
 
     }
 
@@ -289,7 +289,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 240px;
+        margin-left: 220px;
     }
 
     #btnChoose {
@@ -317,11 +317,12 @@
     #tabs {
         overflow: hidden;
         border-bottom: 1px solid #EEEEEE;
-        margin: 0 25px 0 25px;
+        /* margin: 0 25px 0 25px; */
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
         grid-column: 1/4;
+        width: 440px;
     }
 
     .tab {
@@ -364,7 +365,7 @@
     /* Style the tab content */
     .tabcontent {
         height: 100%;
-        /* width: 100%; */
+        width: 440px;
         /* margin: 0 20px 0 20px; */
         grid-column: 1/2;
         display: grid;
