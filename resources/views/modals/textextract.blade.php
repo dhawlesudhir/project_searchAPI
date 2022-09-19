@@ -28,7 +28,7 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="actual-btn" hidden />
 
             <!--our custom file upload button-->
@@ -65,11 +65,12 @@
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+                        <input id="searchrawtext" class="nooutline" type="text" placeholder="Search.."
+                            onkeyup="rawtext_filter()">
                     </div>
-                    <select id="segmentline" name="" id="">
+                    {{-- <select id="segmentline" name="" id="">
                         <option value="">Segment by line</option>
-                    </select>
+                    </select> --}}
                 </div>
 
                 <div id="rawtext-tags" class="tagstext scrolloverlay">
@@ -90,7 +91,8 @@
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+                        <input id="searchformtext" class="nooutline" type="text" placeholder="Search.."
+                            onkeyup="formtext_filter()">
                     </div>
                 </div>
 
@@ -140,7 +142,8 @@
                         <span class="material-symbols-outlined">
                             search
                         </span>
-                        <input id="searchtext" class="nooutline" type="text" placeholder="Search..">
+                        <input id="searchtbltext" class="nooutline" type="text" placeholder="Search.."
+                            onkeyup="tabledata_filter()">
                     </div>
                 </div>
 
@@ -259,13 +262,18 @@
         /* background-color: #EEEEEE; */
         width: 460px;
         margin: 10px 20px;
+        align-items: center;
 
     }
 
-    .imagediv p,
+    .imagediv p {
+        grid-column: 1/4;
+
+    }
+
     .informationDiv p {
         grid-column: 1/4;
-        margin: 5px 0 10px 15px;
+        margin-top: 10px;
         /* height: 5px; */
     }
 
@@ -386,13 +394,19 @@
         display: flex;
     }
 
-    #searchtext {
+    .nooutline {
         font-size: 13px;
         font-family: "Open Sans", sans-serif;
         color: #000000;
-        width: 180px;
+        width: 350px;
         border: none;
     }
+
+    .nooutline::placeholder {
+        font-size: 13px;
+        color: #000000;
+    }
+
 
     #segmentline {
         border-radius: 21px;
@@ -405,10 +419,6 @@
     }
 
 
-    #searchtext::placeholder {
-        font-size: 13px;
-        color: #000000;
-    }
 
     .tagstext {
         display: flex;
@@ -493,11 +503,11 @@
         display: none;
     }
 
-    .forms #searchtext {
+    .forms .nooutline {
         width: 350px;
     }
 
-    .tables #searchtext {
+    .tables .nooutline {
         width: 350px;
     }
 
@@ -604,56 +614,6 @@
         color: #000000;
         border: none;
         width: 220px;
-    }
-
-    /* css for Object recognixation  */
-    .informationDiv2 {
-        display: grid;
-        display: none;
-
-        grid-template-columns: 1fr;
-        grid-template-rows: 15% auto;
-        row-gap: 20px
-    }
-
-    .informationDiv2 .tools {
-        margin-left: 25px;
-        width: 400px;
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-
-    .informationDiv2 .tools p {
-        margin-top: 15px;
-        text-align: center;
-        font-weight: 600;
-    }
-
-    /* 9175431127 avinash*/
-    #lblsearch {
-        grid-column: 1/2;
-        font-size: 13px;
-        font-family: "Open Sans", sans-serif;
-        color: #000000;
-        width: 320px;
-        border: none;
-    }
-
-    #lblsearch::placeholder {
-        font-weight: bold;
-    }
-
-    .objectinformation {
-        margin-left: 20px;
-    }
-
-    .objectinformation .Oinfolist {
-        margin: 20px 0 10px 0;
-        font-weight: 500;
-        border-bottom: 1px solid #EEEEEE;
-        display: flex;
-        justify-content: space-between;
-        padding: 5px 0 5px 0;
     }
 </style>
 @push('scripts')
@@ -837,10 +797,11 @@
 
         function processRawText(obj) {
             divobj = document.getElementById('rawtext-tags');
+            divobj.innerHTML = '';
+
             if (obj.length == 0) {
                 divobj.innerHTML = defaultmsg;
             } else {
-                divobj.innerHTML = '';
                 for (let index = 0; index < obj.length; index++) {
                     divobj.innerHTML += `<span class="item">` + obj[index] + `</span>`;
                 }
@@ -852,10 +813,11 @@
             // console.log(obj[formdataarray[0]]);
 
             divobj = document.getElementById('formItems');
+            divobj.innerHTML = '';
+
             if (formdataarray.length == 0) {
                 divobj.innerHTML = defaultmsg;
             } else {
-                divobj.innerHTML = '';
                 for (let index = 0; index < formdataarray.length; index++) {
                     name = formdataarray[index];
                     value = obj[formdataarray[index]];
@@ -866,32 +828,33 @@
 
         function processTableData(obj) {
             rows = Object.keys(obj[0]);
-            console.log("rows " + rows);
+            // console.log("rows " + rows);
             divobj = document.getElementById('tbody-textExtract');
+            divobj.innerHTML = '';
+
             if (rows.length == 0) {
                 divobj.innerHTML = defaultmsg;
             } else {
-                divobj.innerHTML = '';
                 teststring = '';
                 obj.forEach(element => {
                     rows = Object.keys(element);
                     console.log("rows " + rows.length);
                     for (let rowindex = 0; rowindex < rows.length; rowindex++) {
                         columns = Object.keys(obj[0][rows[rowindex]]);
-                        console.log("columns " + columns.length);
+                        // console.log("columns " + columns.length);
                         // divobj.innerHTML += '<tr>';
                         teststring += '<tr>';
 
                         for (let index = 0; index < columns.length; index++) {
                             value = obj[0][rows[rowindex]][columns[index]];
-                            console.log(value);
+                            // console.log(value);
                             // divobj.innerHTML += '<td>' + value + '</td>';
                             teststring += '<td>' + value + '</td>';
                         }
                         // divobj.innerHTML += '</tr>';
                         teststring += '</tr>';
                     }
-                    console.log(teststring);
+                    // console.log(teststring);
                     divobj.innerHTML = teststring;
                 });
 
@@ -910,6 +873,117 @@
             }
         }
 
+
+        function rawtext_filter() {
+            var searchvalue = document.getElementById('searchrawtext').value;
+            searchvalue = searchvalue.toUpperCase();
+            console.log(searchvalue);
+
+            datavalues = Object.values(bodyobj);
+            console.log(datavalues);
+
+            var text_filter = datavalues.filter(element => ((element).toUpperCase()).search(searchvalue) != -1);
+
+            tempentities = text_filter;
+
+            processRawText(tempentities);
+        }
+
+
+        // not working
+        function formtext_filter1() {
+            var searchvalue = document.getElementById('searchformtext').value;
+            // searchvalue = searchvalue.toUpperCase();
+            console.log(searchvalue);
+
+            datavalues = Object.values(kvsobj);
+
+            console.log(datavalues);
+
+            var text_filter = datavalues.filter(element => {
+                console.log(Object.keys(element));
+                if (element == searchvalue) return element;
+            });
+            console.log(text_filter.length + " / " + searchvalue);
+            if (text_filter.length == 0 && searchvalue == '') {
+                tempentities = kvsobj;
+            } else {
+                tempentities = text_filter;
+            }
+
+            processFormData(tempentities);
+        }
+
+        function formtext_filter() {
+            var searchvalue = document.getElementById('searchformtext').value;
+            searchvalue = searchvalue.toUpperCase();
+            // console.log(searchvalue);
+            if (searchvalue) {
+                formdataarray = Object.keys(kvsobj);
+                // console.log(obj[formdataarray[0]]);
+                divobj = document.getElementById('formItems');
+                divobj.innerHTML = '';
+
+                if (formdataarray.length == 0) {
+                    divobj.innerHTML = defaultmsg;
+                } else {
+                    for (let index = 0; index < formdataarray.length; index++) {
+                        name = formdataarray[index].toString().trim();
+                        // console.log(kvsobj[formdataarray[index]]);
+                        value = kvsobj[formdataarray[index]].toString().trim();
+                        name1 = name.toUpperCase();
+                        value1 = value.toUpperCase();
+
+                        if (name1.includes(searchvalue) || value1.includes(searchvalue)) {
+                            divobj.innerHTML += `<div class="fromsitem"> <p>` + name + `</p> <p>` + value +
+                                `</p> </div>`;
+                        }
+                    }
+                }
+            } else {
+                processFormData(kvsobj);
+            }
+        }
+
+        function tabledata_filter() {
+            var searchvalue = document.getElementById('searchtbltext').value;
+            searchvalue = searchvalue.toUpperCase();
+
+            rows = Object.keys(tableobj[0]);
+            divobj = document.getElementById('tbody-textExtract');
+            divobj.innerHTML = '';
+
+            if (rows.length == 0) {
+                divobj.innerHTML = defaultmsg;
+            } else {
+                teststring = '';
+                tableobj.forEach(element => {
+                    rows = Object.keys(element);
+                    console.log("rows " + rows.length);
+                    for (let rowindex = 0; rowindex < rows.length; rowindex++) {
+                        columns = Object.keys(tableobj[0][rows[rowindex]]);
+                        console.log("columns " + columns.length);
+                        // divobj.innerHTML += '<tr>';
+                        teststring += '<tr>';
+                        let flag = false;
+                        for (let index = 0; index < columns.length; index++) {
+                            value = tableobj[0][rows[rowindex]][columns[index]].toString().trim();
+                            value1 = value.toUpperCase();
+                            // divobj.innerHTML += '<td>' + value + '</td>';
+                            if (value1.includes(searchvalue) || flag == true) {
+                                teststring += '<td>' + value + '</td>';
+                                flag = true;
+                                console.log("value " + value);
+                            }
+                        }
+                        // divobj.innerHTML += '</tr>';
+                        teststring += '</tr>';
+                    }
+                    console.log(teststring);
+                    divobj.innerHTML = teststring;
+                });
+            }
+        }
 
         function test(id, btnid) {
             hideall();
