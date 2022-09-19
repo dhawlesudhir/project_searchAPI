@@ -1,3 +1,7 @@
+<script>
+  var localhost = "{{ env('APP_URL') }}";
+</script>
+
 @push('style')
 <!-- <script> -->
 @stack('style')
@@ -20,12 +24,11 @@
   </header>
   <aside>
     @stack('aside')
-
-    <h4>API service 1</h4>
-    <h4>API service 2</h4>
-    <h4>API service 3</h4>
-    <h4>API service 4</h4>
-    <h4>API service 5</h4>
+    <!-- <a href="{{url('/speechtotext')}}">Speech To Text</a>
+    <a href="{{url('/texttospeech')}}">Text To Speech</a>
+    <a href="{{url('/textextract')}}">Text Extract</a>
+    <a href="{{url('/comprehend')}}">Comprehend Demonstration</a>
+    <a href="{{url('/objectrecognisation')}}">Object Recognition</a> -->
   </aside>
   <article>
     @stack('artical')
@@ -157,11 +160,10 @@
     cursor: pointer;
   }
 
-  .modal aside h4 {
+  .modal aside a {
     font-size: 13px;
     font-weight: 700;
     color: #888888;
-
   }
 
   .modal aside .selected {

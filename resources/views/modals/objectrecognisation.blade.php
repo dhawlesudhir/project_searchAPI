@@ -385,7 +385,11 @@
 
 
 @push('aside')
-<h4 class="selected">Object Recognition</h4>
+<a href="{{url('/speechtotext')}}">Speech To Text</a>
+<a href="{{url('/texttospeech')}}">Text To Speech</a>
+<a href="{{url('/textextract')}}">Text Extract</a>
+<a href="{{url('/comprehend')}}">Comprehend Demonstration</a>
+<a href="{{url('/objectrecognisation')}}" class="selected">Object Recognition</a>
 @endpush
 
 
@@ -646,7 +650,7 @@
         border: none;
     }
 
-    ,
+
     lblsearch::placeholder {
         font-weight: bold;
     }

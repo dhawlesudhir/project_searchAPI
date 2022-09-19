@@ -113,7 +113,11 @@ Text To Speech
 
 
 @push('aside')
-<h4 class="selected">Text To Speech</h4>
+<a href="{{url('/speechtotext')}}">Speech To Text</a>
+<a href="{{url('/texttospeech')}}" class="selected">Text To Speech</a>
+<a href="{{url('/textextract')}}">Text Extract</a>
+<a href="{{url('/comprehend')}}">Comprehend Demonstration</a>
+<a href="{{url('/objectrecognisation')}}">Object Recognition</a>
 @endpush
 
 

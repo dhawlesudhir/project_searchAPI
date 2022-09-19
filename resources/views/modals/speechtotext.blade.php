@@ -212,7 +212,12 @@
 @endpush
 
 
-@push('aside') <h4 class="selected"> Speech To Text </h4>
+@push('aside')
+<a href="{{url('/speechtotext')}}" class="selected">Speech To Text</a>
+<a href="{{url('/texttospeech')}}">Text To Speech</a>
+<a href="{{url('/textextract')}}">Text Extract</a>
+<a href="{{url('/comprehend')}}">Comprehend Demonstration</a>
+<a href="{{url('/objectrecognisation')}}">Object Recognition</a>
 @endpush
 
 @push('artical')

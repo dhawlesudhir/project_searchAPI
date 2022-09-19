@@ -2322,7 +2322,11 @@
 @endpush
 
 @push('aside')
-<h4 class="selected">Comprehend</h4>
+<a href="{{url('/speechtotext')}}">Speech To Text</a>
+<a href="{{url('/texttospeech')}}">Text To Speech</a>
+<a href="{{url('/textextract')}}">Text Extract</a>
+<a href="{{url('/comprehend')}}" class="selected">Comprehend Demonstration</a>
+<a href="{{url('/objectrecognisation')}}">Object Recognition</a>
 @endpush
 
 @push('artical')
