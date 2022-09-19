@@ -50,8 +50,15 @@
 
   .modal {
     position: absolute;
-    top: 1%;
-    left: 8%;
+    /* top: 1%;
+    left: 8%; */
+    /* left: 50%; */
+    /* top: 50%; */
+    /* transform: translate(-50%, -50%); */
+    float: left;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     opacity: 1 !important;
     /* background: o; */
     font-size: 13px;
@@ -64,8 +71,7 @@
     /* width: 800px; */
     /* height: 640px; */
     /* //provided */
-    top: 3%;
-    left: 10%;
+
     width: 1080px;
     height: 640px;
     display: grid;
