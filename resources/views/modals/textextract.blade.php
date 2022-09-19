@@ -28,13 +28,17 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
-            <input type="file" id="actual-btn" hidden />
+                                                                                                                                       <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+            <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
+                hidden />
 
             <!--our custom file upload button-->
-            <label id="labelbtnUpld" for="actual-btn" class="btn" onclick="uploadpicture()">Upload Document</label>
+            <label id="btnUpld" for="actual-btn" class="btn labelbtnUpld">Upload
+                Document</label>
             <!-- </div> -->
-
+            <button id="btnanalyzing" type="button" class="labelbtnUpld btn">
+                Analyzing <i id="converting" class="fa fa-spinner fa-spin"></i>
+            </button>
         </div>
 
         <hr class="hrSeperator">
@@ -148,7 +152,7 @@
                 </div>
 
                 <div class="tablebody scrolloverlay">
-                    <table>
+                    <table id="table-textExtract">
                         <tr>
                             <th class="itemname">Item</th>
                             <th class="qty">Qty.</th>
@@ -292,12 +296,16 @@
         width: 360px;
     }
 
-    #labelbtnUpld {
+    .labelbtnUpld {
         width: 140px;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 220px;
+        margin-left: 160px;
+    }
+
+    #btnanalyzing {
+        display: none;
     }
 
     #btnChoose {
@@ -618,8 +626,7 @@
 </style>
 @push('scripts')
     <script>
-        let fileobjURL = '';
-        var localhost = "{{ env('APP_URL') }}";
+        let responseData;
         let bodyobj;
         let kvsobj;
         let tableobj;
@@ -723,41 +730,49 @@
         // now
         function uploadpicture(files) {
             const file = files.target.files[0];
-            fileobjURL = URL.createObjectURL(file);
+            console.log(file.type);
+            if (file.type == 'image/jpeg' || file.type == 'image/png') {
+                apicall(file);
+            } else {
+                alert('Unsupported file!');
+            }
         }
 
         function apicall(file) {
 
-            var formdata = new FormData();
-            formdata.append("image", file);
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "image/png");
+
+            var file = file;
 
             var requestOptions = {
                 method: 'POST',
-                body: formdata,
+                headers: myHeaders,
+                body: file,
                 redirect: 'follow'
             };
 
-            document.getElementById("btnanalyze").style.display = "none";
+            document.getElementById("btnUpld").style.display = "none";
             document.getElementById("btnanalyzing").style.display = "block";
 
-            fetch(localhost + "/api/imagerecognization", requestOptions)
+            fetch("https://wmo8056gr6.execute-api.ap-south-1.amazonaws.com/dev/textractapiresource", requestOptions)
                 .then(response => {
-                    document.getElementById("btnanalyze").style.display = "flex";
+                    document.getElementById("btnUpld").style.display = "flex";
                     document.getElementById("btnanalyzing").style.display = "none";
                     if (response.ok) {
                         return response.json()
                     }
                     if (response.status == 415) {
-                        let divobj = document.getElementById('Labelsinformation');
-                        divobj.innerHTML = '';
-                        divobj.innerHTML =
-                            `<p class="title">Results</p> <p class="errortext"> Unsupported file/image uploaded </p>`;
+
                         throw new Error(415);
                     }
                 })
                 .then(result => {
-                    console.log("fetch response - " + result);
-                    responseData = result;
+                    console.log("response code - " + result.statusCode);
+                    console.log("fetch response - " + result[0]);
+                    if (result.statusCode == 200) {
+                        responseData = result;
+                    }
                     processResponseData(result);
                 })
                 .catch(error => console.log('error', error));
@@ -766,29 +781,14 @@
         processResponseData(JSON.parse(Testdata));
 
         function processResponseData(response) {
-            // console.log(response);
+
             bodyobj = response.body;
-            // console.log(response.body);
+
             kvsobj = response.kvs;
-            // console.log(Object.keys(kvsobj));
-            // console.log(kvsobj[Object.keys(kvsobj)[0]]);
+
 
             tableobj = response.table;
-            // console.log(tableobj[0]);
-            // tableobj.forEach(element => {
-            //     arrayofobjNames = Object.keys(element);
-            //     arrayofobjNames.forEach(element => {
-            //         for (let index = 1; index <= arrayofobjNames.length; index++) {
-            //             console.log(tableobj[0][element][index]);
-            //         }
-            //     });
-            // });
-            // console.log(tableobj[0][1]['1']);
-            // console.log(tableobj[0][1]['2']);
-            // console.log(tableobj[0][1]['3']);
-            // console.log(tableobj[0][1]['4']);
 
-            // alert(names[0]); // alerts "myArray"
             processRawText(bodyobj);
             processFormData(kvsobj);
             processTableData(tableobj);
@@ -830,7 +830,7 @@
             rows = Object.keys(obj[0]);
             // console.log("rows " + rows);
             divobj = document.getElementById('tbody-textExtract');
-            divobj.innerHTML = '';
+            divobj.innerHTML = ' ';
 
             if (rows.length == 0) {
                 divobj.innerHTML = defaultmsg;
@@ -874,6 +874,7 @@
         }
 
 
+
         function rawtext_filter() {
             var searchvalue = document.getElementById('searchrawtext').value;
             searchvalue = searchvalue.toUpperCase();
@@ -888,7 +889,6 @@
 
             processRawText(tempentities);
         }
-
 
         // not working
         function formtext_filter1() {
@@ -922,11 +922,12 @@
                 formdataarray = Object.keys(kvsobj);
                 // console.log(obj[formdataarray[0]]);
                 divobj = document.getElementById('formItems');
-                divobj.innerHTML = '';
+                divobj.innerHTML = ' ';
 
                 if (formdataarray.length == 0) {
                     divobj.innerHTML = defaultmsg;
                 } else {
+                    let flag = false;
                     for (let index = 0; index < formdataarray.length; index++) {
                         name = formdataarray[index].toString().trim();
                         // console.log(kvsobj[formdataarray[index]]);
@@ -937,7 +938,11 @@
                         if (name1.includes(searchvalue) || value1.includes(searchvalue)) {
                             divobj.innerHTML += `<div class="fromsitem"> <p>` + name + `</p> <p>` + value +
                                 `</p> </div>`;
+                            flag = true;
                         }
+                    }
+                    if (flag == false) {
+                        divobj.innerHTML = defaultmsg;
                     }
                 }
             } else {
@@ -948,41 +953,71 @@
         function tabledata_filter() {
             var searchvalue = document.getElementById('searchtbltext').value;
             searchvalue = searchvalue.toUpperCase();
-
-            rows = Object.keys(tableobj[0]);
+            console.log(searchvalue);
+            if (searchvalue == '') {
+                processTableData(tableobj);
+                return;
+            }
             divobj = document.getElementById('tbody-textExtract');
             divobj.innerHTML = '';
+            // checking if response has rows
+            rows = Object.keys(tableobj[0]);
 
+            let flag = false;
             if (rows.length == 0) {
                 divobj.innerHTML = defaultmsg;
             } else {
-                teststring = '';
                 tableobj.forEach(element => {
                     rows = Object.keys(element);
-                    console.log("rows " + rows.length);
+                    // console.log("rows " + rows.length);
                     for (let rowindex = 0; rowindex < rows.length; rowindex++) {
                         columns = Object.keys(tableobj[0][rows[rowindex]]);
-                        console.log("columns " + columns.length);
-                        // divobj.innerHTML += '<tr>';
-                        teststring += '<tr>';
-                        let flag = false;
+                        // console.log("columns " + columns.length);
+                        // console.log("search " + searchvalue);
+
+
                         for (let index = 0; index < columns.length; index++) {
+
+                            // value toString as it can have numbers and triming
                             value = tableobj[0][rows[rowindex]][columns[index]].toString().trim();
+
+                            // toUpperCase to match with searchvalue
                             value1 = value.toUpperCase();
-                            // divobj.innerHTML += '<td>' + value + '</td>';
-                            if (value1.includes(searchvalue) || flag == true) {
-                                teststring += '<td>' + value + '</td>';
+
+
+                            if (value1.includes(searchvalue)) {
+
+                                // if data matched make flag true,
                                 flag = true;
-                                console.log("value " + value);
+
+                                // if columns has matching value add all columns
+                                filltable_supportfunction(tableobj[0][rows[rowindex]]);
+                                // if any of columns match from row break loop and goto next row
+                                break;
                             }
                         }
-                        // divobj.innerHTML += '</tr>';
-                        teststring += '</tr>';
                     }
-                    console.log(teststring);
-                    divobj.innerHTML = teststring;
                 });
+                // flag == false - no matching result found
+                if (flag == false) {
+                    divobj.innerHTML = defaultmsg;
+                }
             }
+        }
+
+        function filltable_supportfunction(data) {
+
+            columns = Object.keys(data);
+            console.log(data);
+            teststring = '<tr>';
+
+            for (let index = 0; index < columns.length; index++) {
+                value = data[columns[index]].toString().trim();
+                // console.log(value);
+                teststring += '<td>' + value + '</td>';
+            }
+            teststring += '</tr>';
+            divobj.innerHTML += teststring;
         }
 
         function test(id, btnid) {
@@ -1014,10 +1049,6 @@
             btntbl.classList.remove("active");
             qry.style.display = "none";
             btnqry.classList.remove("active");
-        }
-
-        function uploadpicture() {
-            alert("img")
         }
     </script>
 @endpush
