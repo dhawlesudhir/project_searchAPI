@@ -79,7 +79,6 @@
                         <p>Platforms</p>
                     </div>
                     <div>
-                        <!-- <p>{{ count($categories_resources) }}</p> -->
                         <p>200</p>
                         <p>Resources</p>
                     </div>
@@ -165,6 +164,7 @@
 
 
                 </div>
+            </div>
         </article>
         @if (isset($modal))
             @include('modals/' . $modal)
