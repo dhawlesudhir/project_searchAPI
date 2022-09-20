@@ -2,200 +2,209 @@
 
 
 @push('scripts')
-<script>
-    var voiceurlaws = '';
-    var speaker = '';
-    textempty();
-    document.getElementById("converting").style.display = "none";
+    <script>
+        var voiceurlaws = '';
+        var speaker = '';
+        var text;
+        textempty();
+        document.getElementById("converting").style.display = "none";
 
-    function convert() {
+        function convert() {
 
+            //selector value
+            var voiceselect = document.getElementById("voice");
+            speaker = voiceselect.options[voiceselect.selectedIndex].value;
 
-        //selector value
-        var voiceselect = document.getElementById("voice");
-        speaker = voiceselect.options[voiceselect.selectedIndex].value;
+            // text area value
+            text = document.getElementById("texttocovert").value.trim();
+            console.log(text.length);
+            if (text.length < 30) {
+                alert('Please enter text! (minimum 30 characters)');
+                return;
+            }
 
-        // text area value
-        var text = document.getElementById("texttocovert").value;
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
 
-        if (text == '') {
-            alert('Please enter text!');
-            return;
+            document.getElementById("converting").style.display = "flex";
+
+            fetch("http://127.0.0.1:8000/api/textspeechaws?str=" + text + "&speaker=" + speaker, requestOptions)
+                .then(response => response.json())
+                // .then((response) => {
+                //   return response.json();
+                // })
+                .then((result) => {
+                    // use response
+                    voiceurlaws = result.url;
+                    // console.log(result.url);
+                    // console.log(result.str);
+                    textempty();
+                    document.getElementById("converting").style.display = "none";
+
+                })
+                .catch(error => console.log('error', error));
         }
 
 
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
 
-        document.getElementById("converting").style.display = "flex";
+        function textempty() {
+            if (voiceurlaws == '') {
+                document.getElementById("btndownload").style.display = "none";
+                document.getElementById("btnlisten").style.display = "none";
+                document.getElementById("btnconvert").style.display = "flex";
+            } else {
+                document.getElementById("btndownload").style.display = "flex";
+                document.getElementById("btnlisten").style.display = "flex";
+                document.getElementById("btnconvert").style.display = "none";
 
-        fetch("http://127.0.0.1:8000/api/textspeechaws?str=" + text + "&speaker=" + speaker, requestOptions)
-            .then(response => response.json())
-            // .then((response) => {
-            //   return response.json();
-            // })
-            .then((result) => {
-                // use response
-                voiceurlaws = result.url;
-                // console.log(result.url);
-                // console.log(result.str);
-                textempty();
-                document.getElementById("converting").style.display = "none";
+            }
+        }
 
-            })
-            .catch(error => console.log('error', error));
-    }
+        function play() {
+            var audio = new Audio(voiceurlaws);
+            audio.play();
+        }
 
+        // bulding download file
+        const downloadURI = (uri) => {
+            const link = document.createElement("a");
+            link.download = uri;
+            link.href = uri;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
+        function downloadaudiofile() {
+            if (voiceurlaws == '') {
+                alert("Audio file not found, please try converting again!");
+            } else {
+                downloadURI(voiceurlaws)
+            }
+        }
 
-    function textempty() {
-        if (voiceurlaws == '') {
+        // char counting and updating
+        function textchange() {
+            var currenttext = document.getElementById("texttocovert").value.trim();
+            var textremaining = 60 - currenttext.length;
+            document.getElementById("textremaining-p").innerHTML = textremaining + ' Characters remaining';
+            if (text != currenttext) {
+                document.getElementById("btnconvert").style.display = "flex";
+            } else {
+                document.getElementById("btnconvert").style.display = "none";
+            }
+        }
+
+        // clearing text
+        function cleartext() {
+            document.getElementById("texttocovert").value = '';
             document.getElementById("btndownload").style.display = "none";
             document.getElementById("btnlisten").style.display = "none";
             document.getElementById("btnconvert").style.display = "flex";
-        } else {
-            document.getElementById("btndownload").style.display = "flex";
-            document.getElementById("btnlisten").style.display = "flex";
-            document.getElementById("btnconvert").style.display = "none";
-
         }
-    }
 
-    function play() {
-        var audio = new Audio(voiceurlaws);
-        audio.play();
-    }
-
-    // bulding download file
-    const downloadURI = (uri) => {
-        const link = document.createElement("a");
-        link.download = uri;
-        link.href = uri;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-
-    function downloadaudiofile() {
-        if (voiceurlaws == '') {
-            alert("Audio file not found, please try converting again!");
-        } else {
-            downloadURI(voiceurlaws)
+        function parameterchange() {
+            document.getElementById("btnconvert").style.display = "flex";
         }
-    }
-
-    // char counting and updating
-    function textchange() {
-        var textremaining = 60 - document.getElementById("texttocovert").value.length;
-        document.getElementById("textremaining-p").innerHTML = textremaining + ' Characters remaining';
-    }
-
-    // clearing text
-    function cleartext() {
-        document.getElementById("texttocovert").value = '';
-        document.getElementById("btndownload").style.display = "none";
-        document.getElementById("btnlisten").style.display = "none";
-        document.getElementById("btnconvert").style.display = "flex";
-    }
-
-    function parameterchange() {
-        document.getElementById("btnconvert").style.display = "flex";
-    }
-</script>
+    </script>
 @endpush
 
 
 @push('header')
-Text To Speech
+    Text To Speech
 @endpush
 
 
 @push('aside')
-<a href="{{url('/speechtotext')}}">Speech To Text</a>
-<a href="{{url('/texttospeech')}}" class="selected">Text To Speech</a>
-<a href="{{url('/textextract')}}">Text Extract</a>
-<a href="{{url('/comprehend')}}">Comprehend Demonstration</a>
-<a href="{{url('/objectrecognisation')}}">Object Recognition</a>
+    <a href="{{ url('/speechtotext') }}">Speech To Text</a>
+    <a href="{{ url('/texttospeech') }}" class="selected">Text To Speech</a>
+    <a href="{{ url('/textextract') }}">Text Extract</a>
+    <a href="{{ url('/comprehend') }}">Comprehend Demonstration</a>
+    <a href="{{ url('/objectrecognisation') }}">Object Recognition</a>
 @endpush
 
 
 
 @push('artical')
-<div id="texttospeechmodal" class="model-artical">
-    <div class="engine">
-        <span class="headings">Engine</span>
-        <div>
+    <div id="texttospeechmodal" class="model-artical">
+        <div class="engine">
+            <span class="headings">Engine</span>
+
             <label class="form-control">
-                <input type="radio" id="engine" name="Neural" value="neural" />
-                <span class="title">Neural</span>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                <input type="radio" id="radioNeural" name="engine" value="neural" checked />
+                <div class="enginetext">
+                    <span class="title">Neural</span>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                </div>
             </label>
-        </div>
 
-        <div>
             <label class="form-control">
-                <input type="radio" class="title" id="engine" name="Standard" value="standard" />
-                <span class="title">Standard</span>
+                <input type="radio" id="radioStandard" name="engine" value="standard" />
+                <div class="enginetext">
+                    <span class="title">Standard</span>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                </div>
             </label>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+
         </div>
-    </div>
 
-    <div class="language">
-        <fieldset class="optionsFieldSet">
-            <label for="languageSelected" class="headings labelLan">Language</label>
-            <select id="languageSelected" class="optselect" name="">
-                <option value="engus" class="sltOption">English, US</option>
-                <option value="abc">ABC</option>
-                <option value="mnp">MNP</option>
-            </select>
-        </fieldset>
+        <div class="language">
+            <fieldset class="optionsFieldSet">
+                <label for="languageSelected" class="headings labelLan">Language</label>
+                <select id="languageSelected" class="optselect" name="">
+                    <option value="engus" class="sltOption">English, US</option>
+                    <option value="abc">ABC</option>
+                    <option value="mnp">MNP</option>
+                </select>
+            </fieldset>
 
-        <fieldset class="optionsFieldSet">
-            <label for="voice" class="headings labelVoice">Voice</label>
-            <select id="voice" class="optselect" name="" onchange="parameterchange()">
-                <option value="Amy" class="sltOption">Amy, Female</option>
-                <option value="Matthew">Matthew, Male</option>
-                <option value="Joanna">Joanna, Female</option>
-            </select>
-        </fieldset>
-    </div>
-
-    <div class="textinputdiv">
-        <label for="texttocovert" class="headings texttoLabel">Input Text</label>
-        <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" maxlength="60" placeholder="English,US" onkeyup="textchange()"></textarea>
-        <div class="texttocovertbtns">
-            <p id="textremaining-p" class="pChars">60 Characters remaining</p>
-            <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
+            <fieldset class="optionsFieldSet">
+                <label for="voice" class="headings labelVoice">Voice</label>
+                <select id="voice" class="optselect" name="" onchange="parameterchange()">
+                    <option value="Amy" class="sltOption">Amy, Female</option>
+                    <option value="Matthew">Matthew, Male</option>
+                    <option value="Joanna">Joanna, Female</option>
+                </select>
+            </fieldset>
         </div>
-    </div>
 
-</div>
+        <div class="textinputdiv">
+            <label for="texttocovert" class="headings texttoLabel">Input Text</label>
+            <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" maxlength="60"
+                placeholder="English,US" onkeyup="textchange()"></textarea>
+            <div class="texttocovertbtns">
+                <p id="textremaining-p" class="pChars">60 Characters remaining</p>
+                <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
+            </div>
+        </div>
+
+    </div>
 @endpush
 
 @push('footer')
-<div class="footerDiv">
-    <button id="btndownload" class="btn download" onclick="downloadaudiofile()">
-        Download
-        <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
-            <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
-        </svg>
-    </button>
-    <!-- <a href="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3" download="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3">Download PDF</a> -->
+    <div class="footerDiv">
+        <button id="btndownload" class="btn download" onclick="downloadaudiofile()">
+            Download
+            <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)"
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
+                <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
+            </svg>
+        </button>
+        <!-- <a href="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3" download="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3">Download PDF</a> -->
 
-    <button id="btnlisten" type="button" class="btn listen" onclick="play()">
-        Listen
-        <span class="material-symbols-sharp">
-            play_arrow
-        </span>
-    </button>
-    <button id="btnconvert" type="button" class="btn" onclick="convert()">
-        Convert <i id="converting" class="fa fa-spinner fa-spin"></i>
-    </button>
-</div>
+        <button id="btnlisten" type="button" class="btn listen" onclick="play()">
+            Listen
+            <span class="material-symbols-sharp">
+                play_arrow
+            </span>
+        </button>
+        <button id="btnconvert" type="button" class="btn" onclick="convert()">
+            Convert <i id="converting" class="fa fa-spinner fa-spin"></i>
+        </button>
+    </div>
 @endpush
 
 <style>
@@ -240,12 +249,16 @@ Text To Speech
     }
 
     .engine p {
-        margin: 2px 0 0 23px;
+        /* margin: 2px 0 0 23px; */
         color: #888888;
         font-size: 11px;
     }
 
-
+    .enginetext {
+        display: flex;
+        flex-direction: column;
+        row-gap: 5px;
+    }
 
     input#engine {
         margin-right: 5px;
@@ -370,7 +383,7 @@ Text To Speech
     .optionsFieldSet {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
         /* justify-content: space-between; */
     }
 
@@ -385,10 +398,20 @@ Text To Speech
         font-family: "Open Sans", sans-serif;
         color: #888888;
     }
+
+    .form-control {
+        display: flex;
+        column-gap: 15px;
+        align-items: flex-start;
+    }
+
+    .form-control input[type="radio"] {
+        scale: 1.3;
+    }
 </style>
 
 @push('style')
-<style>
-    /* //texttospeech styling */
-</style>
+    <style>
+        /* //texttospeech styling */
+    </style>
 @endpush
