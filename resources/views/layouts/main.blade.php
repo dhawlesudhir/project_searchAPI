@@ -92,6 +92,7 @@
                     </form>
                 </div>
             </header>
+
             <div class="content">
                 @if (count($categories_resources))
                     <p>Configurations helps change a group of system settings across your computers in one-click. Click
@@ -124,6 +125,7 @@
                     <p id="notFound">No API's Found</p>
                 @endif
             </div>
+
 
             <div class="content2" style="display: none">
                 <p class="content2Divtitle">Configurations helps change a group of system settings across your computers
@@ -208,6 +210,72 @@
         select.submit = function() {
             this.form.submit();
         };
+
+
+        categoryData = `[
+ {
+  "id": "1",
+  "name": "Text Extract",
+  "color": "#B7D2E7",
+  "status": "1",
+  "resources": {
+    "id": "2",
+    "name": "TEXT EXTRACTION FROM IMAGE",
+    "status": "1",
+    "route": "/textextract"
+  }
+},
+ {
+  "id": "2",
+  "name": "SPEECH TO TEXT",
+  "color": "#D56162",
+  "status": "1",
+  "resources": {
+    "id": "2",
+    "name": "Speech to text",
+    "status": "1",
+    "route": "/speechtotext"
+  }
+},
+{
+  "id": "2",
+  "name": "IMAGE RECOGNITION",
+  "color": "#1150FF",
+  "status": "1",
+  "resources": {
+    "id": "2",
+    "name": "Object Recognition from Image",
+    "status": "1",
+    "route": "/objectrecognisation"
+  }
+},
+{
+  "id": "2",
+  "name": "TEXT TO SPEECH",
+  "color": "#EE675C",
+  "status": "1",
+  "resources": {
+    "id": "2",
+    "name": "TEXT TO SPEECH",
+    "status": "1",
+    "route": "/texttospeech"
+  }
+},
+{
+  "id": "2",
+  "name": "COMPREHEND",
+  "color": "#c6c6c6",
+  "status": "1",
+  "resources": {
+    "id": "2",
+    "name": "Comprehend",
+    "status": "1",
+    "route": "/comprehend"
+  }
+}
+]`;
+
+        console.log(JSON.parse(categoryData));
     </script>
 </body>
 
