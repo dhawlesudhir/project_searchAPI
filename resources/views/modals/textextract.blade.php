@@ -28,7 +28,7 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                       <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                           <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
                 hidden />
 
@@ -741,7 +741,6 @@
         // now
         function uploadpicture(files) {
             const file = files.target.files[0];
-            console.log(file.type);
             if (file.type == 'image/jpeg' || file.type == 'image/png') {
                 fileobjURL = URL.createObjectURL(file);
                 reset(false);
