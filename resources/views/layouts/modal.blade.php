@@ -1,7 +1,3 @@
-<script>
-    var localhost = "{{ env('APP_URL') }}";
-</script>
-
 @push('style')
     <!-- <script>
         -- >
@@ -30,11 +26,7 @@
     </header>
     <aside>
         @stack('aside')
-        <!-- <a href="{{ url('/speechtotext') }}">Speech To Text</a>
-    <a href="{{ url('/texttospeech') }}">Text To Speech</a>
-    <a href="{{ url('/textextract') }}">Text Extract</a>
-    <a href="{{ url('/comprehend') }}">Comprehend Demonstration</a>
-    <a href="{{ url('/objectrecognisation') }}">Object Recognition</a> -->
+
     </aside>
     <article>
         @stack('artical')
