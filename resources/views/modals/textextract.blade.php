@@ -19,7 +19,7 @@
         <div class="imagediv">
             <p class="title">Document Name</p>
             <picture>
-                <img src="/assets/images/NoPath.png">
+                <img id="imagefortextExtract" src="{{ url('/assets/images/NoPath.png') }}">
             </picture>
             <!-- <input type="file" class="btn" id="btnChoose" name="myfile"> -->
             {{-- <select class="btn" id="btnChoose">Choose Sample Document
@@ -28,7 +28,7 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                       <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                   <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
                 hidden />
 
@@ -218,15 +218,15 @@
 
 @push('footer')
     <div class="footerDiv">
-        <button class="btn download">
+        {{-- <button class="btn download">
             Download
             <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)"
                 xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18">
                 <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
                 <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
             </svg>
-        </button>
-        <button class="btn reset">
+        </button> --}}
+        <button class="btn reset" onclick="reset(true)">
             RESET DEMO
         </button>
     </div>
@@ -264,7 +264,7 @@
         grid-template-columns: 1fr;
         grid-auto-rows: 45px 420px 45px;
         /* background-color: #EEEEEE; */
-        width: 460px;
+        width: 350px;
         margin: 10px 20px;
         align-items: center;
 
@@ -323,8 +323,8 @@
     .informationDiv {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 7% 10% auto;
-        width: 100%;
+        grid-template-rows: 35px 35px 420px;
+        width: 350px;
         align-items: start;
         margin: 10px
     }
@@ -386,7 +386,7 @@
         grid-column: 1/2;
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 15% auto;
+        grid-template-rows: 50px 350px;
     }
 
     .tabcontent .tools {
@@ -539,7 +539,7 @@
 
     .fromsitem p:last-child {
         width: 180px;
-        height: 20px;
+        height: auto;
         background-color: #F5F5F5;
         padding: 5px 10px 5px 10px;
     }
@@ -623,6 +623,10 @@
         border: none;
         width: 220px;
     }
+
+    img {
+        object-fit: contain;
+    }
 </style>
 @push('scripts')
     <script>
@@ -631,6 +635,7 @@
         let kvsobj;
         let tableobj;
         defaultmsg = `<b> No records found!</b>`;
+        var baseurl = "{{ env('APP_URL') }}";
 
         let Testdata = `{
     "statusCode": 200,
@@ -727,16 +732,32 @@
     ]
 }`;
 
+        reset(true);
         // now
         function uploadpicture(files) {
             const file = files.target.files[0];
             console.log(file.type);
             if (file.type == 'image/jpeg' || file.type == 'image/png') {
+                fileobjURL = URL.createObjectURL(file);
+                reset(false);
                 apicall(file);
             } else {
                 alert('Unsupported file!');
             }
         }
+
+        function reset(mode) {
+            let imgElement = document.getElementById('imagefortextExtract');
+
+            if (!mode) {
+                imgElement.src = fileobjURL;
+            } else {
+                imgElement.src = baseurl + '/assets/images/NoPath.png';
+                processResponseData(JSON.parse(Testdata));
+
+            }
+        }
+
 
         function apicall(file) {
 
@@ -778,7 +799,6 @@
                 .catch(error => console.log('error', error));
         }
 
-        processResponseData(JSON.parse(Testdata));
 
         function processResponseData(response) {
 
@@ -827,7 +847,10 @@
         }
 
         function processTableData(obj) {
-            rows = Object.keys(obj[0]);
+            console.log('table');
+            rows = Object.keys(obj);
+            console.log(rows);
+
             // console.log("rows " + rows);
             divobj = document.getElementById('tbody-textExtract');
             divobj.innerHTML = ' ';
@@ -836,17 +859,18 @@
                 divobj.innerHTML = defaultmsg;
             } else {
                 teststring = '';
+                let tableCount = 0;
                 obj.forEach(element => {
                     rows = Object.keys(element);
-                    console.log("rows " + rows.length);
+                    // console.log("rows " + rows.length);
                     for (let rowindex = 0; rowindex < rows.length; rowindex++) {
-                        columns = Object.keys(obj[0][rows[rowindex]]);
+                        columns = Object.keys(obj[tableCount][rows[rowindex]]);
                         // console.log("columns " + columns.length);
                         // divobj.innerHTML += '<tr>';
                         teststring += '<tr>';
 
                         for (let index = 0; index < columns.length; index++) {
-                            value = obj[0][rows[rowindex]][columns[index]];
+                            value = obj[tableCount][rows[rowindex]][columns[index]];
                             // console.log(value);
                             // divobj.innerHTML += '<td>' + value + '</td>';
                             teststring += '<td>' + value + '</td>';
@@ -856,8 +880,9 @@
                     }
                     // console.log(teststring);
                     divobj.innerHTML = teststring;
+                    tableCount++;
                 });
-
+                console.log('table' + tableCount);
             }
         }
 
@@ -890,7 +915,7 @@
             processRawText(tempentities);
         }
 
-        // not working
+        // not working, should work on it for KG
         function formtext_filter1() {
             var searchvalue = document.getElementById('searchformtext').value;
             // searchvalue = searchvalue.toUpperCase();
@@ -961,17 +986,18 @@
             divobj = document.getElementById('tbody-textExtract');
             divobj.innerHTML = '';
             // checking if response has rows
-            rows = Object.keys(tableobj[0]);
+            rows = Object.keys(tableobj);
 
             let flag = false;
             if (rows.length == 0) {
                 divobj.innerHTML = defaultmsg;
             } else {
+                let Tablecount = 0;
                 tableobj.forEach(element => {
                     rows = Object.keys(element);
                     // console.log("rows " + rows.length);
                     for (let rowindex = 0; rowindex < rows.length; rowindex++) {
-                        columns = Object.keys(tableobj[0][rows[rowindex]]);
+                        columns = Object.keys(tableobj[Tablecount][rows[rowindex]]);
                         // console.log("columns " + columns.length);
                         // console.log("search " + searchvalue);
 
@@ -979,7 +1005,7 @@
                         for (let index = 0; index < columns.length; index++) {
 
                             // value toString as it can have numbers and triming
-                            value = tableobj[0][rows[rowindex]][columns[index]].toString().trim();
+                            value = tableobj[Tablecount][rows[rowindex]][columns[index]].toString().trim();
 
                             // toUpperCase to match with searchvalue
                             value1 = value.toUpperCase();
@@ -991,12 +1017,13 @@
                                 flag = true;
 
                                 // if columns has matching value add all columns
-                                filltable_supportfunction(tableobj[0][rows[rowindex]]);
+                                filltable_supportfunction(tableobj[Tablecount][rows[rowindex]]);
                                 // if any of columns match from row break loop and goto next row
                                 break;
                             }
                         }
                     }
+                    Tablecount++;
                 });
                 // flag == false - no matching result found
                 if (flag == false) {
