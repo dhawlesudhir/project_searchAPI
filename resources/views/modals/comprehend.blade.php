@@ -1301,7 +1301,7 @@
 }`;
         responsedataprocessing(JSON.parse(testdataobject));
         showentitytab();
-
+        inputChange();
         payloadDataToHTMLDiv();
 
         function callcomprehend() {
@@ -1310,7 +1310,7 @@
             if (textfromarea.length < 30) {
                 alert('Minimum 30 charecter long text required');
                 return false;
-            } else if (temp == textfromarea) {
+            } else if (temp.trim() == textfromarea.trim()) {
                 return false;
             }
             document.getElementById("btnAnalyze").style.display = "none";
@@ -2058,6 +2058,13 @@
             document.getElementById("comprehendtextara").value = textfromarea;
             responsedataprocessing(JSON.parse(testdataobject));
         }
+
+        function inputChange() {
+            inputtext = document.getElementById('comprehendtextara').value.trim();
+            balanceInput = 10000 - inputtext.length;
+            document.getElementById('textremaining-p').innerHTML = `<p id="textremaining-p" class="pChars">` +
+                balanceInput + ` Characters remaining </p>`;
+        }
     </script>
 @endpush
 
@@ -2079,7 +2086,7 @@
         {{-- text area div --}}
         <div class="textareadiv">
             <label for="comprehendtextara" class="headings">Input Text</label>
-            <textarea id="comprehendtextara" class="textinput" name="" maxlength="100000">Throughout the interwar period, elements of the fleet conducted visits to ports throughout the Mediterranean, but few fleet exercises occurred due to budget pressures. In 1930, the Maritime Air Force was divorced from Royal Yugoslav Army control, and the naval air arm began to develop significantly, including the establishment of bases along the Adriatic coast. The following year, a British-made flotilla leader was commissioned with the idea that the KM might be able to operate in the Mediterranean alongside the British and French navies.</textarea>
+            <textarea id="comprehendtextara" class="textinput" name="" maxlength="100000" onkeyup="inputChange()">Throughout the interwar period, elements of the fleet conducted visits to ports throughout the Mediterranean, but few fleet exercises occurred due to budget pressures. In 1930, the Maritime Air Force was divorced from Royal Yugoslav Army control, and the naval air arm began to develop significantly, including the establishment of bases along the Adriatic coast. The following year, a British-made flotilla leader was commissioned with the idea that the KM might be able to operate in the Mediterranean alongside the British and French navies.</textarea>
             <p id="textremaining-p" class="pChars">100000 Characters remaining</p>
 
             <div class="textareadivbtns">
