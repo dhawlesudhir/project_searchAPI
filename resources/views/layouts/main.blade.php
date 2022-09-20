@@ -97,71 +97,6 @@
                 <p class="content2Divtitle">Configurations helps change a group of system settings across your computers
                     in one-click. Click on one of the settings below to get started.</p>
                 <div id="div-categories" class="groups">
-                    <div class="group">
-                        <h5 class="group-heading">SYSTEM AND SECURITY</h5>
-                        <div class="group-items">
-                            <a href="">Firewall</a>
-                            <a href="">Registry</a>
-                            <a href="">Services</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h5 class="group-heading">Artificial Intelligence</h5>
-                        <div class="group-items">
-                            <a href="/textextract">Image to text</a>
-                            <a href="/speechtotext">Speech to text</a>
-                            <a href="/texttospeech">Text to speech</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h5 class="group-heading">NETWORK AND INTERNET</h5>
-                        <div class="group-items">
-                            <a href="">WiFi and Bluetooth Radio</a>
-                            <a href="">WiFi Profiles</a>
-                            <a href="">IP Printer</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h5 class="group-heading">APPEARANCE AND PERSONALIZATION</h5>
-                        <div class="group-items">
-                            <a href="">Display</a>
-                            <a href="">Fonts</a>
-                            <a href="">Theme</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h5 class="group-heading">USER ACCOUNTS</h5>
-                        <div class="group-items">
-                            <a href="">User Management</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h5 class="group-heading">HARDWARE</h5>
-                        <div class="group-items">
-                            <a href="">Power Managemnt</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h5 class="group-heading">OTHERS</h5>
-                        <div class="group-items">
-                            <a href="">Scheduler</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h5 class="group-heading">CLOCK AND REGION</h5>
-                        <div class="group-items">
-                            <a href="">Date/Time</a>
-                            <a href="">Region</a>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <h5 class="group-heading">EASE OF ACCESS</h5>
-                        <div class="group-items">
-                            <a href="">Activate Windows Kiosk Mode</a>
-                            <a href="">Shortcut</a>
-                        </div>
-                    </div>
-
 
                 </div>
             </div>
@@ -253,7 +188,7 @@
                 name = categoryData[index].name;
                 color = categoryData[index].color;
                 resources = categoryData[index].resources;
-                console.log("re " + resources.length);
+                // console.log("re " + resources.length);
                 if (resources.length > 0) {
 
                     HTMLcode += `<div class="group" style="border-left: solid 5px ` + color + `">
@@ -270,7 +205,7 @@
                     HTMLcode += `</div>`;
                 }
             }
-            console.log(HTMLcode);
+            // console.log(HTMLcode);
             groupsElement.innerHTML = HTMLcode;
         }
 
@@ -292,8 +227,8 @@
                     for (let index = 0; index < resources.length; index++) {
                         resourcename = resources[index].name.toUpperCase();
                         if (resourcename.includes(searchvalue) || categoryname.includes(searchvalue)) {
-                            console.log(searchvalue);
-                            console.log(categoryData[categoryindex]);
+                            // console.log(searchvalue);
+                            // console.log(categoryData[categoryindex]);
                             // loadCategories(categoryData[categoryindex]);
                             addCategory(categoryData[categoryindex]);
                             flag = true;
