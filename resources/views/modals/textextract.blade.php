@@ -28,7 +28,7 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                   <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                       <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
                 hidden />
 
@@ -48,16 +48,16 @@
 
             <div id="tabs" class="responsive sticky-top bg-white">
                 <!-- <div class="tabs tabs-center"> -->
-                <a id="btnrawtext" class="tab active" onclick="test('rawtext','btnrawtext')">
+                <a id="btnrawtext" class="tab active" onclick="toggleTabs('rawtext','btnrawtext')">
                     Raw Text
                 </a>
-                <a id="btnform" class="tab" onclick="test('form','btnform')">
+                <a id="btnform" class="tab" onclick="toggleTabs('form','btnform')">
                     Forms
                 </a>
-                <a id="btntbl" class="tab" onclick="test('tbl','btntbl')">
+                <a id="btntbl" class="tab" onclick="toggleTabs('tbl','btntbl')">
                     Tables
                 </a>
-                <a id="btnqry" class="tab" onclick="test('qry','btnqry')">
+                <a id="btnqry" class="tab" onclick="toggleTabs('qry','btnqry')">
                     Queries
                 </a>
                 <!-- </div> -->
@@ -323,7 +323,7 @@
     .informationDiv {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 35px 35px 420px;
+        grid-template-rows: 35px 50px 420px;
         width: 350px;
         align-items: start;
         margin: 10px
@@ -350,6 +350,8 @@
         padding: 0 10px 8px 10px;
         box-sizing: border-box;
         border-bottom: 3px solid transparent;
+        transition: all 0.35s linear;
+
     }
 
     .active {
@@ -387,6 +389,10 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 50px 350px;
+        transition: all 0.5s ease-in;
+        transition: opacity 4s ease-out;
+        transition: all 0.35s linear;
+
     }
 
     .tabcontent .tools {
@@ -426,8 +432,6 @@
         height: 40px;
     }
 
-
-
     .tagstext {
         display: flex;
         flex-wrap: wrap;
@@ -440,7 +444,7 @@
     }
 
     .scrolloverlay {
-        overflow: auto;
+        overflow: scroll;
     }
 
     .scrolloverlay::-webkit-scrollbar {
@@ -497,6 +501,7 @@
     /* tab toggle manual */
     .rawtext {
         display: grid;
+        transition: all 4s linear;
     }
 
     .tables {
@@ -1047,7 +1052,7 @@
             divobj.innerHTML += teststring;
         }
 
-        function test(id, btnid) {
+        function toggleTabs(id, btnid) {
             hideall();
             var x = document.getElementById(id);
             if (x.style.display === "none") {
