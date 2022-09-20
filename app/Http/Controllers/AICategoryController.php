@@ -13,41 +13,46 @@ class AICategoryController extends Controller
     //
     public function texttospeech(Request $request)
     {
-        $category = new CategoryController();
-        $categoriesData = $category->index($request, "data");
+        // $category = new CategoryController();
+        // $categoriesData = $category->index($request, "data");
         //collection of resources relate to category
-        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        // return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        return view('layouts.main')->with('modal', __FUNCTION__);
     }
 
     public function speechtotext(Request $request)
     {
-        $category = new CategoryController();
-        $categoriesData = $category->index($request, "data");
+        // $category = new CategoryController();
+        // $categoriesData = $category->index($request, "data");
         //collection of resources related to category
-        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        // return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        return view('layouts.main')->with('modal', __FUNCTION__);
     }
 
     public function textextract(Request $request)
     {
-        $category = new CategoryController();
-        $categoriesData = $category->index($request, "data");
+        // $category = new CategoryController();
+        // $categoriesData = $category->index($request, "data");
         //collection of resources related to category
-        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        // return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        return view('layouts.main')->with('modal', __FUNCTION__);
     }
 
     public function objectrecognisation(Request $request)
     {
-        $category = new CategoryController();
-        $categoriesData = $category->index($request, "data");
+        // $category = new CategoryController();
+        // $categoriesData = $category->index($request, "data");
         //collection of resources related to category
-        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        // return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        return view('layouts.main')->with('modal', __FUNCTION__);
     }
     public function comprehend(Request $request)
     {
-        $category = new CategoryController();
-        $categoriesData = $category->index($request, "data");
-        //collection of resources related to category
-        return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        // $category = new CategoryController();
+        // $categoriesData = $category->index($request, "data");
+        // //collection of resources related to category
+        // return view('layouts.main')->with('categories_resources', $categoriesData)->with('modal', __FUNCTION__);
+        return view('layouts.main')->with('modal', __FUNCTION__);
     }
 
     public function AWScomprehend(Request $request)
@@ -95,20 +100,6 @@ class AICategoryController extends Controller
 
     public function AWSimagerecognization(Request $request)
     {
-
-        // if (!$request->hasFile('image')) {
-        //     return response()->json([
-        //         'status' => 'failed',
-        //         'response' => "send or add 'image' data"
-        //     ], 400);
-        // }
-
-        // if (!($file_formate == 'jpeg') or !($file_formate == 'png')) {
-        //     return response()->json([
-        //         'status' => 'failed',
-        //         'response' => "supported file format: JPEG or PNG"
-        //     ], 400);
-        // }
 
         if (!$request->hasFile('image')) {
             return response()->json([
