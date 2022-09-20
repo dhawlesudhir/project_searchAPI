@@ -351,14 +351,14 @@ article header div:first-child {
 }
 
 #notFound {
-    font-size: 28px;
-    font-family: "Roboto", sans-serif;
+    font-size: 18px;
+    /* font-family: "Roboto", sans-serif; */
 }
 
-#notFound::after {
-    content: "(press Enter key)";
-    font-size: 18px;
-}
+/* #notFound::after {
+    content: " (press Enter key)";
+    font-size: 14px;
+} */
 
 /*
 .group:last-child {

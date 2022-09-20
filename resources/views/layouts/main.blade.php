@@ -86,14 +86,14 @@
                 </div>
                 <div class="search-input">
                     <p>Search for an API</p>
-                    <form method="get" action="/" auto-focus>
-                        <input id="searchresourcesipt" type="text" name="search" placeholder="Enter an API"
-                            autofocus />
-                    </form>
+                    {{-- <form method="get" action="/" auto-focus> --}}
+                    <input id="searchresourcesipt" type="text" name="search" placeholder="Enter an API" autofocus
+                        onkeyup="category_filter()" />
+                    {{-- </form> --}}
                 </div>
             </header>
 
-            <div class="content">
+            <div class="content" style="display: none">
                 @if (count($categories_resources))
                     <p>Configurations helps change a group of system settings across your computers in one-click. Click
                         on one of the settings below to get started.</p>
@@ -122,15 +122,15 @@
           ?>
                     </div>
                 @else
-                    <p id="notFound">No API's Found</p>
+                    <p id="notFound">No results found</p>
                 @endif
             </div>
 
 
-            <div class="content2" style="display: none">
+            <div class="content2">
                 <p class="content2Divtitle">Configurations helps change a group of system settings across your computers
                     in one-click. Click on one of the settings below to get started.</p>
-                <div class="groups">
+                <div id="div-categories" class="groups">
                     <div class="group">
                         <h5 class="group-heading">SYSTEM AND SECURITY</h5>
                         <div class="group-items">
@@ -218,64 +218,149 @@
   "name": "Text Extract",
   "color": "#B7D2E7",
   "status": "1",
-  "resources": {
+  "resources": [{
     "id": "2",
     "name": "TEXT EXTRACTION FROM IMAGE",
     "status": "1",
-    "route": "/textextract"
-  }
+    "route": "textextract"
+  }]
 },
  {
   "id": "2",
   "name": "SPEECH TO TEXT",
-  "color": "#D56162",
+  "color": "#12d595",
   "status": "1",
-  "resources": {
+  "resources": [{
     "id": "2",
     "name": "Speech to text",
     "status": "1",
-    "route": "/speechtotext"
-  }
+    "route": "speechtotext"
+  }]
 },
 {
   "id": "2",
   "name": "IMAGE RECOGNITION",
   "color": "#1150FF",
   "status": "1",
-  "resources": {
+  "resources": [{
     "id": "2",
     "name": "Object Recognition from Image",
     "status": "1",
-    "route": "/objectrecognisation"
-  }
+    "route": "objectrecognisation"
+  }]
 },
 {
   "id": "2",
   "name": "TEXT TO SPEECH",
   "color": "#EE675C",
   "status": "1",
-  "resources": {
+  "resources": [{
     "id": "2",
     "name": "TEXT TO SPEECH",
     "status": "1",
-    "route": "/texttospeech"
-  }
+    "route": "texttospeech"
+  }]
 },
 {
   "id": "2",
   "name": "COMPREHEND",
   "color": "#c6c6c6",
   "status": "1",
-  "resources": {
+  "resources":[{
     "id": "2",
     "name": "Comprehend",
     "status": "1",
-    "route": "/comprehend"
-  }
+    "route": "comprehend"
+  }]
 }
 ]`;
 
-        console.log(JSON.parse(categoryData));
+        StoredCategoryData = JSON.parse(categoryData);
+        loadCategories(StoredCategoryData);
+
+        function loadCategories(categoryData) {
+            let groupsElement = document.getElementById('div-categories');
+            groupsElement.innerHTML = '';
+            let HTMLcode = '';
+            for (let index = 0; index < categoryData.length; index++) {
+                name = categoryData[index].name;
+                color = categoryData[index].color;
+                resources = categoryData[index].resources;
+                console.log("re " + resources.length);
+                if (resources.length > 0) {
+
+                    HTMLcode += `<div class="group" style="border-left: solid 5px ` + color + `">
+                        <h5 class="group-heading" >` + name + `</h5>`;
+
+                    for (let index = 0; index < resources.length; index++) {
+                        name = resources[index].name;
+                        path = resources[index].route;
+                        HTMLcode += `<div class="group-items" >
+                            <a href="{{ url('`+path+`') }}">` + name + `</a>
+                        </div>`;
+                    }
+
+                    HTMLcode += `</div>`;
+                }
+            }
+            console.log(HTMLcode);
+            groupsElement.innerHTML = HTMLcode;
+        }
+
+        // checking JSON data if searchvalue in there
+        function category_filter() {
+
+            var searchvalue = document.getElementById('searchresourcesipt').value;
+            searchvalue = searchvalue.toUpperCase();
+            categoryData = StoredCategoryData;
+            document.getElementById('div-categories').innerHTML = '';
+
+            let flag = false;
+            for (let categoryindex = 0; categoryindex < categoryData.length; categoryindex++) {
+                categoryname = categoryData[categoryindex].name.toUpperCase();
+                resources = categoryData[categoryindex].resources;
+                if (resources.length > 0) {
+
+
+                    for (let index = 0; index < resources.length; index++) {
+                        resourcename = resources[index].name.toUpperCase();
+                        if (resourcename.includes(searchvalue) || categoryname.includes(searchvalue)) {
+                            console.log(searchvalue);
+                            console.log(categoryData[categoryindex]);
+                            // loadCategories(categoryData[categoryindex]);
+                            addCategory(categoryData[categoryindex]);
+                            flag = true;
+
+                        }
+                    }
+                }
+            }
+            if (flag == false) {
+                //no record msg
+                document.getElementById('div-categories').innerHTML = `<p id="notFound">No results found</p>`;
+            }
+        }
+
+        // if category or resource text matching , add them to UI
+        function addCategory(category) {
+            name = category.name;
+            color = category.color;
+            resources = category.resources;
+
+            HTMLcode = `<div class="group" style="border-left: solid 5px ` + color + `">
+                        <h5 class="group-heading" >` + name + `</h5>`;
+
+            for (let index = 0; index < resources.length; index++) {
+                name = resources[index].name;
+                path = resources[index].route;
+                HTMLcode += `<div class="group-items" >
+                            <a href="{{ url('`+path+`') }}">` + name + `</a>
+                        </div>`;
+            }
+
+            HTMLcode += `</div>`;
+            document.getElementById('div-categories').innerHTML += HTMLcode;
+        }
     </script>
 </body>
 

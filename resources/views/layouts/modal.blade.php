@@ -87,9 +87,12 @@
         grid-column: 2 / 3;
         height: 100%;
         border-bottom: #EEEEEE solid 1px;
-        padding: 10px;
+        /* padding: 10px; */
         box-sizing: border-box;
-        justify-content: space-around;
+
+        display: flex;
+        align-items: center;
+        /* justify-content: center; */
 
     }
 
