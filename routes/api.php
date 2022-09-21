@@ -3,7 +3,7 @@
 use App\Http\Controllers\AICategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\http\Controllers\speechController;
+use App\http\Controllers\SpeechController;
 
 /*
 |--------------------------------------------------------------------------
