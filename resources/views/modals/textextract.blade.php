@@ -28,7 +28,7 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                                                   <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                                                                   <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
                 hidden />
 
@@ -756,7 +756,10 @@
             if (!mode) {
                 imgElement.src = fileobjURL;
             } else {
-                imgElement.src = baseurl + '/assets/images/NoPath.png';
+                // if reset = true
+                // imgElement.src = baseurl + '/assets/images/NoPath.png';
+                imgElement.src = `{{ url('/assets/images/NoPath.png') }}`;
+
                 processResponseData(JSON.parse(Testdata));
             }
         }
