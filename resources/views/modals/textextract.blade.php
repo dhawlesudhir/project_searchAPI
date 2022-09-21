@@ -28,7 +28,7 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                                                   <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                                                                                                                                                                                                                                                                                                                                                                           <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
             <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
                 hidden />
 
@@ -642,6 +642,8 @@
         defaultmsg = `<b> No records found!</b>`;
         var baseurl = "{{ env('APP_URL') }}";
         console.log(baseurl);
+        echo 'testfromoriginFolder';
+
         let Testdata = `{
     "statusCode": 200,
     "body": [
