@@ -3,7 +3,7 @@
 use App\Http\Controllers\AICategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\http\Controllers\speechController;
+use App\http\Controllers\SpeechController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/speech', [SpeechController::class, 'speechToText']);
 Route::get('/text', [SpeechController::class, 'textToSpeech']);
 Route::get('/getText', [SpeechController::class, 'textExtract']);
-Route::get('/textspeechaws', [SpeechController::class, 'textToSpeechAWS']);
+Route::get('/textspeechaws', [AICategoryController::class, 'textToSpeechAWS']);
 Route::post('/comprehend', [AICategoryController::class, 'AWScomprehend']);
 Route::post('/imagerecognization', [AICategoryController::class, 'AWSimagerecognization']);
