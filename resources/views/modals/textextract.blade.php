@@ -28,7 +28,11 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
+<<<<<<< HEAD
                                                                                                                                                                                                                                                                                                                                                                            <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+=======
+                                                                                                                                                                                                                                                                                                                                                                                       <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+>>>>>>> 04b725d302d5f66849e06a167c9a2e3ca49dd0ff
             <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
                 hidden />
 
@@ -642,8 +646,12 @@
         defaultmsg = `<b> No records found!</b>`;
         var baseurl = "{{ env('APP_URL') }}";
         console.log(baseurl);
+<<<<<<< HEAD
         echo 'testfromoriginFolder';
 
+=======
+        echo 'test';
+>>>>>>> 04b725d302d5f66849e06a167c9a2e3ca49dd0ff
         let Testdata = `{
     "statusCode": 200,
     "body": [
@@ -758,7 +766,10 @@
             if (!mode) {
                 imgElement.src = fileobjURL;
             } else {
-                imgElement.src = baseurl + '/assets/images/NoPath.png';
+                // if reset = true
+                // imgElement.src = baseurl + '/assets/images/NoPath.png';
+                imgElement.src = `{{ url('/assets/images/NoPath.png') }}`;
+
                 processResponseData(JSON.parse(Testdata));
             }
         }
