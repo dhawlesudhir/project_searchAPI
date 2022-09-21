@@ -6,6 +6,8 @@
         var voiceurlaws = '';
         var speaker = '';
         var text;
+        var localhost = "{{ env('APP_URL') }}";
+
         textempty();
         document.getElementById("converting").style.display = "none";
 
@@ -30,7 +32,7 @@
 
             document.getElementById("converting").style.display = "flex";
 
-            fetch("http://127.0.0.1:8000/api/textspeechaws?str=" + text + "&speaker=" + speaker, requestOptions)
+            fetch(localhost + "/api/textspeechaws?str=" + text + "&speaker=" + speaker, requestOptions)
                 .then(response => response.json())
                 // .then((response) => {
                 //   return response.json();

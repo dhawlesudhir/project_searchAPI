@@ -35,7 +35,7 @@
         @stack('footer')
     </footer>
     <!-- <div class="modal-close" onclick="{{ URL::previous() }}">✖</div> -->
-    <a class="modal-close" href="/">✖</a>
+    <a class="modal-close" href="{{ url('/') }}">✖</a>
 </div>
 
 
