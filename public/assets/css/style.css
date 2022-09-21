@@ -336,6 +336,7 @@ article header div:first-child {
     font-size: 12px;
     color: #000000;
     pointer-events: all;
+    text-transform: capitalize;
 }
 
 /* .group-items a::first-letter {

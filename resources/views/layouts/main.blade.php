@@ -122,7 +122,7 @@
   "status": "1",
   "resources": [{
     "id": "2",
-    "name": "TEXT EXTRACTION FROM IMAGE",
+    "name": "text extraction from image",
     "status": "1",
     "route": "textextract"
   }]
@@ -158,7 +158,7 @@
   "status": "1",
   "resources": [{
     "id": "2",
-    "name": "TEXT TO SPEECH",
+    "name": "Text TO speech",
     "status": "1",
     "route": "texttospeech"
   }]
