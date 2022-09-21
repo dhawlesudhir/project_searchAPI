@@ -28,17 +28,24 @@
 
             <!-- <div> -->
             <!-- <input id="uploadimage" type="file" name="myfile" hidden />
-                                                                                                                                                                                                                                                                                                                                                                                           <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
-            <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
-                hidden />
+    <<<<<<< HEAD
+                                                                                                                                                                                                                                                                                                                                                                                               <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+            =======
+            <<<<<<< HEAD <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                =======
+                <button class="btn" id="btnUpld" for="#uploadimage">Upload Document</button> -->
+                >>>>>>> 04b725d302d5f66849e06a167c9a2e3ca49dd0ff
+                >>>>>>> b2f2115a8dfb2bc50889fe0b0b9c5ddfe2b55e9a
+                <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png"
+                    onchange="uploadpicture(event)" hidden />
 
-            <!--our custom file upload button-->
-            <label id="btnUpld" for="actual-btn" class="btn labelbtnUpld">Upload
-                Document</label>
-            <!-- </div> -->
-            <button id="btnanalyzing" type="button" class="labelbtnUpld btn">
-                Analyzing <i id="converting" class="fa fa-spinner fa-spin"></i>
-            </button>
+                <!--our custom file upload button-->
+                <label id="btnUpld" for="actual-btn" class="btn labelbtnUpld">Upload
+                    Document</label>
+                <!-- </div> -->
+                <button id="btnanalyzing" type="button" class="labelbtnUpld btn">
+                    Analyzing <i id="converting" class="fa fa-spinner fa-spin"></i>
+                </button>
         </div>
 
         <hr class="hrSeperator">
@@ -642,6 +649,13 @@
         defaultmsg = `<b> No records found!</b>`;
         var baseurl = "{{ env('APP_URL') }}";
         console.log(baseurl);
+
+
+        echo 'testfromoriginFolder';
+
+
+
+
 
         let Testdata = `{
     "statusCode": 200,
