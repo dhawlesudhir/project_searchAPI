@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
 
     <title>API Collections</title>
+    <link rel="icon" type="image/x-icon" href="{{ url('/assets\images\icon-laravel.png') }}">
 
     <!-- Fonts -->
 
