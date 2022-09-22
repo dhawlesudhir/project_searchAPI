@@ -159,7 +159,7 @@
   "status": "1",
   "resources": [{
     "id": "2",
-    "name": "Text TO speech",
+    "name": "Text To speech",
     "status": "1",
     "route": "texttospeech"
   }]
