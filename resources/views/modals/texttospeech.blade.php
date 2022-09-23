@@ -198,10 +198,10 @@
         <!-- <a href="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3" download="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3">Download PDF</a> -->
 
         <button id="btnlisten" type="button" class="btn listen" onclick="play()">
-            Listen
             <span class="material-symbols-sharp">
                 play_arrow
             </span>
+            Listen
         </button>
         <button id="btnconvert" type="button" class="btn" onclick="convert()">
             Convert <i id="converting" class="fa fa-spinner fa-spin"></i>
@@ -315,21 +315,6 @@
         gap: 20px;
     }
 
-    .modal .btn {
-        background-color: transparent;
-        color: #0091FF;
-        box-shadow: 0px 3px 6px #00000029;
-        border: 1px solid #0091FF;
-        border-radius: 24px;
-        opacity: 1;
-        width: 208px;
-        height: 36px;
-        text-align: center;
-        font-size: 13px;
-        font-family: "Open Sans", sans-serif;
-        font-weight: bold;
-    }
-
     .listen,
     .download {
         color: #FFFFFF !important;
@@ -378,8 +363,8 @@
 
     .textinputdiv .btnClear {
         width: 98px !important;
-        font-size: 13px;
-        font-weight: 300;
+        height: 30px !important;
+        font-weight: 100 !important;
     }
 
     .optionsFieldSet {

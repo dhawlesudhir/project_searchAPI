@@ -294,7 +294,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 160px;
+        margin-left: 152px;
+        font-weight: 100 !important;
     }
 
     #btnanalyzing {
@@ -482,14 +483,6 @@
         padding-left: 9px;
     }
 
-
-
-    .reset {
-        text-align: center;
-        margin-right: 20px;
-        padding: 5px;
-        width: 120px !important;
-    }
 
     /* tab toggle manual */
     .rawtext {

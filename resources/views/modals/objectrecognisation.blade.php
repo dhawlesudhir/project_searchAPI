@@ -215,6 +215,8 @@
                         return response.json()
                     }
                     if (response.status == 415) {
+                        document.getElementById("btnanalyze").style.display = "flex";
+                        document.getElementById("btnanalyzing").style.display = "none";
                         let divobj = document.getElementById('Labelsinformation');
                         divobj.innerHTML = '';
                         divobj.innerHTML =
@@ -227,7 +229,13 @@
                     responseData = result;
                     processResponseData(result);
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => {
+                    alert('something went wrong,try again later');
+
+                    document.getElementById("btnanalyze").style.display = "flex";
+                    document.getElementById("btnanalyzing").style.display = "none";
+                    console.log('error', error)
+                });
         }
 
         processResponseData(TESTresponseData);
@@ -593,6 +601,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-weight: 100 !important;
     }
 
     #btnanalyzing {
@@ -715,10 +724,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .reset {
-        width: 120px !important;
     }
 
     #btnDownloadobjets {

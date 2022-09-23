@@ -184,4 +184,14 @@
         padding-right: 2rem !important;
         color: #888888;
     }
+
+
+    .reset {
+        background-color: #0091FF !important;
+        text-align: center;
+        margin-right: 8px;
+        padding: 5px;
+        color: #FFFFFF !important;
+        letter-spacing: 0px;
+    }
 </style>

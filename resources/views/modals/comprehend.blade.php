@@ -1325,7 +1325,16 @@
 
             fetch(localhost + "/api/comprehend?text=" + textfromarea,
                     requestOptions)
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                        console.log("ok");
+                    } else {
+
+                        console.log("erropr");
+                        throw new Error();
+                    }
+                })
                 .then(result => {
                     console.log(result)
                     responsedataprocessing(result);
@@ -1335,7 +1344,12 @@
                     document.getElementById("btnanalyzing").style.display = "none";
                     // console.log(result.Entities);
                 })
-                .catch(error => console.log('error', error));
+                .catch(error => {
+                    alert('something went wrong,try again later');
+                    document.getElementById("btnAnalyze").style.display = "block";
+                    document.getElementById("btnanalyzing").style.display = "none";
+                    console.log('error', error)
+                });
         }
 
         function responsedataprocessing(data) {
@@ -2091,7 +2105,7 @@
 
             <div class="textareadivbtns">
                 <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
-                <button id="btnAnalyze" class="btnAnalyze btn" onclick="callcomprehend()">analyze</button>
+                <button id="btnAnalyze" class="btnAnalyze btn" onclick="callcomprehend()">ANALYZE</button>
 
                 <button id="btnanalyzing" type="button" class="btnAnalyze btn" onclick="convert()">
                     Analyzing <i id="converting" class="fa fa-spinner fa-spin"></i>
@@ -2466,7 +2480,7 @@
     #comprehendtextara {
         grid-column: 1/4;
         width: 100%;
-        border-radius: 5px;
+        border-radius: 8px;
         padding: 12px 15px 12px 15px !important;
         box-sizing: border-box;
         border: 1px solid #DDDDDD;
@@ -2485,14 +2499,19 @@
         color: #888888;
     }
 
-    .btn {
-        font-weight: 400 !important;
+    .btnClear {
+        font-weight: 100 !important;
+        width: 98px !important;
+
     }
 
 
     .btnAnalyze {
+        font-weight: 100 !important;
         color: #FFFFFF !important;
         background-color: #0091FF !important;
+        text-transform: uppercase;
+        width: 98px !important;
     }
 
 
@@ -2511,6 +2530,7 @@
         background-color: #F0F0F0;
         color: #888888;
         line-height: 24px;
+        font-weight: 400 !important;
     }
 
     .comprehendtextaradisabled::-webkit-scrollbar {
@@ -2519,11 +2539,6 @@
     }
 
 
-    .btn {
-        height: 30px !important;
-        width: 98px !important;
-        text-transform: uppercase;
-    }
 
     .textareadivbtns {
         display: flex;
@@ -2571,7 +2586,7 @@
 
 
     .analyzedtextdiv {
-        margin: 15px;
+        margin: 20px;
     }
 
     .titleanalyzedtextp {
@@ -2582,7 +2597,8 @@
 
     /* styling result content  inside results */
     .results {
-        margin: 15px 15px 20px 15px;
+        /* margin: 15px 15px 20px 15px; */
+        margin: 20px;
     }
 
     .results p {
@@ -2807,7 +2823,6 @@
 
     #btnanalyzing {
         display: none;
-
     }
 
 

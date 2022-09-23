@@ -332,7 +332,9 @@ article header div:first-child {
 
 .group-items a {
     text-decoration: none;
-    font-family: "Roboto", sans-serif;
+    /* font-family: "Roboto", sans-serif; */
+    font-family: "Open Sans", sans-serif;
+
     font-size: 12px;
     color: #000000;
     pointer-events: all;
