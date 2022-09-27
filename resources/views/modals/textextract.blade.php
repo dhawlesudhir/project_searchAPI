@@ -19,7 +19,7 @@
         <div class="imagediv">
             <p class="title">Document Name</p>
             <picture>
-                <img id="imagefortextExtract" src="{{ asset('/images/NoPath.png') }}">
+                <img id="imagefortextExtract" src="{{ asset('images/NoPath.png') }}">
             </picture>
 
             <input type="file" id="actual-btn" accept="image/gif, image/jpeg, image/png" onchange="uploadpicture(event)"
@@ -745,7 +745,7 @@
             } else {
                 // if reset = true
                 // imgElement.src = baseurl + '/assets/images/NoPath.png';
-                imgElement.src = `{{ asset('/images/NoPath.png') }}`;
+                imgElement.src = `{{ asset('images/NoPath.png') }}`;
 
                 processResponseData(JSON.parse(Testdata));
             }
