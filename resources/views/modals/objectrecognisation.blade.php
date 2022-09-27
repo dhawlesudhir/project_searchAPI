@@ -167,7 +167,7 @@
             } else {
                 document.getElementById('btnUpldimage').value = '';
                 divobj_div_imgcontainer.innerHTML =
-                    `<img id="imgUplded" src="{{ url('/assets/images/batting.jpg') }}">`;
+                    `<img id="imgUplded" src="{{ asset('/images/batting.jpg') }}">`;
                 processResponseData(TESTresponseData);
 
             }
@@ -426,7 +426,7 @@
             <div class="divimgcontainer">
                 {{-- <picture> --}}
                 <div id="div_imgcontainer" class="imgcontainer">
-                    <img id="imgUplded" src="{{ url('/assets/images/batting.jpg') }}">
+                    <img id="imgUplded" src="{{ asset('/images/batting.jpg') }}">
                     {{-- <div class="imghighlight" style="top:100px;right:100px;width:100px;height:100px">
                         <div class="innerDiv-imghighlight" text="popups">
                         </div>
