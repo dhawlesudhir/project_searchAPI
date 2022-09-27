@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=0">
 
     <title>API Collections</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('\images\icon-laravel.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('images\icon-laravel.png') }}">
 
     <!-- Fonts -->
 
@@ -38,7 +38,7 @@
 
     <!-- Styles -->
     <!-- <link rel="stylesheet" href="/assets/css/style.css"> -->
-    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 </head>
 
