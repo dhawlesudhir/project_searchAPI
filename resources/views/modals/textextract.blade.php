@@ -5,7 +5,7 @@
 @endpush
 
 @push('aside')
-    <a href="{{ url('/texttospeech') }}" class="selected">Text To Speech</a>
+    <a href="{{ url('/texttospeech') }}">Text To Speech</a>
     <a href="{{ url('/speechtotext') }}">Speech To Text</a>
     <a href="{{ url('/textextract') }}" class="selected">Text Extract</a>
     <a href="{{ url('/objectrecognisation') }}">Object Recognition</a>
