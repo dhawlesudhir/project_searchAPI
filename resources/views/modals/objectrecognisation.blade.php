@@ -156,6 +156,8 @@
         TESTresponseData = JSON.parse(TESTresponseData);
 
         function reset(mode) {
+            document.getElementById('searchLabel').value = ' ';
+
             let divobj_Labelsinformation = document.getElementById('Labelsinformation');
             divobj_Labelsinformation.innerHTML = '';
             let divobj_div_imgcontainer = document.getElementById('div_imgcontainer');
@@ -406,11 +408,11 @@
 
 
 @push('aside')
+    <a href="{{ url('/texttospeech') }}" class="selected">Text To Speech</a>
     <a href="{{ url('/speechtotext') }}">Speech To Text</a>
-    <a href="{{ url('/texttospeech') }}">Text To Speech</a>
     <a href="{{ url('/textextract') }}">Text Extract</a>
+    <a href="{{ url('/objectrecognisation') }}">Object Recognition</a>
     <a href="{{ url('/comprehend') }}">Comprehend Demonstration</a>
-    <a href="{{ url('/objectrecognisation') }}" class="selected">Object Recognition</a>
 @endpush
 
 
@@ -597,11 +599,17 @@
 
 
     .labelbtnUpld {
-        width: 140px;
+        width: 150px !important;
+        height: 32px !important;
         display: flex;
         justify-content: center;
         align-items: center;
         font-weight: 100 !important;
+        text-transform: capitalize !important;
+        font-weight: 400 !important;
+        padding: 5px;
+        box-sizing: border-box;
+        text-transform: capitalize !important;
     }
 
     #btnanalyzing {
@@ -627,7 +635,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        margin-right: 10px;
+        margin-right: 15px;
         box-sizing: border-box;
     }
 
@@ -656,7 +664,7 @@
         /* display: none; */
         grid-template-columns: 1fr;
         grid-template-rows: 50px 435px;
-        row-gap: 20px;
+        row-gap: 30px;
         margin: 10px;
         width: 430px;
     }
@@ -670,7 +678,7 @@
 
     .informationDiv .tools p {
         /* color: #000000 !important; */
-        /* margin-top: 10px; */
+        margin-top: 10px;
         font-size: 10px;
         text-align: center;
         font-weight: 400;
