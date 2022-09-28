@@ -214,8 +214,8 @@
 
 
 @push('aside')
-    <a href="{{ url('/texttospeech') }}" class="selected">Text To Speech</a>
-    <a href="{{ url('/speechtotext') }}">Speech To Text</a>
+    <a href="{{ url('/texttospeech') }}">Text To Speech</a>
+    <a href="{{ url('/speechtotext') }}" class="selected">Speech To Text</a>
     <a href="{{ url('/textextract') }}">Text Extract</a>
     <a href="{{ url('/objectrecognisation') }}">Object Recognition</a>
     <a href="{{ url('/comprehend') }}">Comprehend</a>
@@ -245,22 +245,22 @@
             <button id="btnSubmit" class="btn" onclick="apicallsubmit()"> Submit </button>
 
             <!-- <button id="btnRecord" for="actual-btn" class="btn" onclick="startRecording()">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
-                <path fill="#0091ff" d="M10.021 12.208q-1.25 0-2.146-.896-.896-.895-.896-2.145V4.146q0-1.25.896-2.136.896-.885 2.146-.885t2.135.885q.886.886.886 2.136v5.021q0 1.25-.875 2.145-.875.896-2.146.896Zm-1.167 6v-2.437q-2.437-.333-4-2.219-1.562-1.885-1.562-4.385h2.291q0 1.854 1.302 3.125 1.303 1.27 3.136 1.27 1.833 0 3.125-1.27 1.292-1.271 1.292-3.125h2.291q0 2.5-1.562 4.385-1.563 1.886-4.021 2.219v2.437Z" />
-                </svg>START TRANSCRIBING
-                </button>
-                <div id="rdnganimateddiv" style="display: none;" class="btn waveboxContainer" onclick="stopRecording()">
-                Recording <div class="waves">
-                <div class="box box1">
-                </div><div class="box box2">
-                </div>
-                <div class="box box3">
-                </div>
-                <div class="box box4">
-                </div>
-                <div class="box box5">
-                </div></div><p> click to stop </p>
-                 </div> -->
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20">
+                    <path fill="#0091ff" d="M10.021 12.208q-1.25 0-2.146-.896-.896-.895-.896-2.145V4.146q0-1.25.896-2.136.896-.885 2.146-.885t2.135.885q.886.886.886 2.136v5.021q0 1.25-.875 2.145-.875.896-2.146.896Zm-1.167 6v-2.437q-2.437-.333-4-2.219-1.562-1.885-1.562-4.385h2.291q0 1.854 1.302 3.125 1.303 1.27 3.136 1.27 1.833 0 3.125-1.27 1.292-1.271 1.292-3.125h2.291q0 2.5-1.562 4.385-1.563 1.886-4.021 2.219v2.437Z" />
+                    </svg>START TRANSCRIBING
+                    </button>
+                    <div id="rdnganimateddiv" style="display: none;" class="btn waveboxContainer" onclick="stopRecording()">
+                    Recording <div class="waves">
+                    <div class="box box1">
+                    </div><div class="box box2">
+                    </div>
+                    <div class="box box3">
+                    </div>
+                    <div class="box box4">
+                    </div>
+                    <div class="box box5">
+                    </div></div><p> click to stop </p>
+                     </div> -->
 
         </div>
 

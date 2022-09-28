@@ -411,7 +411,7 @@
     <a href="{{ url('/texttospeech') }}" class="selected">Text To Speech</a>
     <a href="{{ url('/speechtotext') }}">Speech To Text</a>
     <a href="{{ url('/textextract') }}">Text Extract</a>
-    <a href="{{ url('/objectrecognisation') }}">Object Recognition</a>
+    <a href="{{ url('/objectrecognisation') }}" class="selected">Object Recognition</a>
     <a href="{{ url('/comprehend') }}">Comprehend</a>
 @endpush
 
