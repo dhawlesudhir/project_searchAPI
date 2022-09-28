@@ -18,7 +18,7 @@
             speaker = voiceselect.options[voiceselect.selectedIndex].value;
 
             // text area value
-            text = document.getElementById("texttocovert").value.trim();
+            text = document.getElementById("texttocovert").value;
             console.log(text.length);
             if (text.length < 30) {
                 alert('Please enter text! (minimum 30 characters)');
