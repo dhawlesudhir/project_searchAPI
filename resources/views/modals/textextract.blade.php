@@ -147,10 +147,10 @@
                 <div class="tablebody scrolloverlay">
                     <table id="table-textExtract">
                         <tr>
-                            <th class="itemname">Item</th>
-                            <th class="qty">Qty.</th>
-                            <th class="price">Price</th>
-                            <th class="total">Total</th>
+                            <th class="itemname"></th>
+                            <th class="qty"></th>
+                            <th class="price"></th>
+                            <th class="total"></th>
                         </tr>
                         <tbody id='tbody-textExtract'>
                             {{-- <tr>
@@ -290,12 +290,16 @@
     }
 
     .labelbtnUpld {
-        width: 140px;
+        width: 150px !important;
+        height: 32px !important;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 152px;
-        font-weight: 100 !important;
+        margin-left: 210px;
+        font-weight: 400 !important;
+        padding: 5px;
+        box-sizing: border-box;
+        text-transform: capitalize !important;
     }
 
     #btnanalyzing {
