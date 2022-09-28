@@ -159,6 +159,7 @@
         font-family: "Open Sans", sans-serif;
         font-weight: bold;
         cursor: pointer;
+        text-transform: uppercase;
     }
 
     .modal aside a {

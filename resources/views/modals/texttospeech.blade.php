@@ -105,6 +105,7 @@
             document.getElementById("btndownload").style.display = "none";
             document.getElementById("btnlisten").style.display = "none";
             document.getElementById("btnconvert").style.display = "flex";
+            textchange();
         }
 
         function parameterchange() {
@@ -120,11 +121,11 @@
 
 
 @push('aside')
-    <a href="{{ url('/speechtotext') }}">Speech To Text</a>
     <a href="{{ url('/texttospeech') }}" class="selected">Text To Speech</a>
+    <a href="{{ url('/speechtotext') }}">Speech To Text</a>
     <a href="{{ url('/textextract') }}">Text Extract</a>
-    <a href="{{ url('/comprehend') }}">Comprehend Demonstration</a>
     <a href="{{ url('/objectrecognisation') }}">Object Recognition</a>
+    <a href="{{ url('/comprehend') }}">Comprehend Demonstration</a>
 @endpush
 
 
@@ -138,7 +139,7 @@
                 <input type="radio" id="radioNeural" name="engine" value="neural" checked />
                 <div class="enginetext">
                     <span class="title">Neural</span>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p>Produces the most natural human-like speech possible</p>
                 </div>
             </label>
 
@@ -146,7 +147,7 @@
                 <input type="radio" id="radioStandard" name="engine" value="standard" />
                 <div class="enginetext">
                     <span class="title">Standard</span>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p>Produces natural-sounding speech</p>
                 </div>
             </label>
 
@@ -188,12 +189,13 @@
 @push('footer')
     <div class="footerDiv">
         <button id="btndownload" class="btn download" onclick="downloadaudiofile()">
-            Download
+
             <svg id="file_download_black_24dp_2_" data-name="file_download_black_24dp (2)"
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path id="Path_34" data-name="Path 34" d="M0,0H24V24H0Z" fill="none" />
                 <path id="Path_35" data-name="Path 35" d="M19,9H15V3H9V9H5l7,7ZM5,18v2H19V18Z" fill="#0091ff" />
             </svg>
+            Download
         </button>
         <!-- <a href="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3" download="https://recitepro.s3.amazonaws.com/0924b6f4801b4b2caaff66d9808e5001.mp3">Download PDF</a> -->
 
@@ -218,7 +220,7 @@
         width: 100%;
         font-size: 13px;
         font-weight: 500;
-        margin: 10px 15px;
+        margin: 18px;
     }
 
     .headings {
@@ -243,7 +245,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: auto 1fr;
-        row-gap: 15px;
+        row-gap: 16px;
     }
 
     .engine span {
@@ -273,11 +275,16 @@
         row-gap: 20px;
     }
 
+    .optselect:focus {
+        /* border: 1px solid #0091FF; */
+        box-shadow: 0 0 3px #0091FF;
+    }
+
     .textinputdiv {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr auto;
-        height: 100%;
+        height: 200px;
         row-gap: 10px;
     }
 
@@ -288,7 +295,8 @@
     .textinput {
         grid-column: 1/-1;
         width: 100%;
-        border-radius: 5px;
+        height: 160px;
+        border-radius: 8px;
         padding: 10px;
         box-sizing: border-box;
         border: 1px solid #DDDDDD;
@@ -326,8 +334,12 @@
         padding-left: 9px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        gap: 5px;
+        gap: 40px;
+    }
+
+    .listen {
+        gap: 50px;
+
     }
 
     #btnconvert {
@@ -335,6 +347,8 @@
         align-items: center;
         justify-content: center;
         gap: 5px;
+        background-color: #0091FF !important;
+        color: #FFFFFF !important;
     }
 
     .download {
@@ -388,12 +402,13 @@
 
     .form-control {
         display: flex;
-        column-gap: 15px;
+        column-gap: 12px;
         align-items: flex-start;
+        margin-left: 5px;
     }
 
     .form-control input[type="radio"] {
-        scale: 1.3;
+        scale: 1.4;
     }
 </style>
 
