@@ -81,6 +81,7 @@
 
         var textfromarea = document.getElementById("comprehendtextara").value;
 
+        var payloaddata;
 
         function payloadDataToHTMLDiv() {
             payloadtext = textfromarea;
@@ -95,7 +96,7 @@
             }
             multilinedata = multilinedata + payloadtext;
 
-            var payloaddata = `{\n 'text':"` + multilinedata + `" \n}`;
+            payloaddata = `{\n 'text':"` + multilinedata + `" \n}`;
             updateHTML_request(payloaddata);
         }
 
@@ -1374,6 +1375,8 @@
 
         function cleartext() {
             document.getElementById("comprehendtextara").value = '';
+            inputChange();
+
         }
 
         function entitydataprocessing(data) {
@@ -2071,10 +2074,11 @@
                 'Throughout the interwar period, elements of the fleet conducted visits to ports throughout the Mediterranean, but few fleet exercises occurred due to budget pressures. In 1930, the Maritime Air Force was divorced from Royal Yugoslav Army control, and the naval air arm began to develop significantly, including the establishment of bases along the Adriatic coast. The following year, a British-made flotilla leader was commissioned with the idea that the KM might be able to operate in the Mediterranean alongside the British and French navies.';
             document.getElementById("comprehendtextara").value = textfromarea;
             responsedataprocessing(JSON.parse(testdataobject));
+            inputChange();
         }
 
         function inputChange() {
-            inputtext = document.getElementById('comprehendtextara').value.trim();
+            inputtext = document.getElementById('comprehendtextara').value;
             balanceInput = 10000 - inputtext.length;
             document.getElementById('textremaining-p').innerHTML = `<p id="textremaining-p" class="pChars">` +
                 balanceInput + ` Characters remaining </p>`;
@@ -2087,11 +2091,11 @@
 @endpush
 
 @push('aside')
+    <a href="{{ url('/texttospeech') }}" class="selected">Text To Speech</a>
     <a href="{{ url('/speechtotext') }}">Speech To Text</a>
-    <a href="{{ url('/texttospeech') }}">Text To Speech</a>
     <a href="{{ url('/textextract') }}">Text Extract</a>
-    <a href="{{ url('/comprehend') }}" class="selected">Comprehend Demonstration</a>
     <a href="{{ url('/objectrecognisation') }}">Object Recognition</a>
+    <a href="{{ url('/comprehend') }}">Comprehend</a>
 @endpush
 
 @push('artical')
@@ -2422,11 +2426,11 @@
                 <div class="callresponsedivs">
                     <div class="divapicall">
                         <div id="HTMLContainercall" class="HTMLContainer HTMLContainercall"></div>
-                        <button class="btn btncpycall" onclick="copytext(1)">COPY TEXT</button>
+                        <button class="btn  btncpy" onclick="copytext(1)">COPY TEXT</button>
                     </div>
                     <div class="divapiresponse">
                         <div id="HTMLContainerresponse" class="HTMLContainer HTMLContainercallresponse"></div>
-                        <button class="btn btncpyresponse" onclick="copytext(2)">COPY TEXT</button>
+                        <button class="btn btncpy" onclick="copytext(2)">COPY TEXT</button>
                     </div>
                 </div>
             </div>
@@ -2751,12 +2755,16 @@
     .divapicall,
     .divapiresponse {
         position: relative;
+        height: 350px;
+        margin-bottom: 10px;
     }
 
-    .btncpycall,
-    .btncpyresponse {
+    .btncpy {
         position: absolute;
         right: 0;
+        width: 98px !important;
+        height: 30px !important;
+        font-weight: 400 !important;
     }
 
     /* hide  */
