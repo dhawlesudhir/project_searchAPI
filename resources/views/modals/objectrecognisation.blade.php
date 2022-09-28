@@ -412,7 +412,7 @@
     <a href="{{ url('/speechtotext') }}">Speech To Text</a>
     <a href="{{ url('/textextract') }}">Text Extract</a>
     <a href="{{ url('/objectrecognisation') }}">Object Recognition</a>
-    <a href="{{ url('/comprehend') }}">Comprehend Demonstration</a>
+    <a href="{{ url('/comprehend') }}">Comprehend</a>
 @endpush
 
 
@@ -593,6 +593,7 @@
         border-radius: 10px;
         padding: 5px;
         z-index: 1;
+        font-size: 10px !important;
     }
 
 
