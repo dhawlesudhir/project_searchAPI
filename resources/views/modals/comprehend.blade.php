@@ -1954,7 +1954,15 @@
             // copyText.setSelectionRange(0, 99999); // For mobile devices
 
             // Copy the text inside the text field
-            navigator.clipboard.writeText(copyText);
+            // navigator.clipboard.writeText(copyText);
+            document.addEventListener('copy', (e) => {
+                //@ts-ignore
+                e.clipboardData.setData('text/plain', (copyText));
+                e.preventDefault();
+                //@ts-ignore
+                document.removeEventListener('copy', null);
+            });
+            document.execCommand('copy');
 
             // Alert the copied text
             alert("Copied the text: " + copyText);
