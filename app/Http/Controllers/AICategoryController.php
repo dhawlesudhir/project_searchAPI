@@ -175,6 +175,8 @@ class AICategoryController extends Controller
 
         $str = urlencode($request->input('str'));
         $speaker = $request->input('speaker');
+        $languagecode = $request->input('languagecode');
+        $engine = $request->input('engine');
         if (empty($str)) {
             return response()->json([
                 'status' => 'failed',
@@ -190,6 +192,16 @@ class AICategoryController extends Controller
         $variableparams = '&str=' . $str;
         $url = $baseurl . $user . $fixedparams . $variableparams;
 
+        // $baseurl1 = 'https://cgw5jwfhhmfxhad7wnadjzmqum0mdpqb.lambda-url.us-east-1.on.aws/?';
+        // //parameters1
+        // $voice = $speaker;
+        // $text = $str;
+        // $languagecode = $languagecode;
+        // $engine = $engine;
+
+        // $parametersurl = 'voice=' . $speaker . '&text=' . $text . '&languagecode=' . $languagecode . '&engine=' . $engine;
+
+        // $url = $baseurl1 . $parametersurl;
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -203,9 +215,11 @@ class AICategoryController extends Controller
             CURLOPT_CUSTOMREQUEST => 'GET',
         ));
 
-        $response = json_decode(curl_exec($curl));
+        // $response = json_decode(curl_exec($curl));
+        $response = curl_exec($curl);
         curl_close($curl);
-
+        return $response;
+        die;
         // if request failed
         if (!isset($response)) {
             return response()->json([

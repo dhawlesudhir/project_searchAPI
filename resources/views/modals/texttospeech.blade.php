@@ -15,6 +15,8 @@
 
             //selector value
             var voiceselect = document.getElementById("voice");
+            var languagecode = 'hi-IN';
+            var engine = 'neural' ;
             speaker = voiceselect.options[voiceselect.selectedIndex].value;
 
             // text area value
@@ -32,7 +34,7 @@
 
             document.getElementById("converting").style.display = "flex";
 
-            fetch(localhost + "/api/textspeechaws?str=" + text + "&speaker=" + speaker, requestOptions)
+            fetch(localhost + "/api/textspeechaws?str=" + text + "&speaker=" + speaker+"&languagecode="+languagecode+"&engine="+engine, requestOptions)
                 .then(response => response.json())
                 // .then((response) => {
                 //   return response.json();
@@ -90,7 +92,7 @@
         // char counting and updating
         function textchange() {
             var currenttext = document.getElementById("texttocovert").value.trim();
-            var textremaining = 60 - currenttext.length;
+            var textremaining = 500 - currenttext.length;
             document.getElementById("textremaining-p").innerHTML = textremaining + ' Characters remaining';
             if (text != currenttext) {
                 document.getElementById("btnconvert").style.display = "flex";
@@ -158,7 +160,7 @@
                 <label for="languageSelected" class="headings labelLan">Language</label>
                 <select id="languageSelected" class="optselect" name="">
                     <option value="engus" class="sltOption">English, US</option>
-                    <option value="abc">ABC</option>
+                    <option value="hi-IN">Hindi</option>
                     <option value="mnp">MNP</option>
                 </select>
             </fieldset>
@@ -175,10 +177,10 @@
 
         <div class="textinputdiv">
             <label for="texttocovert" class="headings texttoLabel">Input Text</label>
-            <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" maxlength="60"
+            <textarea id="texttocovert" class="textinput" name="" cols="90%" rows="6" maxlength="500"
                 placeholder="English,US" onkeyup="textchange()"></textarea>
             <div class="texttocovertbtns">
-                <p id="textremaining-p" class="pChars">60 Characters remaining</p>
+                <p id="textremaining-p" class="pChars">500 Characters remaining</p>
                 <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
             </div>
         </div>

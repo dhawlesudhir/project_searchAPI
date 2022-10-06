@@ -50,7 +50,7 @@
                 <a id="btntbl" class="tab" onclick="toggleTabs('tbl','btntbl')">
                     Tables
                 </a>
-                <a id="btnqry" class="tab" onclick="toggleTabs('qry','btnqry')">
+                <a id="btnqry" class="tab" onclick="toggleTabs('qry','btnqry')" hidden>
                     Queries
                 </a>
                 <!-- </div> -->
@@ -164,7 +164,7 @@
                 </div>
             </div>
 
-            <div id="qry" class="queries tabcontent">
+            <div id="qry" class="queries tabcontent" hidden>
                 <div class="tools">
                     <div class="iconinputbox">
                         <span class="material-symbols-outlined">
