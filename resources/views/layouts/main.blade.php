@@ -175,6 +175,18 @@
     "status": "1",
     "route": "comprehend"
   }]
+},
+{
+  "id": "2",
+  "name": "COMPREHEND MEDICAL",
+  "color": "#c6c6c6",
+  "status": "1",
+  "resources":[{
+    "id": "2",
+    "name": "Comprehend Medical",
+    "status": "1",
+    "route": "/comprehendmedical"
+  }]
 }
 ]`;
 
