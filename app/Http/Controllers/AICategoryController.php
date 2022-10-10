@@ -215,11 +215,11 @@ class AICategoryController extends Controller
             CURLOPT_CUSTOMREQUEST => 'GET',
         ));
 
-        // $response = json_decode(curl_exec($curl));
-        $response = curl_exec($curl);
+        $response = json_decode(curl_exec($curl));
+        // $response = curl_exec($curl);
         curl_close($curl);
-        return $response;
-        die;
+        // return $response;
+        // die;
         // if request failed
         if (!isset($response)) {
             return response()->json([
