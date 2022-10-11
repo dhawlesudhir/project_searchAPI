@@ -64,6 +64,23 @@
 
         // updateHTML_response(payload);
     </script>
+    <script>
+
+tabData('a_tab_entity',1);
+        function tabData(tabId,tabNumber){
+            addClass(tabId,'active');
+        }
+
+        function addClass(tabId,className){
+            const tabList = document.getElementsByClassName('tab');
+            for (const iterator of tabList) {
+                if(iterator.classList.contains(className)){
+                    iterator.classList.remove(className);
+                }
+            }
+            document.getElementById(tabId).classList.add(className);
+        }
+    </script>
 
 @endpush
 
@@ -93,29 +110,45 @@
                 <button class="btnClear btn" onclick="cleartext()">CLEAR TEXT</button>
                 <button id="btnAnalyze" class="btnAnalyze btn" onclick="callcomprehend()">ANALYZE</button>
 
-                <button id="btnanalyzing" type="button" class="btnAnalyze btn" onclick="convert()">
+                <button id="btnanalyzing" type="button" class="btnAnalyze btn" onclick="convert()" hidden>
                     Analyzing <i id="converting" class="fa fa-spinner fa-spin"></i>
                 </button>
             </div>
         </div>
+
         <div class="comprehendresultdiv">
             <p class="headings tabtitlep">Insights</p>
             <div id="tabs" class="responsive sticky-top bg-white">
-                <!-- <div class="tabs tabs-center"> -->
-                <a id="a_tab_entity" class="tab" onclick="showentitytab()">
+
+                <a id="a_tab_entity" class="tab active" onclick="tabData('a_tab_entity',1)">
                     Entities
                 </a>
-                <a id="a_tab_rxnorm" class="tab" onclick="showphrasetab()">
+                <a id="a_tab_rxnorm" class="tab" onclick="tabData('a_tab_rxnorm',2)">
                     RxNorm concepts
                 </a>
-                <a id="a_tab_icd" class="tab" onclick="showlanguagetab()">
+                <a id="a_tab_icd" class="tab" onclick="tabData('a_tab_icd',3)">
                     ICD-10-CM concepts
                 </a>
-                <a id="a_tab_ct" class="tab" onclick="showpiitab()">
+                <a id="a_tab_ct" class="tab" onclick="tabData('a_tab_ct',4)">
                     SNOMED CT concepts
                 </a>
-                <!-- </div> -->
+
             </div>
+
+            <div class="divResultTable">
+                <div class="divResultTableTools">
+                    <input type="text">
+                    <div class="ResultPagination">
+
+                    </div>
+                </div>
+                <div class="divTable">
+                    <table>
+
+                    </table>
+                </div>
+            </div>
+
 
             <div class="appintegration">
                 <p class="headings">Application Integration</p>
@@ -206,7 +239,6 @@
 
     }
 
-
     .btnAnalyze {
         font-weight: 100 !important;
         color: #FFFFFF !important;
@@ -214,32 +246,6 @@
         text-transform: uppercase;
         width: 98px !important;
     }
-
-
-    .comprehendtextaradisabled {
-        grid-column: 1/4;
-        width: 100%;
-        height: 140px;
-        border-radius: 5px;
-        padding: 10px;
-        box-sizing: border-box;
-        border: 1px solid #DDDDDD;
-        resize: none;
-        font-family: "Open Sans", sans-serif;
-        line-height: 28px;
-        overflow-y: scroll;
-        background-color: #F0F0F0;
-        color: #888888;
-        line-height: 24px;
-        font-weight: 400 !important;
-    }
-
-    .comprehendtextaradisabled::-webkit-scrollbar {
-        display: none;
-        /* Safari and Chrome */
-    }
-
-
 
     .textareadivbtns {
         display: flex;
@@ -284,54 +290,6 @@
     }
 
     /* end Style the tab */
-
-
-    .analyzedtextdiv {
-        margin: 20px;
-    }
-
-    .titleanalyzedtextp {
-        color: #111111;
-        font-weight: bold;
-        margin-bottom: 7px;
-    }
-
-    /* styling result content  inside results */
-    .results {
-        /* margin: 15px 15px 20px 15px; */
-        margin: 20px;
-    }
-
-    .results p {
-        margin-bottom: 15px;
-    }
-
-    .results .tools {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-        gap: 10px;
-    }
-
-    .iconinputbox {
-        border: 1px solid #DDDDDD;
-        border-radius: 16px;
-        padding: 7px 5px 7px 10px;
-        display: flex;
-    }
-
-    .searchtext {
-        font-size: 13px;
-        font-family: "Open Sans", sans-serif;
-        color: #000000 !important;
-        width: auto;
-        min-width: 350px;
-        max-width: 400px;
-        border: none;
-        font-weight: 600;
-    }
-
 
     /* pagination */
     .pagination {
@@ -462,72 +420,6 @@
         width: 98px !important;
         height: 30px !important;
         font-weight: 400 !important;
-    }
-
-    /* hide  */
-    .table {
-        display: block;
-    }
-
-    .language {
-        display: block;
-    }
-
-    /* language table  */
-    /* .languagetable .col1 {
-        width: 750px;
-    }
-
-    .languagetable .col2 {
-        width: 50px;
-    } */
-
-    .languagetable tbody tr {
-        border-bottom: 0px;
-    }
-
-
-    /* 2 columns table  */
-    .cols-2 .col1 {
-        width: 750px;
-    }
-
-    .cols-2 .col2 {
-        width: 50px;
-    }
-
-
-    .piielements {
-        margin: 25px 15px;
-
-    }
-
-    .radiospii {
-        display: flex;
-        gap: 120px;
-    }
-
-    .form-control p {
-        margin-left: 20px;
-        color: #888888;
-    }
-
-    .radiotitle {
-        color: #000000;
-        margin-left: 5px;
-        font-weight: 600;
-    }
-
-    /* .comprehendresultdiv {
-      display: none;
-    } */
-
-    .loaderdiv {
-        display: none;
-    }
-
-    #btnanalyzing {
-        display: none;
     }
 
 
