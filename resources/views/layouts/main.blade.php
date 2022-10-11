@@ -185,7 +185,7 @@
     "id": "2",
     "name": "Comprehend Medical",
     "status": "1",
-    "route": "/comprehendmedical"
+    "route": "comprehendmedico"
   }]
 }
 ]`;
