@@ -277,6 +277,7 @@
             document.getElementById('div-categories').innerHTML += HTMLcode;
         }
     </script>
+    <script src="https://kit.fontawesome.com/fef6045456.js" crossorigin="anonymous"></script>
 </body>
 
 

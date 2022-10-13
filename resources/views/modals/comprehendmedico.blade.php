@@ -65,23 +65,24 @@
         // updateHTML_response(payload);
     </script>
     <script>
+        tabData('a_tab_entity', 1);
 
-tabData('a_tab_entity',1);
-        function tabData(tabId,tabNumber){
-            addClass(tabId,'active');
+
+        function tabData(tabId, tabNumber) {
+            addClass(tabId, 'active');
         }
 
-        function addClass(tabId,className){
+
+        function addClass(tabId, className) {
             const tabList = document.getElementsByClassName('tab');
             for (const iterator of tabList) {
-                if(iterator.classList.contains(className)){
+                if (iterator.classList.contains(className)) {
                     iterator.classList.remove(className);
                 }
             }
             document.getElementById(tabId).classList.add(className);
         }
     </script>
-
 @endpush
 
 @push('header')
@@ -119,7 +120,6 @@ tabData('a_tab_entity',1);
         <div class="comprehendresultdiv">
             <p class="headings tabtitlep">Insights</p>
             <div id="tabs" class="responsive sticky-top bg-white">
-
                 <a id="a_tab_entity" class="tab active" onclick="tabData('a_tab_entity',1)">
                     Entities
                 </a>
@@ -132,20 +132,76 @@ tabData('a_tab_entity',1);
                 <a id="a_tab_ct" class="tab" onclick="tabData('a_tab_ct',4)">
                     SNOMED CT concepts
                 </a>
-
             </div>
 
             <div class="divResultTable">
+                <p class="headings">Results</p>
+
                 <div class="divResultTableTools">
-                    <input type="text">
-                    <div class="ResultPagination">
+                    <div class="iconinputbox">
+                        <span class="material-symbols-outlined">
+                            search
+                        </span>
+                        <input id="searchentity" class="nooutline searchtext" type="text" placeholder="Search.."
+                            onkeyup="entitidata_filter()">
+                    </div>
+
+                    <div id="paginationentity" class="pagination">
+                        {{-- <span id="previouspageentity">
+                            < </span>
+                                <a class="selected" onclick="paginationwork(entities,1)">1</a>
+                                <a href="">2</a>
+                                <a href="">3</a>
+                                <span id="nextpageentity"> > </span> --}}
+                        {{-- code will be generated dynamically --}}
 
                     </div>
-                </div>
-                <div class="divTable">
-                    <table>
 
+                </div>
+
+                <div class="divTable">
+                    <table id="tblEntities">
+                        <thead>
+                            <tr class="tblColumnsName">
+                                <th>Entity</th>
+                                <th>Type</th>
+                                <th>Category</th>
+                                <th>Traits</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbodyEntities">
+                            <tr class="additionalRecord">
+                                <td>
+                                    <table>
+                                        <tr class="tblbodyEntitiesRecords">
+                                            <td>
+                                                <i class="fa-solid fa-chevron-up"></i>
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                                <span onclick="alert('a')">1</span>
+
+                                            </td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr class=" collapsedRecord">
+                                            <td style="margin-left:40px">test text skfjfkj</td>
+                                            <td>test text sksffsfgsdffsffjfkj</td>
+                                            <td>test text skfjfkj</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr class="tblbodyEntitiesRecords">
+                                <td>January</td>
+                                <td>$100</td>
+                                <td>$100</td>
+                                <td>$100</td>
+                            </tr>
+                        </tbody>
                     </table>
+
                 </div>
             </div>
 
@@ -167,10 +223,6 @@ tabData('a_tab_entity',1);
 
         </div>
 
-        <div class="loaderdiv">
-            <div class="loader"></div>
-
-        </div>
     </div>
 @endpush
 
@@ -327,51 +379,50 @@ tabData('a_tab_entity',1);
         border-collapse: collapse;
     }
 
-    table th {
-        text-align: start;
+
+    .tblColumnsName {
+        display: flex;
+        width: 800px;
+        justify-content: space-between;
     }
 
-    tbody tr {
+    .tblbodyEntitiesRecords {
+        display: flex;
+        width: 800px;
+        justify-content: space-between;
+        align-items: center;
         height: 48px;
         margin: 0;
         border-bottom: 1px solid #EEEEEE;
-        /* background: #EEEEEE 0% 0% no-repeat padding-box; */
-
-        /* &:last-child {
-            border:0;
-        } */
     }
 
-    table .col1 {
-        width: 500px;
+    /* bold underline for collapse record */
+    tbody .additionalRecord {
+        border-bottom: 4px solid #EEEEEE;
+        width: 100%;
+        height: auto;
     }
 
-    table .col2 {
-        width: 250px;
+    table .collapsedRecord {
+        height: 48px;
+
+        border-bottom: 0;
+        display: flex;
+        width: 800px;
+        justify-content: space-between;
+        align-items: center;
+
+        /* margin: 10px 0 10px 0; */
+        /* visibility: hidden; */
+        margin: 0 0 0 50px;
+        /* justify-content: space-around; */
     }
 
-    table .col3 {
-        width: 50px;
+    .collapsedRecord {
+        /* display: none !important; */
     }
 
-    /* tbody tr .tdcol2 {} */
-
-    tbody tr td {
-        /* text-align: center; */
-        font-weight: 500;
-    }
-
-    /* coloured line in table row */
-    tbody .line {
-        content: "";
-        display: inline-block;
-        width: 35px;
-        height: 3px;
-        vertical-align: middle;
-        margin-right: 5px;
-        /* background-color: #0091FF; */
-    }
-
+    /* table css end */
 
 
     /* // api integration boxes */
@@ -496,5 +547,46 @@ tabData('a_tab_entity',1);
         /* margin: 5px 10px 10px 10px; */
         /* height: 100%; */
         align-items: center;
+    }
+
+    .divResultTable {
+        margin: 20px;
+    }
+
+    /* //tool box code */
+    .divResultTableTools {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 20px 0 20px 0;
+        gap: 10px;
+    }
+
+    .iconinputbox {
+        border: 1px solid #DDDDDD;
+        border-radius: 16px;
+        padding: 7px 5px 7px 10px;
+        display: flex;
+        box-sizing: border-box;
+        height: 30px;
+        align-items: center;
+    }
+
+    .searchtext {
+        font-size: 13px;
+        font-family: "Open Sans", sans-serif;
+        color: #000000 !important;
+        width: auto;
+        min-width: 350px;
+        max-width: 400px;
+        border: none;
+        font-weight: 600;
+    }
+
+    .fa-solid,
+    .fas {
+        font-weight: 900;
+        scale: 1.1;
+        margin: 0 5px 0 5px;
     }
 </style>
